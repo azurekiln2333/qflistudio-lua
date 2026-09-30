@@ -5,10 +5,26 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val flutterTargetAbis = project.findProperty("target-platform")?.toString()?.split(",")?.map {
+    when (it) {
+        "android-arm" -> "armeabi-v7a"
+        "android-arm64" -> "arm64-v8a"
+        "android-x64" -> "x86_64"
+        else -> throw GradleException("Unsupported Flutter target platform: $it")
+    }
+}
+val splitPerAbi = project.findProperty("split-per-abi")?.toString()?.toBoolean() ?: false
+
 android {
     namespace = "com.azurekiln.qfli.script"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
+
+    externalNativeBuild {
+        cmake {
+            path = file("../../native/CMakeLists.txt")
+        }
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -31,6 +47,14 @@ android {
     }
 
     buildTypes {
+        if (flutterTargetAbis != null && !splitPerAbi && !project.hasProperty("disable-abi-filtering")) {
+            // Flutter defaults to every ABI even when a narrower target was requested.
+            configureEach {
+                ndk.abiFilters.clear()
+                ndk.abiFilters.addAll(flutterTargetAbis)
+            }
+        }
+
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.

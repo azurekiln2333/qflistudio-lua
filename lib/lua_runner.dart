@@ -6,14 +6,19 @@ import 'package:path/path.dart' as p;
 import 'package:qfli_studio_core/services/process_supervisor.dart';
 import 'package:qfli_studio_core/services/studio_profile.dart';
 
+import 'lua_toolchain.dart';
+
 /// Runtime adapter for the shared scripting product.
 class LuaProgramRunner implements ProgramRunner {
-  const LuaProgramRunner();
+  const LuaProgramRunner({this.toolchain = const LuaToolchain()});
+
+  final LuaToolchain toolchain;
 
   static final ProcessSupervisor _processSupervisor = ProcessSupervisor();
 
   static const Set<String> _sourceExtensions = {
     '.lua',
+    '.luac',
     '.js',
     '.mjs',
     '.ts',
@@ -27,6 +32,9 @@ class LuaProgramRunner implements ProgramRunner {
   }) async {
     final extension = p.extension(entryFile).toLowerCase();
     if (!_sourceExtensions.contains(extension)) return null;
+    if (extension == '.lua' || extension == '.luac') {
+      return _runLua(projectPath, entryFile);
+    }
     final runtime = _runtimeName(extension);
     if (!Platform.isWindows && !Platform.isLinux && !Platform.isMacOS) {
       return _notReady(p.basename(entryFile), runtime);
@@ -57,12 +65,59 @@ class LuaProgramRunner implements ProgramRunner {
     }
   }
 
+  ProgramRunResult _runLua(String projectPath, String entryFile) {
+    final LuaExecution execution;
+    try {
+      execution = toolchain.startRun(
+        file: entryFile,
+        projectDirectory: projectPath,
+      );
+    } catch (error) {
+      return ProgramRunResult(
+        title: '运行 ${p.basename(entryFile)}（Lua 5.4）',
+        stdout: const Stream<String>.empty(),
+        stderr: Stream<String>.value('Lua 运行失败：$error'),
+        exitCode: Future<int>.value(kProgramNotRunExitCode),
+      );
+    }
+    final stdout = StreamController<String>();
+    final stderr = StreamController<String>();
+    final completion = Completer<int>();
+    var canceled = false;
+    unawaited(() async {
+      try {
+        final result = await execution.result;
+        if (!canceled) {
+          for (final line in const LineSplitter().convert(result.output)) {
+            stdout.add(line);
+          }
+          for (final line in const LineSplitter().convert(result.error)) {
+            stderr.add(line);
+          }
+        }
+        completion.complete(result.status);
+      } catch (error) {
+        if (!canceled) stderr.add('Lua 运行失败：$error');
+        completion.complete(kProgramNotRunExitCode);
+      } finally {
+        await stdout.close();
+        await stderr.close();
+      }
+    }());
+    return ProgramRunResult(
+      title: '运行 ${p.basename(entryFile)}（Lua 5.4）',
+      stdout: stdout.stream,
+      stderr: stderr.stream,
+      exitCode: completion.future,
+      cancel: () async {
+        canceled = true;
+        await execution.cancel();
+      },
+    );
+  }
+
   Future<List<String>?> _commandFor(String extension, String entryFile) async {
     final candidates = switch (extension) {
-      '.lua' => const [
-        ['lua'],
-        ['luajit'],
-      ],
       '.js' || '.mjs' => const [
         ['node'],
         ['deno', 'run'],
@@ -72,22 +127,27 @@ class LuaProgramRunner implements ProgramRunner {
         ['tsx'],
         ['ts-node'],
       ],
-      '.sh' => Platform.isWindows
-          ? const [
-              ['powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File'],
-            ]
-          : const [
-              ['sh'],
-              ['bash'],
-            ],
+      '.sh' =>
+        Platform.isWindows
+            ? const [
+                [
+                  'powershell',
+                  '-NoProfile',
+                  '-ExecutionPolicy',
+                  'Bypass',
+                  '-File',
+                ],
+              ]
+            : const [
+                ['sh'],
+                ['bash'],
+              ],
       _ => const <List<String>>[],
     };
     for (final candidate in candidates) {
-      final probe = await Process.run(
-        Platform.isWindows ? 'where' : 'which',
-        [candidate.first],
-        runInShell: Platform.isWindows,
-      );
+      final probe = await Process.run(Platform.isWindows ? 'where' : 'which', [
+        candidate.first,
+      ], runInShell: Platform.isWindows);
       if (probe.exitCode == 0) return [...candidate, entryFile];
     }
     return null;
@@ -97,12 +157,15 @@ class LuaProgramRunner implements ProgramRunner {
     final controller = StreamController<String>();
     scheduleMicrotask(() {
       controller
-        ..add('$runtime 运行时不可用：请在桌面端安装对应工具链。')
-        ..add('当前仍可使用编辑、保存、格式化和项目导入导出。')
+        ..add(
+          Platform.isWindows || Platform.isLinux || Platform.isMacOS
+              ? '未找到 $runtime 运行环境，请安装后重试。'
+              : '$runtime 脚本需要桌面端对应的运行环境。',
+        )
         ..close();
     });
     return ProgramRunResult(
-      title: '运行 $fileName（$runtime 不可用）',
+      title: '运行 $fileName（$runtime）',
       stdout: controller.stream,
       stderr: const Stream<String>.empty(),
       exitCode: Future<int>.value(kProgramNotRunExitCode),

@@ -17,6 +17,7 @@ dependencies:
 
   # lua_runner.dart 用它做路径处理。
   path: ^1.9.1
+  ffi: ^2.2.0
 
 dependency_overrides:
   re_editor:

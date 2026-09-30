@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
 import 'package:qfli_lua/main.dart' show luaProfile;
+import 'package:qfli_lua/lua_toolchain.dart';
 import 'package:qfli_studio_core/services/project_templates.dart';
 import 'package:qfli_studio_core/services/runner_service.dart';
 import 'package:qfli_studio_core/services/studio_profile.dart';
@@ -93,16 +94,16 @@ void main() {
   });
 
   group('运行后端', () {
-    test('本语言文件被接管，并说明解释器还在开发中', () async {
-      write('main.lua', '// 示例');
+    test('本语言文件由内置 Lua 执行', () async {
+      write('main.lua', 'print(6 * 7)');
       final result = await luaProfile.runner!.run(
         projectPath: project.path,
         entryFile: p.join(project.path, 'main.lua'),
       );
       expect(result, isNotNull, reason: '运行后端没有接管本语言文件');
-      expect(result!.title, contains('Lua 不可用'));
-      expect(await result.stdout.toList(), isNotEmpty);
-      expect(await result.exitCode, kProgramNotRunExitCode);
+      expect(result!.title, contains('Lua 5.4'));
+      expect(await result.stdout.toList(), ['42']);
+      expect(await result.exitCode, 0);
     });
 
     test('别的语言文件交回内核', () async {
@@ -117,14 +118,105 @@ void main() {
 
   group('运行按钮分流', () {
     test('点运行拿到结果，而不是掉进「移动端跑不了」的兜底提示', () async {
-      write('main.lua', '// 示例');
+      write('main.lua', 'print("ready")');
       final result = await RunnerService.runProject(
         projectPath: project.path,
         entryFile: p.join(project.path, 'main.lua'),
       );
       expect(result, isNotNull);
       expect(result!.hint, isNull, reason: '后端接管了就不该走兜底提示');
-      expect(result.title, contains('Lua 不可用'));
+      expect(result.title, contains('Lua 5.4'));
+      expect(await result.stdout!.toList(), ['ready']);
+      expect(await result.exitCode, 0);
+    });
+  });
+
+  group('Lua 编译器', () {
+    const toolchain = LuaToolchain();
+
+    test('语法检查不执行程序，编译字节码可再运行', () async {
+      write('main.lua', 'error("should not run")');
+      final source = p.join(project.path, 'main.lua');
+      final output = p.join(project.path, 'main.luac');
+      expect((await toolchain.check(source)).success, isTrue);
+      expect((await toolchain.compile(source, output)).success, isTrue);
+      final bytes = File(output).readAsBytesSync();
+      expect(bytes.take(4), [27, 76, 117, 97]);
+      final result = await toolchain.run(
+        file: output,
+        projectDirectory: project.path,
+      );
+      expect(result.status, isNonZero);
+      expect(result.error, contains('should not run'));
+    });
+
+    test('项目模块和标准库可用', () async {
+      write('maths.lua', 'return { answer = 6 * 7 }');
+      write(
+        'main.lua',
+        'local m = require("maths")\nprint(m.answer, string.upper("lua"))',
+      );
+      final result = await toolchain.run(
+        file: p.join(project.path, 'main.lua'),
+        projectDirectory: project.path,
+      );
+      expect(result.status, 0, reason: result.error);
+      expect(result.output, '42\tLUA\n');
+    });
+
+    test('语法错误返回诊断', () async {
+      write('main.lua', 'local = nope');
+      final result = await toolchain.check(p.join(project.path, 'main.lua'));
+      expect(result.status, isNonZero);
+      expect(result.error, contains('main.lua'));
+    });
+
+    test('FFI 保留零字节，非 UTF-8 输出不会丢弃运行结果', () async {
+      write('main.lua', 'io.write("before", string.char(0, 255), "after")');
+      final result = await toolchain.run(
+        file: p.join(project.path, 'main.lua'),
+        projectDirectory: project.path,
+      );
+      expect(result.status, 0, reason: result.error);
+      expect(result.output.codeUnits, [
+        ...'before'.codeUnits,
+        0,
+        0xfffd,
+        ...'after'.codeUnits,
+      ]);
+    });
+
+    test('项目相对文件读写和 dofile 不依赖 App 进程目录', () async {
+      write('scripts/value.lua', 'return 42');
+      write(
+        'main.lua',
+        'local f = assert(io.open("data.txt", "w"))\n'
+            'f:write(dofile("scripts/value.lua")); f:close()\n'
+            'assert(os.rename("data.txt", "answer.txt"))\n'
+            'io.input("answer.txt")\n'
+            'print(io.read("*a"))',
+      );
+      final result = await toolchain.run(
+        file: p.join(project.path, 'main.lua'),
+        projectDirectory: project.path,
+      );
+      expect(result.status, 0, reason: result.error);
+      expect(result.output, '42\n');
+      expect(File(p.join(project.path, 'answer.txt')).readAsStringSync(), '42');
+    });
+
+    test('取消运行会停止 Lua 死循环', () async {
+      write('main.lua', 'while true do end');
+      final execution = toolchain.startRun(
+        file: p.join(project.path, 'main.lua'),
+        projectDirectory: project.path,
+        timeLimit: const Duration(seconds: 3),
+      );
+      await Future<void>.delayed(const Duration(milliseconds: 50));
+      await execution.cancel();
+      final result = await execution.result;
+      expect(result.status, 130);
+      expect(result.error, contains('cancelled'));
     });
   });
 }
