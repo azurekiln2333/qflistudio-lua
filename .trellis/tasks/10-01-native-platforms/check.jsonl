@@ -1,0 +1,2 @@
+{"file": ".trellis/spec/backend/lua-toolchain.md", "reason": "Shared C/FFI behavior and platform artifact validation"}
+{"file": ".trellis/tasks/10-01-native-platforms/prd.md", "reason": "Verify all native targets and supported local tests without scope reduction"}

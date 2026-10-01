@@ -164,6 +164,39 @@ void main() {
       expect(result.output, '42\tLUA\n');
     });
 
+    test('native tools support Unicode project and file paths', () async {
+      const folder = '\u9879\u76ee-\u{1f527}';
+      const entry = '\u5165\u53e3.lua';
+      const module = '\u6a21\u5757';
+      const data = '\u6570\u636e.txt';
+      const renamed = '\u7ed3\u679c.txt';
+      write('$folder/$module.lua', 'return 42');
+      write(
+        '$folder/$entry',
+        'local answer = require("$module")\n'
+            'local f = assert(io.open("$data", "w"))\n'
+            'f:write(answer); f:close()\n'
+            'assert(os.rename("$data", "$renamed"))\n'
+            'local input = assert(io.open("$renamed", "r"))\n'
+            'print(input:read("a")); input:close()\n'
+            'assert(os.remove("$renamed"))',
+      );
+      final root = p.join(project.path, folder);
+      final source = p.join(root, entry);
+      final bytecode = p.setExtension(source, '.luac');
+      final checked = await toolchain.check(source);
+      expect(checked.status, 0, reason: checked.error);
+      final compiled = await toolchain.compile(source, bytecode);
+      expect(compiled.status, 0, reason: compiled.error);
+      expect(File(bytecode).readAsBytesSync().take(4), [27, 76, 117, 97]);
+      for (final file in [source, bytecode]) {
+        final result = await toolchain.run(file: file, projectDirectory: root);
+        expect(result.status, 0, reason: result.error);
+        expect(result.output, '42\n');
+        expect(File(p.join(root, renamed)).existsSync(), isFalse);
+      }
+    });
+
     test('语法错误返回诊断', () async {
       write('main.lua', 'local = nope');
       final result = await toolchain.check(p.join(project.path, 'main.lua'));

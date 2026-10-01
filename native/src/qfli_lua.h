@@ -5,6 +5,8 @@
 
 #ifdef _WIN32
 #define QFLI_API __declspec(dllexport)
+#elif defined(__APPLE__)
+#define QFLI_API __attribute__((used, visibility("default")))
 #else
 #define QFLI_API __attribute__((visibility("default")))
 #endif

@@ -1,0 +1,3 @@
+{"file": ".trellis/spec/backend/lua-toolchain.md", "reason": "Shared C/FFI ownership, ABI, packaging and runtime verification contracts"}
+{"file": ".trellis/tasks/10-01-native-platforms/prd.md", "reason": "Cross-platform native-runtime requirements and testing constraints"}
+{"file": ".trellis/tasks/10-01-native-platforms/design.md", "reason": "Platform ownership and Apple linking/loading design"}

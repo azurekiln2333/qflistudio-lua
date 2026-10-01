@@ -151,6 +151,11 @@ class LuaToolchain {
 
 DynamicLibrary _openLibrary(String? explicitPath) {
   if (explicitPath != null) return DynamicLibrary.open(explicitPath);
+  if (Platform.isIOS) return DynamicLibrary.process();
+  if (Platform.isMacOS) {
+    final linked = DynamicLibrary.process();
+    if (linked.providesSymbol('qfli_lua_version')) return linked;
+  }
   final name = Platform.isWindows
       ? 'libqfli_lua.dll'
       : Platform.isMacOS

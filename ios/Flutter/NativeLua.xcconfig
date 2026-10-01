@@ -1,0 +1,5 @@
+GCC_C_LANGUAGE_STANDARD = gnu11
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) LUA_COMPAT_5_3 LUA_USE_IOS
+HEADER_SEARCH_PATHS = $(inherited) "$(SRCROOT)/../native/src" "$(SRCROOT)/../native/third_party/lua-5.4.8/src"
+// Dart looks up the statically linked bridge by name; retain global symbols when stripping.
+STRIP_STYLE = non-global
