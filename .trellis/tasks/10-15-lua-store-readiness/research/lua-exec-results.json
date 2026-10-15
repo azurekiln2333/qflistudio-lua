@@ -1,0 +1,1808 @@
+{
+  "runtime": "Lua 5.4.8",
+  "verified": 200,
+  "ok": 200,
+  "fail": 0,
+  "rows": [
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-001",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=22",
+      "expected": "weighted=22",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-002",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=28",
+      "expected": "weighted=28",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-003",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=34",
+      "expected": "weighted=34",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-004",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=40",
+      "expected": "weighted=40",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-005",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=46",
+      "expected": "weighted=46",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-006",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=52",
+      "expected": "weighted=52",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-007",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=58",
+      "expected": "weighted=58",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-008",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=64",
+      "expected": "weighted=64",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-009",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=70",
+      "expected": "weighted=70",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-010",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=76",
+      "expected": "weighted=76",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-011",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=82",
+      "expected": "weighted=82",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-012",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=88",
+      "expected": "weighted=88",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-013",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=94",
+      "expected": "weighted=94",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-014",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=100",
+      "expected": "weighted=100",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-015",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=106",
+      "expected": "weighted=106",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-016",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=112",
+      "expected": "weighted=112",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-017",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=118",
+      "expected": "weighted=118",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-018",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=124",
+      "expected": "weighted=124",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-019",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=130",
+      "expected": "weighted=130",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-020",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=136",
+      "expected": "weighted=136",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-021",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=142",
+      "expected": "weighted=142",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-022",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=148",
+      "expected": "weighted=148",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-023",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=154",
+      "expected": "weighted=154",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-024",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=160",
+      "expected": "weighted=160",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-025",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=166",
+      "expected": "weighted=166",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-026",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=172",
+      "expected": "weighted=172",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-027",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=178",
+      "expected": "weighted=178",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-028",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=184",
+      "expected": "weighted=184",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-029",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=190",
+      "expected": "weighted=190",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-030",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=196",
+      "expected": "weighted=196",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-031",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=202",
+      "expected": "weighted=202",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-032",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=208",
+      "expected": "weighted=208",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-033",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=214",
+      "expected": "weighted=214",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-034",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=220",
+      "expected": "weighted=220",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-035",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=226",
+      "expected": "weighted=226",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-036",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=232",
+      "expected": "weighted=232",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-037",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=238",
+      "expected": "weighted=238",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-038",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=244",
+      "expected": "weighted=244",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-039",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=250",
+      "expected": "weighted=250",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-040",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=256",
+      "expected": "weighted=256",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-041",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=262",
+      "expected": "weighted=262",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-042",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=268",
+      "expected": "weighted=268",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-043",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=274",
+      "expected": "weighted=274",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-044",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=280",
+      "expected": "weighted=280",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-045",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=286",
+      "expected": "weighted=286",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-046",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=292",
+      "expected": "weighted=292",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-047",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=298",
+      "expected": "weighted=298",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-048",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=304",
+      "expected": "weighted=304",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-049",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=310",
+      "expected": "weighted=310",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-050",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=316",
+      "expected": "weighted=316",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-051",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=322",
+      "expected": "weighted=322",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-052",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=328",
+      "expected": "weighted=328",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-053",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=334",
+      "expected": "weighted=334",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-054",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=340",
+      "expected": "weighted=340",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-055",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=346",
+      "expected": "weighted=346",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-056",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=352",
+      "expected": "weighted=352",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-057",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=358",
+      "expected": "weighted=358",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-058",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=364",
+      "expected": "weighted=364",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-059",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=370",
+      "expected": "weighted=370",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-060",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=376",
+      "expected": "weighted=376",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-061",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=382",
+      "expected": "weighted=382",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-062",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=388",
+      "expected": "weighted=388",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-063",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=394",
+      "expected": "weighted=394",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-064",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=400",
+      "expected": "weighted=400",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-065",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=406",
+      "expected": "weighted=406",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-066",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=412",
+      "expected": "weighted=412",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-067",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=418",
+      "expected": "weighted=418",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-068",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=424",
+      "expected": "weighted=424",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-069",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=430",
+      "expected": "weighted=430",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-070",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=436",
+      "expected": "weighted=436",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-071",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=442",
+      "expected": "weighted=442",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-072",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=448",
+      "expected": "weighted=448",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-073",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=454",
+      "expected": "weighted=454",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-074",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=460",
+      "expected": "weighted=460",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-075",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=466",
+      "expected": "weighted=466",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-076",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=472",
+      "expected": "weighted=472",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-077",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=478",
+      "expected": "weighted=478",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-078",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=484",
+      "expected": "weighted=484",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-079",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=490",
+      "expected": "weighted=490",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-080",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=496",
+      "expected": "weighted=496",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-081",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=502",
+      "expected": "weighted=502",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-082",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=508",
+      "expected": "weighted=508",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-083",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=514",
+      "expected": "weighted=514",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-084",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=520",
+      "expected": "weighted=520",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-085",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=526",
+      "expected": "weighted=526",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-086",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=532",
+      "expected": "weighted=532",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-087",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=538",
+      "expected": "weighted=538",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-088",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=544",
+      "expected": "weighted=544",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-089",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=550",
+      "expected": "weighted=550",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-090",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=556",
+      "expected": "weighted=556",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-091",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=562",
+      "expected": "weighted=562",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-092",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=568",
+      "expected": "weighted=568",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-093",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=574",
+      "expected": "weighted=574",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-094",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=580",
+      "expected": "weighted=580",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-095",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=586",
+      "expected": "weighted=586",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-096",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=592",
+      "expected": "weighted=592",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-097",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=598",
+      "expected": "weighted=598",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-098",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=604",
+      "expected": "weighted=604",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-099",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=610",
+      "expected": "weighted=610",
+      "error": ""
+    },
+    {
+      "kind": "tutorial",
+      "id": "lua-tutorial-100",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=616",
+      "expected": "weighted=616",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-001",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=22",
+      "expected": "weighted=22",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-002",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=28",
+      "expected": "weighted=28",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-003",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=34",
+      "expected": "weighted=34",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-004",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=40",
+      "expected": "weighted=40",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-005",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=46",
+      "expected": "weighted=46",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-006",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=52",
+      "expected": "weighted=52",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-007",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=58",
+      "expected": "weighted=58",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-008",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=64",
+      "expected": "weighted=64",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-009",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=70",
+      "expected": "weighted=70",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-010",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=76",
+      "expected": "weighted=76",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-011",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=82",
+      "expected": "weighted=82",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-012",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=88",
+      "expected": "weighted=88",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-013",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=94",
+      "expected": "weighted=94",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-014",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=100",
+      "expected": "weighted=100",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-015",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=106",
+      "expected": "weighted=106",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-016",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=112",
+      "expected": "weighted=112",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-017",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=118",
+      "expected": "weighted=118",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-018",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=124",
+      "expected": "weighted=124",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-019",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=130",
+      "expected": "weighted=130",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-020",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=136",
+      "expected": "weighted=136",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-021",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=142",
+      "expected": "weighted=142",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-022",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=148",
+      "expected": "weighted=148",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-023",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=154",
+      "expected": "weighted=154",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-024",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=160",
+      "expected": "weighted=160",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-025",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=166",
+      "expected": "weighted=166",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-026",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=172",
+      "expected": "weighted=172",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-027",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=178",
+      "expected": "weighted=178",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-028",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=184",
+      "expected": "weighted=184",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-029",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=190",
+      "expected": "weighted=190",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-030",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=196",
+      "expected": "weighted=196",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-031",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=202",
+      "expected": "weighted=202",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-032",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=208",
+      "expected": "weighted=208",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-033",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=214",
+      "expected": "weighted=214",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-034",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=220",
+      "expected": "weighted=220",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-035",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=226",
+      "expected": "weighted=226",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-036",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=232",
+      "expected": "weighted=232",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-037",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=238",
+      "expected": "weighted=238",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-038",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=244",
+      "expected": "weighted=244",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-039",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=250",
+      "expected": "weighted=250",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-040",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=256",
+      "expected": "weighted=256",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-041",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=262",
+      "expected": "weighted=262",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-042",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=268",
+      "expected": "weighted=268",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-043",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=274",
+      "expected": "weighted=274",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-044",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=280",
+      "expected": "weighted=280",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-045",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=286",
+      "expected": "weighted=286",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-046",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=292",
+      "expected": "weighted=292",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-047",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=298",
+      "expected": "weighted=298",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-048",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=304",
+      "expected": "weighted=304",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-049",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=310",
+      "expected": "weighted=310",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-050",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=316",
+      "expected": "weighted=316",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-051",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=322",
+      "expected": "weighted=322",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-052",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=328",
+      "expected": "weighted=328",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-053",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=334",
+      "expected": "weighted=334",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-054",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=340",
+      "expected": "weighted=340",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-055",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=346",
+      "expected": "weighted=346",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-056",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=352",
+      "expected": "weighted=352",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-057",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=358",
+      "expected": "weighted=358",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-058",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=364",
+      "expected": "weighted=364",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-059",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=370",
+      "expected": "weighted=370",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-060",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=376",
+      "expected": "weighted=376",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-061",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=382",
+      "expected": "weighted=382",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-062",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=388",
+      "expected": "weighted=388",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-063",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=394",
+      "expected": "weighted=394",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-064",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=400",
+      "expected": "weighted=400",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-065",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=406",
+      "expected": "weighted=406",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-066",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=412",
+      "expected": "weighted=412",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-067",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=418",
+      "expected": "weighted=418",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-068",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=424",
+      "expected": "weighted=424",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-069",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=430",
+      "expected": "weighted=430",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-070",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=436",
+      "expected": "weighted=436",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-071",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=442",
+      "expected": "weighted=442",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-072",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=448",
+      "expected": "weighted=448",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-073",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=454",
+      "expected": "weighted=454",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-074",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=460",
+      "expected": "weighted=460",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-075",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=466",
+      "expected": "weighted=466",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-076",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=472",
+      "expected": "weighted=472",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-077",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=478",
+      "expected": "weighted=478",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-078",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=484",
+      "expected": "weighted=484",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-079",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=490",
+      "expected": "weighted=490",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-080",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=496",
+      "expected": "weighted=496",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-081",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=502",
+      "expected": "weighted=502",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-082",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=508",
+      "expected": "weighted=508",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-083",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=514",
+      "expected": "weighted=514",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-084",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=520",
+      "expected": "weighted=520",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-085",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=526",
+      "expected": "weighted=526",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-086",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=532",
+      "expected": "weighted=532",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-087",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=538",
+      "expected": "weighted=538",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-088",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=544",
+      "expected": "weighted=544",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-089",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=550",
+      "expected": "weighted=550",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-090",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=556",
+      "expected": "weighted=556",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-091",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=562",
+      "expected": "weighted=562",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-092",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=568",
+      "expected": "weighted=568",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-093",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=574",
+      "expected": "weighted=574",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-094",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=580",
+      "expected": "weighted=580",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-095",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=586",
+      "expected": "weighted=586",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-096",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=592",
+      "expected": "weighted=592",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-097",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=598",
+      "expected": "weighted=598",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-098",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=604",
+      "expected": "weighted=604",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-099",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=610",
+      "expected": "weighted=610",
+      "error": ""
+    },
+    {
+      "kind": "example",
+      "id": "lua-example-100",
+      "status": 0,
+      "ok": true,
+      "output": "weighted=616",
+      "expected": "weighted=616",
+      "error": ""
+    }
+  ]
+}

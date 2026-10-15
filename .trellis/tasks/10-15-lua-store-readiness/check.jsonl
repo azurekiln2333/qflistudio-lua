@@ -1,0 +1,7 @@
+{"file":".trellis/spec/backend/lua-toolchain.md","reason":"Native runtime, input, ABI and terminal contracts"}
+{"file":".trellis/spec/frontend/content-code-import.md","reason":"Offline content and import behavior"}
+{"file":".trellis/spec/frontend/native-startup.md","reason":"OHOS startup and device/build evidence"}
+{"file":".trellis/tasks/10-15-lua-store-readiness/research/terminal-audit.md","reason":"Terminal audit and confirmed missing delegate"}
+{"file":".trellis/tasks/10-15-lua-store-readiness/research/content-audit.md","reason":"Placeholder proof and Lua-only content boundaries"}
+{"file":".trellis/tasks/10-15-lua-store-readiness/research/platform-offline-audit.md","reason":"Offline UI leaks and platform environment"}
+{"file":".trellis/tasks/10-15-lua-store-readiness/research/baseline.md","reason":"Baseline results and verified audit decisions"}

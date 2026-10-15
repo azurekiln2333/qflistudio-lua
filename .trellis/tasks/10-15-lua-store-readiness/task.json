@@ -1,0 +1,30 @@
+{
+  "id": "lua-store-readiness",
+  "name": "lua-store-readiness",
+  "title": "Audit Lua store readiness and complete offline toolchain",
+  "description": "Verify standalone and editor terminals, shared-core offline policy, complete Lua learning content, OHOS/Android builds and device checks with scoped conventional commits",
+  "status": "planning",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P2",
+  "creator": "lichengyu",
+  "assignee": "lichengyu",
+  "createdAt": "2026-10-15",
+  "completedAt": null,
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "10-15-lua-terminal-completeness",
+    "10-15-lua-learning-content",
+    "10-15-lua-offline-mobile-release"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}
