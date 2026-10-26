@@ -1,5 +1,11 @@
 # Full1282 HAP source readiness — October 24, 2026
 
+> Historical source review. Its readiness, device-queue and missing-export
+> assumptions are superseded by
+> [Lua acceptance continuation — October 26](lua-acceptance-next-20261026.md).
+> Keep the original observations below as dated evidence. They authorize no
+> replay, build or device action.
+
 Scope: source/static review and the explicitly assigned inspector repair only.
 No build, runtime, Flutter test, HAP inspection, device command, signing change,
 private-key inspection, commit or index change was performed in this pass.
