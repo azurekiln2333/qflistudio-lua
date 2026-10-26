@@ -96,6 +96,10 @@ install(TARGETS ${BINARY_NAME} RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}"
   COMPONENT Runtime)
 install(FILES "$<TARGET_FILE:qfli_lua_engine>" DESTINATION "${CMAKE_INSTALL_PREFIX}/lib"
   COMPONENT Runtime)
+if(TARGET qfli_script_engine)
+  install(FILES "$<TARGET_FILE:qfli_script_engine>" DESTINATION "${CMAKE_INSTALL_PREFIX}/lib"
+    COMPONENT Runtime)
+endif()
 
 install(FILES "${FLUTTER_ICU_DATA_FILE}" DESTINATION "${INSTALL_BUNDLE_DATA_DIR}"
   COMPONENT Runtime)

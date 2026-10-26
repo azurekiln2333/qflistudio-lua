@@ -48,6 +48,34 @@ typedef _FreeNative = Void Function(Pointer<_NativeResult>);
 typedef _FreeDart = void Function(Pointer<_NativeResult>);
 typedef _VersionNative = Pointer<Utf8> Function();
 typedef _VersionDart = Pointer<Utf8> Function();
+typedef _RunWithArgvNative =
+    Pointer<_NativeResult> Function(
+      Pointer<Utf8>,
+      Pointer<Utf8>,
+      Int32,
+      Pointer<Pointer<Utf8>>,
+      Int32,
+      Int32,
+      Pointer<Void>,
+    );
+typedef _RunWithArgvDart =
+    Pointer<_NativeResult> Function(
+      Pointer<Utf8>,
+      Pointer<Utf8>,
+      int,
+      Pointer<Pointer<Utf8>>,
+      int,
+      int,
+      Pointer<Void>,
+    );
+typedef _CompileExNative =
+    Pointer<_NativeResult> Function(Pointer<Utf8>, Pointer<Utf8>, Int32);
+typedef _CompileExDart =
+    Pointer<_NativeResult> Function(Pointer<Utf8>, Pointer<Utf8>, int);
+typedef _CheckSourceNative =
+    Pointer<_NativeResult> Function(Pointer<Utf8>, UintPtr, Pointer<Utf8>);
+typedef _CheckSourceDart =
+    Pointer<_NativeResult> Function(Pointer<Utf8>, int, Pointer<Utf8>);
 
 class LuaToolResult {
   const LuaToolResult({
@@ -78,21 +106,57 @@ class LuaToolchain {
 
   final String? libraryPath;
 
+  /// Uses the same bundled-library resolution for all product-owned VM tools.
+  DynamicLibrary openNativeLibrary() => _openLibrary(libraryPath);
+
   Future<LuaToolResult> run({
     required String file,
     required String projectDirectory,
     Duration timeLimit = const Duration(seconds: 10),
+    List<String> commandLine = const [],
+    int scriptIndex = 1,
   }) => startRun(
     file: file,
     projectDirectory: projectDirectory,
     timeLimit: timeLimit,
+    commandLine: commandLine,
+    scriptIndex: scriptIndex,
   ).result;
 
+  /// Starts [file] with cancellation and a time limit.
+  ///
+  /// [commandLine] is the full command line as typed, starting with the
+  /// interpreter name (`['lua', 'main.lua', 'a', 'b']`), and [scriptIndex] is
+  /// the position of the executed script inside it. The native entry point then
+  /// builds the global `arg` table and the chunk varargs exactly like the
+  /// upstream interpreter, so `arg[0]` is the script name the user typed,
+  /// `arg[1..]` / `...` are its arguments, and `arg[-1]` is the interpreter.
+  ///
+  /// An empty [commandLine] keeps the plain shape: `arg[0]` is [file] and the
+  /// chunk receives no varargs.
   LuaExecution startRun({
     required String file,
     required String projectDirectory,
     Duration timeLimit = const Duration(seconds: 10),
+    List<String> commandLine = const [],
+    int scriptIndex = 1,
   }) {
+    if (commandLine.isNotEmpty &&
+        (scriptIndex < 0 || scriptIndex >= commandLine.length)) {
+      throw ArgumentError.value(
+        scriptIndex,
+        'scriptIndex',
+        'must index the executed script inside commandLine',
+      );
+    }
+    final arguments = List<String>.unmodifiable(commandLine);
+    if ([
+      file,
+      projectDirectory,
+      ...arguments,
+    ].any((value) => value.contains('\u0000'))) {
+      throw ArgumentError('Lua paths and arguments cannot contain NUL');
+    }
     final path = libraryPath;
     final library = _openLibrary(path);
     final newToken = library.lookupFunction<_NewTokenNative, _NewTokenDart>(
@@ -117,7 +181,9 @@ class LuaToolchain {
             file,
             projectDirectory,
             timeLimit.inMilliseconds,
-            token.address,
+            tokenAddress: token.address,
+            commandLine: arguments,
+            scriptIndex: scriptIndex,
           ),
         ).whenComplete(() {
           finished = true;
@@ -133,6 +199,40 @@ class LuaToolchain {
     return Isolate.run(() => _invokeNative(path, 'check', file, null, 0));
   }
 
+  /// Parses an unsaved UTF-8 source buffer without executing it or opening libraries.
+  /// Native Lua parser statuses are preserved (3 means a syntax error).
+  Future<LuaToolResult> checkSource(
+    String source, {
+    String chunkName = '@editor.lua',
+  }) {
+    if (chunkName.contains('\u0000')) {
+      throw ArgumentError.value(chunkName, 'chunkName');
+    }
+    final path = libraryPath;
+    return Isolate.run(
+      () => _invokeNative(path, 'source', source, chunkName, 0),
+    );
+  }
+
+  /// Loads source or bytecode without executing; an output path dumps a chunk.
+  Future<LuaToolResult> load(
+    String file, {
+    String? outputFile,
+    bool stripDebug = false,
+  }) {
+    final path = libraryPath;
+    return Isolate.run(
+      () => _invokeNative(
+        path,
+        'load',
+        file,
+        outputFile,
+        0,
+        strip: stripDebug ? 1 : 0,
+      ),
+    );
+  }
+
   Future<LuaToolResult> compile(String file, String outputFile) {
     final path = libraryPath;
     return Isolate.run(
@@ -146,6 +246,40 @@ class LuaToolchain {
       'qfli_lua_version',
     );
     return native().toDartString();
+  }
+
+  /// The banner the upstream interpreter prints for `lua -v`.
+  ///
+  /// Older bundled libraries predate `qfli_lua_copyright`; they fall back to
+  /// the bare [version] string instead of inventing a copyright line the
+  /// loaded VM may not match.
+  String copyright() {
+    final library = _openLibrary(libraryPath);
+    final Pointer<Utf8> Function()? native;
+    try {
+      native = library.lookupFunction<_VersionNative, _VersionDart>(
+        'qfli_lua_copyright',
+      );
+    } on ArgumentError {
+      return version();
+    }
+    return native().toDartString();
+  }
+
+  /// Whether the bundled library exposes the command-line entry point.
+  ///
+  /// A packaged library that predates `qfli_lua_run_with_argv` cannot receive
+  /// script arguments; callers must report that honestly instead of silently
+  /// dropping them.
+  bool get supportsCommandLine {
+    try {
+      _openLibrary(
+        libraryPath,
+      ).lookup<NativeFunction<_RunWithArgvNative>>('qfli_lua_run_with_argv');
+      return true;
+    } on ArgumentError {
+      return false;
+    }
   }
 }
 
@@ -188,22 +322,66 @@ LuaToolResult _invokeNative(
   String action,
   String file,
   String? secondPath,
-  int timeoutMs, [
+  int timeoutMs, {
   int tokenAddress = 0,
-]) {
+  List<String> commandLine = const [],
+  int scriptIndex = 1,
+  int strip = 0,
+}) {
   final library = _openLibrary(libraryPath);
   final free = library.lookupFunction<_FreeNative, _FreeDart>('qfli_lua_free');
   final first = file.toNativeUtf8();
   final second = secondPath?.toNativeUtf8();
+  // The native call builds the table before returning and never keeps these
+  // pointers, so they only have to outlive this isolate's call.
+  Pointer<Pointer<Utf8>> argv = nullptr;
+  final owned = <Pointer<Utf8>>[];
   try {
     final Pointer<_NativeResult> result;
     switch (action) {
       case 'run':
-        final run = library
-            .lookupFunction<_RunWithTokenNative, _RunWithTokenDart>(
-              'qfli_lua_run_with_token',
-            );
-        result = run(
+        final Pointer<_NativeResult> Function(
+          Pointer<Utf8>,
+          Pointer<Utf8>,
+          int,
+          Pointer<Void>,
+        )
+        runWithToken;
+        var argvCount = 0;
+        if (commandLine.isEmpty) {
+          runWithToken = library
+              .lookupFunction<_RunWithTokenNative, _RunWithTokenDart>(
+                'qfli_lua_run_with_token',
+              );
+        } else {
+          final runWithArgv = library
+              .lookupFunction<_RunWithArgvNative, _RunWithArgvDart>(
+                'qfli_lua_run_with_argv',
+              );
+          argvCount = commandLine.length;
+          argv = calloc<Pointer<Utf8>>(argvCount);
+          for (var index = 0; index < argvCount; index++) {
+            final encoded = commandLine[index].toNativeUtf8();
+            owned.add(encoded);
+            argv[index] = encoded;
+          }
+          runWithToken =
+              (
+                Pointer<Utf8> entry,
+                Pointer<Utf8> project,
+                int timeout,
+                Pointer<Void> token,
+              ) => runWithArgv(
+                entry,
+                project,
+                timeout,
+                argv,
+                argvCount,
+                scriptIndex,
+                token,
+              );
+        }
+        result = runWithToken(
           first,
           second ?? nullptr,
           timeoutMs,
@@ -219,6 +397,17 @@ LuaToolResult _invokeNative(
           'qfli_lua_compile',
         );
         result = compile(first, second ?? nullptr);
+      case 'load':
+        final load = library.lookupFunction<_CompileExNative, _CompileExDart>(
+          'qfli_lua_compile_ex',
+        );
+        result = load(first, second ?? nullptr, strip);
+      case 'source':
+        final check = library
+            .lookupFunction<_CheckSourceNative, _CheckSourceDart>(
+              'qfli_lua_check_source',
+            );
+        result = check(first, utf8.encode(file).length, second ?? nullptr);
       default:
         throw ArgumentError.value(action, 'action');
     }
@@ -241,5 +430,9 @@ LuaToolResult _invokeNative(
   } finally {
     calloc.free(first);
     if (second != null) calloc.free(second);
+    for (final encoded in owned) {
+      calloc.free(encoded);
+    }
+    if (argv != nullptr) calloc.free(argv);
   }
 }

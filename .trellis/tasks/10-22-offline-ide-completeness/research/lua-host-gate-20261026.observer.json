@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 1,
+  "observerId": "20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45",
+  "observerPid": 92716,
+  "observerIsControlPlane": true,
+  "protocolArchitecture": "python-owned-command-v1",
+  "protocolApprovalEvent": 793,
+  "protocolApprovalTextSha256": "bd2f42328b70d498f3cd46b3555371746ffaedb75f206394436f7dd862666f50",
+  "boundary": "validation-child-terminal; final-sender-and-observer-control-plane; no-self-terminal-claim",
+  "grantEvent": 871,
+  "grantText": "NEW GRANT Lua-acceptance-20261026-05, <=330s TOTAL including ACK/launch/validation/original outer observation/final publisher proof, explicit successor c-coordinator. Accept ONLY actual READY869. Explicit serial phases: controls source suite acceptance; acceptance includes full1282. Dynamically reduce <=300s payload by actual remaining time and observation/publication reserves. Consumed832/822/698 NEVER replay.\nPrepared D:/MyNewProjects/qfli_lua/build/offline-ide-audit/refreeze-20261026T065528930Z/prepared.json SHA256130d70768b971b34da82fb55f30dfca81408d0e6576b8a9c6b5b4e3c90834c29. Candidate210 tree406541e8e9b05c9dd63ae9286c5ba296ee155ab1, product203 HEAD327b7c54d04bc184e03171f52da942c2157083b1, core176 HEAD5b3c48c7d1c1822d0ee348b68eb6b33f3bba54d0+actual disclosed WIP. C independently rehashed203/176/210 and14 script/Python/runtime inputs, zero drift; manifests match. Supervisor095de8c remains frozen. No clean-core/all-core-tested/Windows descendant-proof claim. Adapter source review found no circular wait; product repairs remain UNRUN until actual gate.\nACCEPT python-owned-command-v1 preservesCustodian=true exactly as793. Observer0f30ce6953eeeddec6e50a1ee8bb0df966b7e1387404a2d5d89bbc48a76adfb0; bridge7b2846ac2f03edb6d11910b666e286dece28e67a8f1cf19e4ee4b8304f3e7b6f; helper5c3dc4d0bdaaa26233212560968b58d02e215eb27c29e9e88be4c99d212ce116; innerced8925cbaf5401d2e0be0eafe46c3d740e0e8e3bf2e506c78636d22c4921a52. All six scripts unchanged. Independently read actual raw grant, atomic single-use claim, ACK+launch same invocation only AFTER fresh full identity/environment/WIP match and valid timestamped memory committed/limit/headroom/physical. Any drift retires before ACK. C07:19:21Z memory59787427840/68444442624/headroom8657014784/physical9490MiB onlypoint, not capacity guarantee or retry authorization; actual prior OOM history remains.\nRetain original exact process/Job/bridge handles through actual terminal+active0. Live/uncertain validation custodian never killed/disposed for timeout/query error; sticky HOLD/late remains. Exact ownedJob must NATURALLY reach0; residual forced cleanup FAILS gate even if resource release later proven. ACK/final senders bounded separately. Final requires original exact outer terminal, postwrite clock proof, exact payload/publishers/bridges terminal+Jobs0; final sender separately terminal/result. C independently observes these before any nextSDK. No successor grant by Lua, no inferred bounded success. No native rebuild/WSL/HAP/device/core/sibling/branding/signing writes. Old snapshots/grants not replayable.",
+  "nextOwner": "c-coordinator",
+  "totalSeconds": 328,
+  "requestedMaxSeconds": 298,
+  "preparedManifest": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\refreeze-20261026T065528930Z\\prepared.json",
+  "preparedSha256": "130d70768b971b34da82fb55f30dfca81408d0e6576b8a9c6b5b4e3c90834c29",
+  "grantClaim": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\observers\\grant-claims\\grant-871.claim",
+  "status": "released",
+  "ack": {
+    "identity": {
+      "pid": 86288,
+      "handle": "164",
+      "creationFileTime100ns": "134374730821018070",
+      "image": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+      "capturedBeforeResume": true,
+      "imageCapturedAfterResume": true
+    },
+    "bridge": {
+      "name": "ack",
+      "kind": "ack",
+      "identity": {
+        "pid": 43300,
+        "handle": "1828",
+        "creationFileTime100ns": "134374730819875901",
+        "image": "D:\\ProgramFiles\\Python\\Python313\\python.exe",
+        "controlPlaneOnly": true
+      },
+      "terminal": true,
+      "exitCode": 0,
+      "resultPath": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\observers\\20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45\\ack-result.json"
+    },
+    "proof": {
+      "schemaVersion": 1,
+      "kind": "ack",
+      "name": "ack",
+      "observerId": "20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45",
+      "grantEvent": 871,
+      "requestSha256": "d6317ea595fa85245ba60613eef8703d5ac5a0d19a3951026e97112442e5801b",
+      "helperSha256": "5c3dc4d0bdaaa26233212560968b58d02e215eb27c29e9e88be4c99d212ce116",
+      "pythonSha256": "d87063e5597f257004c731b66c59c56c91038861c6877b1a3dca6b8c4e919125",
+      "bridgeIsControlPlane": true,
+      "preservesCustodian": false,
+      "status": "passed",
+      "errors": [],
+      "ownedJob": {
+        "pid": 86288,
+        "threadId": 92136,
+        "createdSuspended": true,
+        "assignedBeforeResume": true,
+        "terminal": true,
+        "creationFiletime100ns": "134374730821018070",
+        "processHandle": "164",
+        "jobHandle": "408",
+        "image": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+        "jobActiveProcesses": 0,
+        "exitCode": 0
+      },
+      "ackJob": {
+        "pid": 86288,
+        "threadId": 92136,
+        "createdSuspended": true,
+        "assignedBeforeResume": true,
+        "terminal": true,
+        "creationFiletime100ns": "134374730821018070",
+        "processHandle": "164",
+        "jobHandle": "408",
+        "image": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+        "jobActiveProcesses": 0,
+        "exitCode": 0
+      },
+      "handlesClosed": true,
+      "cleanupVerified": true,
+      "descendantsTerminalAndEmpty": true,
+      "stdout": "{\"kind\":\"message\",\"by\":\"Lua\",\"text\":\"Lua ACK+LAUNCH grant871 in observer20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45; successor c-coordinator; total<=328 seconds. Inner automatic notices are provisional: final validation ownership requires the dedicated observer's retained child-terminal/empty-Job proof. Observer/final sender are control-plane only, no self-terminal claim.\",\"origin\":\"cli\",\"seq\":872,\"ts\":\"2026-10-26T07:24:43.086Z\"}\n",
+      "stderr": "",
+      "event": {
+        "kind": "message",
+        "by": "Lua",
+        "text": "Lua ACK+LAUNCH grant871 in observer20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45; successor c-coordinator; total<=328 seconds. Inner automatic notices are provisional: final validation ownership requires the dedicated observer's retained child-terminal/empty-Job proof. Observer/final sender are control-plane only, no self-terminal claim.",
+        "origin": "cli",
+        "seq": 872,
+        "ts": "2026-10-26T07:24:43.086Z"
+      },
+      "timedOut": false,
+      "elapsedMilliseconds": 1045.2738999956637
+    },
+    "exactRootTerminal": true,
+    "exactExitCode": 0,
+    "descendantsTerminalAndEmpty": true,
+    "result": {
+      "TreeEmpty": true,
+      "Error": null,
+      "TimedOut": false
+    },
+    "event": {
+      "kind": "message",
+      "by": "Lua",
+      "text": "Lua ACK+LAUNCH grant871 in observer20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45; successor c-coordinator; total<=328 seconds. Inner automatic notices are provisional: final validation ownership requires the dedicated observer's retained child-terminal/empty-Job proof. Observer/final sender are control-plane only, no self-terminal claim.",
+      "origin": "cli",
+      "seq": 872,
+      "ts": "2026-10-26T07:24:43.086Z"
+    }
+  },
+  "outer": {
+    "identity": {
+      "pid": 91776,
+      "handle": "416",
+      "creationFileTime100ns": "134374730833121712",
+      "image": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+      "capturedBeforeResume": true,
+      "imageCapturedAfterResume": true
+    },
+    "bridge": {
+      "name": "validation-outer",
+      "kind": "owned-command",
+      "identity": {
+        "pid": 74172,
+        "handle": "1824",
+        "creationFileTime100ns": "134374730831918101",
+        "image": "D:\\ProgramFiles\\Python\\Python313\\python.exe",
+        "controlPlaneOnly": true
+      },
+      "terminal": true,
+      "exitCode": 0,
+      "resultPath": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\observers\\20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45\\validation-outer-result.json"
+    },
+    "proof": {
+      "schemaVersion": 1,
+      "kind": "owned-command",
+      "name": "validation-outer",
+      "observerId": "20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45",
+      "grantEvent": 871,
+      "requestSha256": "4fc7a8b6f833fda4c38492f84104a32751fabd63f8851e95724f06f5644281cd",
+      "helperSha256": "5c3dc4d0bdaaa26233212560968b58d02e215eb27c29e9e88be4c99d212ce116",
+      "pythonSha256": "d87063e5597f257004c731b66c59c56c91038861c6877b1a3dca6b8c4e919125",
+      "bridgeIsControlPlane": true,
+      "preservesCustodian": true,
+      "status": "passed",
+      "errors": [],
+      "ownedJob": {
+        "pid": 91776,
+        "threadId": 84416,
+        "createdSuspended": true,
+        "assignedBeforeResume": true,
+        "terminal": true,
+        "creationFiletime100ns": "134374730833121712",
+        "processHandle": "416",
+        "jobHandle": "404",
+        "image": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+        "jobActiveProcesses": 0,
+        "exitCode": 0
+      },
+      "ackJob": {
+        "pid": 91776,
+        "threadId": 84416,
+        "createdSuspended": true,
+        "assignedBeforeResume": true,
+        "terminal": true,
+        "creationFiletime100ns": "134374730833121712",
+        "processHandle": "416",
+        "jobHandle": "404",
+        "image": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+        "jobActiveProcesses": 0,
+        "exitCode": 0
+      },
+      "handlesClosed": true,
+      "cleanupVerified": true,
+      "descendantsTerminalAndEmpty": true,
+      "stdout": "",
+      "stderr": "",
+      "event": null,
+      "timedOut": false,
+      "elapsedMilliseconds": 243124.25390000135
+    },
+    "exactRootTerminal": true,
+    "exactExitCode": 0,
+    "descendantsTerminalAndEmpty": true,
+    "result": {
+      "TreeEmpty": true,
+      "Error": null,
+      "TimedOut": false
+    }
+  },
+  "runPath": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\final-verification\\20261026T072443706Z-0ded42585bd545aba0b652b27c35036e\\run.json",
+  "runSha256": "9d37831d385075df82c0ed820b8bd2e7fb22078b3835339e597cb73ded1a1572",
+  "phaseProof": [
+    {
+      "phase": "controls",
+      "status": "passed",
+      "rootProcessId": 8916,
+      "rootExitCode": 0,
+      "treeEmpty": true,
+      "timedOut": false,
+      "residualTreeTerminated": false
+    },
+    {
+      "phase": "source",
+      "status": "passed",
+      "rootProcessId": 84548,
+      "rootExitCode": 0,
+      "treeEmpty": true,
+      "timedOut": false,
+      "residualTreeTerminated": false
+    },
+    {
+      "phase": "suite",
+      "status": "passed",
+      "rootProcessId": 73576,
+      "rootExitCode": 0,
+      "treeEmpty": true,
+      "timedOut": false,
+      "residualTreeTerminated": false
+    },
+    {
+      "phase": "acceptance",
+      "status": "passed",
+      "rootProcessId": 90000,
+      "rootExitCode": 0,
+      "treeEmpty": true,
+      "timedOut": false,
+      "residualTreeTerminated": false
+    }
+  ],
+  "validationJobsTerminalAndEmpty": true,
+  "validationGatePassed": true,
+  "finalPublisher": {
+    "identity": {
+      "pid": 22420,
+      "handle": "424",
+      "creationFileTime100ns": "134374733265794025",
+      "image": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+      "capturedBeforeResume": true,
+      "imageCapturedAfterResume": true
+    },
+    "bridge": {
+      "name": "final-publisher",
+      "kind": "owned-command",
+      "identity": {
+        "pid": 83120,
+        "handle": "2016",
+        "creationFileTime100ns": "134374733264721503",
+        "image": "D:\\ProgramFiles\\Python\\Python313\\python.exe",
+        "controlPlaneOnly": true
+      },
+      "terminal": true,
+      "exitCode": 0,
+      "resultPath": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\observers\\20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45\\final-publisher-result.json"
+    },
+    "proof": {
+      "schemaVersion": 1,
+      "kind": "owned-command",
+      "name": "final-publisher",
+      "observerId": "20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45",
+      "grantEvent": 871,
+      "requestSha256": "13d98e9f78909023839dfa3428c160683d6432f76a69f672f4191c0a4ebf3a00",
+      "helperSha256": "5c3dc4d0bdaaa26233212560968b58d02e215eb27c29e9e88be4c99d212ce116",
+      "pythonSha256": "d87063e5597f257004c731b66c59c56c91038861c6877b1a3dca6b8c4e919125",
+      "bridgeIsControlPlane": true,
+      "preservesCustodian": false,
+      "status": "passed",
+      "errors": [],
+      "ownedJob": {
+        "pid": 22420,
+        "threadId": 90816,
+        "createdSuspended": true,
+        "assignedBeforeResume": true,
+        "terminal": true,
+        "creationFiletime100ns": "134374733265794025",
+        "processHandle": "424",
+        "jobHandle": "400",
+        "image": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+        "jobActiveProcesses": 0,
+        "exitCode": 0
+      },
+      "ackJob": {
+        "pid": 22420,
+        "threadId": 90816,
+        "createdSuspended": true,
+        "assignedBeforeResume": true,
+        "terminal": true,
+        "creationFiletime100ns": "134374733265794025",
+        "processHandle": "424",
+        "jobHandle": "400",
+        "image": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+        "jobActiveProcesses": 0,
+        "exitCode": 0
+      },
+      "handlesClosed": true,
+      "cleanupVerified": true,
+      "descendantsTerminalAndEmpty": true,
+      "stdout": "",
+      "stderr": "",
+      "event": null,
+      "timedOut": false,
+      "elapsedMilliseconds": 895.8052000016323
+    },
+    "exactRootTerminal": true,
+    "exactExitCode": 0,
+    "descendantsTerminalAndEmpty": true,
+    "result": {
+      "TreeEmpty": true,
+      "Error": null,
+      "TimedOut": false
+    }
+  },
+  "finalEvent": {
+    "kind": "message",
+    "by": "Lua",
+    "text": "Lua FINAL VALIDATION OWNERSHIP RELEASE grant871 -> c-coordinator. Exact wrapper child PID=91776 creation=134374730833121712 terminal exit=0, outer Job empty; all payload/pending-publisher Jobs empty. ValidationGatePassed=True, not device evidence. Observer/final sender are control-plane only; NO observer/sender self-terminal claim. Final sender is separately bounded; next SDK grant waits finalPublisher terminal/empty and nextSdkGrantReady in D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\observers\\20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45\\observer.json plus the observer stdout finalEvidenceCheckedMilliseconds post-write proof. A pending record write is not readiness. Root must not infer success from ownership release.",
+    "origin": "cli",
+    "seq": 876,
+    "ts": "2026-10-26T07:28:47.417Z"
+  },
+  "coordinationBudgetPassed": true,
+  "nextSdkGrantReady": true,
+  "error": null,
+  "elapsedMilliseconds": 245542,
+  "acknowledgedUtc": "2026-10-26T07:24:43.086Z",
+  "endedUtc": "2026-10-26T07:28:47.4931567Z",
+  "bridges": [
+    {
+      "name": "ack",
+      "kind": "ack",
+      "identity": {
+        "pid": 43300,
+        "handle": "1828",
+        "creationFileTime100ns": "134374730819875901",
+        "image": "D:\\ProgramFiles\\Python\\Python313\\python.exe",
+        "controlPlaneOnly": true
+      },
+      "terminal": true,
+      "exitCode": 0,
+      "resultPath": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\observers\\20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45\\ack-result.json"
+    },
+    {
+      "name": "validation-outer",
+      "kind": "owned-command",
+      "identity": {
+        "pid": 74172,
+        "handle": "1824",
+        "creationFileTime100ns": "134374730831918101",
+        "image": "D:\\ProgramFiles\\Python\\Python313\\python.exe",
+        "controlPlaneOnly": true
+      },
+      "terminal": true,
+      "exitCode": 0,
+      "resultPath": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\observers\\20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45\\validation-outer-result.json"
+    },
+    {
+      "name": "final-publisher",
+      "kind": "owned-command",
+      "identity": {
+        "pid": 83120,
+        "handle": "2016",
+        "creationFileTime100ns": "134374733264721503",
+        "image": "D:\\ProgramFiles\\Python\\Python313\\python.exe",
+        "controlPlaneOnly": true
+      },
+      "terminal": true,
+      "exitCode": 0,
+      "resultPath": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\observers\\20261026T072441926Z-eb079d4cb54c47d1a10249998bdd0e45\\final-publisher-result.json"
+    }
+  ],
+  "finalEvidenceRequiresPostWriteObservation": true,
+  "finalWriteReserveMilliseconds": 1000,
+  "finalPostWriteObservedMilliseconds": null,
+  "effectiveMaxSeconds": 275,
+  "outerMaxExecutionMilliseconds": 302766
+}

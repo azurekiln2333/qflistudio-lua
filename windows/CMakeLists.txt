@@ -52,6 +52,16 @@ add_subdirectory(${FLUTTER_MANAGED_DIR})
 # Application build; see runner/CMakeLists.txt.
 add_subdirectory("runner")
 add_subdirectory("../native" "${CMAKE_BINARY_DIR}/qfli_lua_native")
+if(NOT TARGET qfli_script_engine)
+  set(QFLI_SCRIPT_PREBUILT
+    "${CMAKE_CURRENT_SOURCE_DIR}/../native/build/script-windows/script/libqfli_script.dll"
+    CACHE FILEPATH "QuickJS DLL built with a supported GCC/Clang compiler")
+  if(NOT EXISTS "${QFLI_SCRIPT_PREBUILT}")
+    message(FATAL_ERROR "Build native/script with modern GCC/Clang first, or set QFLI_SCRIPT_PREBUILT to the resulting libqfli_script.dll. See native/script/README.md.")
+  endif()
+  add_library(qfli_script_engine SHARED IMPORTED GLOBAL)
+  set_target_properties(qfli_script_engine PROPERTIES IMPORTED_LOCATION "${QFLI_SCRIPT_PREBUILT}")
+endif()
 
 
 # Generated plugin build rules, which manage building the plugins and adding
@@ -77,6 +87,10 @@ install(TARGETS ${BINARY_NAME} RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}"
   COMPONENT Runtime)
 install(FILES "$<TARGET_FILE:qfli_lua_engine>" DESTINATION "${CMAKE_INSTALL_PREFIX}"
   COMPONENT Runtime)
+if(TARGET qfli_script_engine)
+  install(FILES "$<TARGET_FILE:qfli_script_engine>" DESTINATION "${CMAKE_INSTALL_PREFIX}"
+    COMPONENT Runtime)
+endif()
 
 install(FILES "${FLUTTER_ICU_DATA_FILE}" DESTINATION "${INSTALL_BUNDLE_DATA_DIR}"
   COMPONENT Runtime)

@@ -1,0 +1,3 @@
+{"file":".trellis/spec/backend/lua-toolchain.md","reason":"Verify actual bundled library and target evidence"}
+{"file":".trellis/spec/frontend/content-code-import.md","reason":"Check offline content integration"}
+{"file":".trellis/tasks/10-22-offline-ide-completeness/research/baseline.md","reason":"Preserve existing work and verify exact scope"}

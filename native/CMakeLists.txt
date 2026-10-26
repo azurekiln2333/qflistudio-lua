@@ -32,6 +32,9 @@ if(UNIX)
   target_link_libraries(qfli_lua_engine PRIVATE m ${CMAKE_DL_LIBS})
 endif()
 
+# Product-owned offline ECMAScript/TypeScript engine; same OHOS subdirectory.
+add_subdirectory(script)
+
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR AND NOT ANDROID AND NOT CMAKE_SYSTEM_NAME STREQUAL "OHOS")
   add_executable(qfli_lua_test test/qfli_lua_test.c)
   target_include_directories(qfli_lua_test PRIVATE src)

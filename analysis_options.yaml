@@ -12,6 +12,7 @@ include: package:flutter_lints/flutter.yaml
 # no vendor dir here
 analyzer:
   exclude:
+    - build/**
     - vendor/**
 
 linter:

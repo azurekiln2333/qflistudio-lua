@@ -1,0 +1,5 @@
+# Exact receipts retain original CRLF bytes so recorded SHA-256 values survive Git.
+lua-host-gate-20261026.run.json -text whitespace=cr-at-eol
+lua-host-gate-20261026.observer.json -text whitespace=cr-at-eol
+lua-host-gate-20261026.source.json -text whitespace=cr-at-eol
+lua-host-gate-20261026.outer.json -text whitespace=cr-at-eol

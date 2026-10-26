@@ -22,6 +22,13 @@ On iOS, shell subprocesses are unavailable: upstream Lua prevents
 `os.execute` from starting commands, and the iOS build makes `io.popen`
 report an unsupported operation.
 
+Each run's default `io.stdin` / `io.read` opens the project's regular
+`input.txt`. A missing file supplies immediate EOF through an owned null-device
+stream. Other metadata/open errors and non-regular paths fail before execution.
+The Lua state closes its input descriptor without reading, redirecting or
+closing the application's stdin. Explicit `io.input` selections keep upstream
+semantics. All platforms use the same native implementation and unchanged ABI.
+
 Captured `print`, `io.write`, file writes to stdout/stderr, and enabled Lua
 warnings remain local to each run. Native result buffers carry explicit byte
 lengths, including embedded NUL bytes. Dart decodes malformed UTF-8 with
@@ -51,11 +58,13 @@ scripts can catch that error and continue executing subsequent code.
   alignment in the final package after changing native build settings.
 - HarmonyOS hvigor builds the library through
   `ohos/entry/src/main/cpp/CMakeLists.txt` and includes it in the HAP.
-  The native configuration supports ARM64 devices and x86_64 simulators; use
-  `flutter build hap --release --target-platform ohos-x64` for an x86_64 build.
-  The entry Hvigor plugin selects native ABIs from `TARGET_PLATFORM` for each
-  Flutter invocation, so an ARM64 HAP does not advertise an x64-only Lua library
-  (or the reverse). IDE builds without this parameter retain both native ABIs.
+  IDE builds default to ARM64. Explicit Flutter targets select `ohos-arm64`,
+  `ohos-x64`, or both, and the entry Hvigor plugin adjusts native compilation
+  and packaging exclusions together. Each selected ABI includes Lua, Script
+  and Flutter libraries; dependency HARs cannot introduce an unselected ABI.
+  `tools/build_ohos_audit.ps1` builds and preserves a hashed HAP after inspecting
+  actual ELF libraries, exports, compiler/content assets and offline permissions.
+  A successful package inspection is separate from execution on a target.
 - Windows and Linux Flutter CMake build and bundle the same library.
   The CMake target is `qfli_lua_engine`; its output name is `qfli_lua`, with
   the `lib` prefix retained on Windows. Windows installs `libqfli_lua.dll`

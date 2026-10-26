@@ -94,6 +94,27 @@ void main() {
   });
 
   group('运行后端', () {
+    for (final (extension, code) in [
+      ('js', 'console.log("脚本：" + [1, 2, 3].reduce((a, b) => a + b, 0));'),
+      (
+        'ts',
+        'interface Value { n: number }; const v: Value = { n: 42 }; console.log(v.n);',
+      ),
+    ]) {
+      test('内置 $extension 后端经档位完整接管运行', () async {
+        write('main.$extension', code);
+        final result = await luaProfile.runner!.run(
+          projectPath: project.path,
+          entryFile: p.join(project.path, 'main.$extension'),
+        );
+        expect(result, isNotNull);
+        final output = result!.stdout.toList();
+        final errors = result.stderr.toList();
+        expect(await result.exitCode, 0, reason: (await errors).join('\n'));
+        expect(await output, [extension == 'js' ? '脚本：6' : '42']);
+      });
+    }
+
     test('本语言文件由内置 Lua 执行', () async {
       write('main.lua', 'print(6 * 7)');
       final result = await luaProfile.runner!.run(
@@ -101,7 +122,7 @@ void main() {
         entryFile: p.join(project.path, 'main.lua'),
       );
       expect(result, isNotNull, reason: '运行后端没有接管本语言文件');
-      expect(result!.title, contains('Lua 5.4'));
+      expect(result!.title, 'lua main.lua');
       expect(await result.stdout.toList(), ['42']);
       expect(await result.exitCode, 0);
     });
@@ -114,6 +135,25 @@ void main() {
       );
       expect(result, isNull);
     });
+
+    test('标题是英文命令行，输出照实回放', () async {
+      // 文件名故意带括号和中文：括号是用户内容，不该被当成宿主标签剥掉。
+      write('测试(1).lua', 'print("你好，世界")\nprint("（运行结束）")');
+      final result = await luaProfile.runner!.run(
+        projectPath: project.path,
+        entryFile: p.join(project.path, '测试(1).lua'),
+      );
+      expect(result, isNotNull);
+      // 标题是英文命令行，括号只来自文件名本身。
+      expect(result!.title, 'lua 测试(1).lua');
+      // 脚本输出里的中文和旧页脚文本必须原样保留，且两条流都要抽干，
+      // 否则这次运行会一直挂在 pending 状态。
+      final stdout = await result.stdout.toList();
+      final stderr = await result.stderr.toList();
+      expect(stdout, ['你好，世界', '（运行结束）']);
+      expect(stderr, isEmpty);
+      expect(await result.exitCode, 0);
+    });
   });
 
   group('运行按钮分流', () {
@@ -125,7 +165,7 @@ void main() {
       );
       expect(result, isNotNull);
       expect(result!.hint, isNull, reason: '后端接管了就不该走兜底提示');
-      expect(result.title, contains('Lua 5.4'));
+      expect(result.title, 'lua main.lua');
       expect(await result.stdout!.toList(), ['ready']);
       expect(await result.exitCode, 0);
     });

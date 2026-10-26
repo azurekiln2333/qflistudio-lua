@@ -1,0 +1,403 @@
+{
+  "grant": 698,
+  "ackEvent": 699,
+  "autoPendingEvent": 700,
+  "finalObservedReleaseEvent": 701,
+  "clarificationEvent": 705,
+  "outerSession": 91407,
+  "outerExit": 1,
+  "coordinationElapsedSeconds": 333.015,
+  "coordinationLimitSeconds": 330,
+  "coordinationPassed": false,
+  "wrapperRun": "build\\offline-ide-audit\\final-verification\\20261025T213924178Z-e0637a73a691482b87075c66586a1dea\\run.json",
+  "wrapper": {
+    "schemaVersion": 3,
+    "runId": "20261025T213924178Z-e0637a73a691482b87075c66586a1dea",
+    "wrapperProcessId": 57112,
+    "containmentRevision": "owned-job-natural-drain-v1",
+    "naturalDrainLimitMilliseconds": 1000,
+    "startedUtc": "2026-10-25T21:39:24.1929741Z",
+    "endedUtc": "2026-10-25T21:39:39.9203871Z",
+    "projectRoot": "D:\\MyNewProjects\\qfli_lua",
+    "grantEvent": 698,
+    "grantText": "GRANT NEW Lua-acceptance-20261026-02 replacement READY696 (NOT concurrent JSON695), <=330s ACK-to-actual-outer-terminal/final release, successor c-coordinator.693 retired694 beforeACK/SDK. Freeze exact207path candidate59df38b2b28f70e166ce37b6520974dc2d68402e manifest source-candidate-20261025T212816991785Z; unchanged launcherCED8925C/controls35DC1A6B/verifier59E78688/page8A054A58/runner49BBB6C1 and actual176coreSHA0e6661f7131b61eefc66db0e492f38c6a3ee9430a4e4f41669e940a11fd3cf8b. Same reviewed command/scope controls/source/suite/full1282 MaxSeconds300+30cleanup/observer/publication. ACK+launch one invocation after exact preflight; no further docs/source preparation. No device/native rebuild/core/sibling writes. Release only actual outer+exact Jobs/groups terminal active0; else HOLD. No replay693. JSON686 next thenJava691.",
+    "nextOwner": "c-coordinator",
+    "maxValidationSeconds": 300,
+    "requestedPhases": [
+      "controls",
+      "source",
+      "suite",
+      "acceptance"
+    ],
+    "requiresSeparateScopeGrant": true,
+    "status": "failed",
+    "exitCode": 1,
+    "error": "source failed or required residual process cleanup; inspect its exact result and logs.",
+    "phases": [
+      {
+        "phase": "controls",
+        "startedUtc": "2026-10-25T21:39:26.1488236Z",
+        "endedUtc": "2026-10-25T21:39:31.3214262Z",
+        "rootProcessId": 2928,
+        "rootExitCode": 0,
+        "observedProcessIds": [
+          1920,
+          2928,
+          10176,
+          43828,
+          43880,
+          49808,
+          62244,
+          65100,
+          67020,
+          70408,
+          70652,
+          72028,
+          72476,
+          73380
+        ],
+        "maxExecutionMilliseconds": 10000,
+        "timedOut": false,
+        "residualTreeTerminated": false,
+        "treeEmpty": true,
+        "rootExitObservedElapsedMilliseconds": 4771,
+        "activeProcessesAtRootExit": 0,
+        "naturalDrainAttempted": false,
+        "naturalDrainBudgetMilliseconds": 0,
+        "naturalDrainElapsedMilliseconds": 0,
+        "naturalDrainCompleted": false,
+        "activeProcessesAfterDrain": 0,
+        "residualProcesses": [],
+        "jobTerminationRequested": false,
+        "cleanupElapsedMilliseconds": 0,
+        "status": "passed",
+        "error": null,
+        "sourceBefore": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\final-verification\\20261025T213924178Z-e0637a73a691482b87075c66586a1dea\\controls\\source-before.json",
+        "sourceBeforeSha256": "293d509469882163bb01bde6bd0f4a7fe7c88c378ec3555b10a4f273b64e9c46",
+        "sourceAfter": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\final-verification\\20261025T213924178Z-e0637a73a691482b87075c66586a1dea\\controls\\source-after.json",
+        "sourceAfterSha256": "92800c9620f2408bb14ec52eddb09aa2f9de70c7029f83a0b6ebb7685f3322e1",
+        "sourceDrift": [],
+        "sourceDriftAllowed": false,
+        "sourceManifestError": null,
+        "sourceCaptureDeadlineExceeded": false,
+        "stdout": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\final-verification\\20261025T213924178Z-e0637a73a691482b87075c66586a1dea\\controls\\phase.stdout.log",
+        "stderr": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\final-verification\\20261025T213924178Z-e0637a73a691482b87075c66586a1dea\\controls\\phase.stderr.log"
+      },
+      {
+        "phase": "source",
+        "startedUtc": "2026-10-25T21:39:31.6193858Z",
+        "endedUtc": "2026-10-25T21:39:39.6575612Z",
+        "rootProcessId": 25968,
+        "rootExitCode": 1,
+        "observedProcessIds": [
+          25968,
+          27896,
+          62876,
+          67020,
+          70000,
+          70140,
+          71620,
+          72080
+        ],
+        "maxExecutionMilliseconds": 292309,
+        "timedOut": false,
+        "residualTreeTerminated": false,
+        "treeEmpty": true,
+        "rootExitObservedElapsedMilliseconds": 7773,
+        "activeProcessesAtRootExit": 0,
+        "naturalDrainAttempted": false,
+        "naturalDrainBudgetMilliseconds": 0,
+        "naturalDrainElapsedMilliseconds": 0,
+        "naturalDrainCompleted": false,
+        "activeProcessesAfterDrain": 0,
+        "residualProcesses": [],
+        "jobTerminationRequested": false,
+        "cleanupElapsedMilliseconds": 0,
+        "status": "failed",
+        "error": null,
+        "sourceBefore": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\final-verification\\20261025T213924178Z-e0637a73a691482b87075c66586a1dea\\source\\source-before.json",
+        "sourceBeforeSha256": "f911e4023d786a8fceb497c7be6703ab0ebbdaa3d15863934c8b269063dab853",
+        "sourceAfter": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\final-verification\\20261025T213924178Z-e0637a73a691482b87075c66586a1dea\\source\\source-after.json",
+        "sourceAfterSha256": "977d4f9e16ec31c1b296df96627307ef60e434b541e6e75059307dca469c9277",
+        "sourceDrift": [
+          {
+            "key": "product/bin/script_acceptance.dart",
+            "kind": "changed",
+            "beforeSha256": "8a054a58f9bcee1950015d2a04b4dc535bb656cc5b278d3f049bb5ef558e2a31",
+            "afterSha256": "d52e93a2f79961da184276880b02c0ea1485af230710919505d9960a919298f3"
+          },
+          {
+            "key": "product/bin/script_report_export.dart",
+            "kind": "changed",
+            "beforeSha256": "5796cf28241cca406768dfec3f09139f897d501e26d7700ad70b8f8364353e5e",
+            "afterSha256": "90217cbd9c7f7f4e5bf46a35353d60b0b672915bf72641eb73dafe7a3bd4108c"
+          },
+          {
+            "key": "product/lib/lua_runner.dart",
+            "kind": "changed",
+            "beforeSha256": "49bbb6c1d5f0f60f31c220768e4a7897a0b41c6463b9cfe5ab7b5cb0b1777f19",
+            "afterSha256": "e8605b8ec76c4a8e9762e5906e4fcd6e72902329bfeb41b8a858280984b8dc24"
+          },
+          {
+            "key": "product/test/script_report_export_test.dart",
+            "kind": "changed",
+            "beforeSha256": "ea9743cca4dfcfc2e6690fee5e0e559fe78b702ead8f4bed17d6e7877a877a78",
+            "afterSha256": "451858b9ea9c4893825971242aff120da70e9556068c4b277f29ec5b656255c4"
+          }
+        ],
+        "sourceDriftAllowed": true,
+        "sourceManifestError": null,
+        "sourceCaptureDeadlineExceeded": false,
+        "stdout": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\final-verification\\20261025T213924178Z-e0637a73a691482b87075c66586a1dea\\source\\phase.stdout.log",
+        "stderr": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\final-verification\\20261025T213924178Z-e0637a73a691482b87075c66586a1dea\\source\\phase.stderr.log"
+      }
+    ],
+    "validationElapsedMilliseconds": 15728,
+    "publication": {
+      "status": "published",
+      "exitCode": 0,
+      "timedOut": false,
+      "processId": 54944,
+      "treeEmpty": true,
+      "residualTreeTerminated": false,
+      "rootExitObservedElapsedMilliseconds": 967,
+      "activeProcessesAtRootExit": 0,
+      "naturalDrainAttempted": false,
+      "naturalDrainBudgetMilliseconds": 0,
+      "naturalDrainElapsedMilliseconds": 0,
+      "naturalDrainCompleted": false,
+      "activeProcessesAfterDrain": 0,
+      "residualProcesses": [],
+      "jobTerminationRequested": false,
+      "cleanupElapsedMilliseconds": 0,
+      "event": {
+        "kind": "message",
+        "by": "Lua",
+        "text": "Lua bounded validation terminal: grant event 698; run 20261025T213924178Z-e0637a73a691482b87075c66586a1dea; requested phases=controls,source,suite,acceptance; status=failed; exit=1. controls: PID=2928, exit=0, timeout=False, captureDeadline=False, treeEmpty=True, drift=0, status=passed; source: PID=25968, exit=1, timeout=False, captureDeadline=False, treeEmpty=True, drift=4, status=failed Lua RELEASES this host reservation to explicitly queued c-coordinator; next owner must explicitly accept. Report: D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\final-verification\\20261025T213924178Z-e0637a73a691482b87075c66586a1dea\\run.json. No native build/HAP/device command is supported by this wrapper.",
+        "origin": "cli",
+        "seq": 700,
+        "ts": "2026-10-25T21:39:40.843Z"
+      },
+      "error": null
+    }
+  },
+  "controls": {
+    "schemaVersion": 1,
+    "runId": "20261025T213924178Z-e0637a73a691482b87075c66586a1dea",
+    "processId": 2928,
+    "startedUtc": "2026-10-25T21:39:26.9158752Z",
+    "endedUtc": "2026-10-25T21:39:31.2152623Z",
+    "maxSeconds": 10,
+    "elapsedMilliseconds": 4305,
+    "status": "passed",
+    "error": null,
+    "helpers": [
+      {
+        "path": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\run_bounded_verification.ps1",
+        "sha256": "ced8925cbaf5401d2e0be0eafe46c3d740e0e8e3bf2e506c78636d22c4921a52"
+      },
+      {
+        "path": "D:\\MyNewProjects\\qfli_lua\\build\\offline-ide-audit\\run_bounded_hap.ps1",
+        "sha256": "e45bb9161b6103fd5bc5dd1ab6571b742ad9e39009d87e7f4263a9aacd93594a"
+      }
+    ],
+    "normalizedNativeIdentical": true,
+    "cases": [
+      {
+        "name": "finite-child",
+        "status": "passed",
+        "result": {
+          "RootProcessId": 65100,
+          "RootExitCode": 0,
+          "TimedOut": false,
+          "ResidualTreeTerminated": false,
+          "TreeEmpty": true,
+          "ObservedProcessIds": [
+            49808,
+            62244,
+            65100,
+            70408
+          ],
+          "RootExitObservedElapsedMilliseconds": 583,
+          "ActiveProcessesAtRootExit": 2,
+          "NaturalDrainAttempted": true,
+          "NaturalDrainBudgetMilliseconds": 1000,
+          "NaturalDrainElapsedMilliseconds": 639,
+          "NaturalDrainCompleted": true,
+          "ActiveProcessesAfterDrain": 0,
+          "ResidualProcesses": [],
+          "JobTerminationRequested": false,
+          "CleanupElapsedMilliseconds": 0,
+          "Error": null
+        },
+        "child": {
+          "processId": 70408,
+          "imagePath": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+          "creationFileTime100ns": "134374379680873896"
+        }
+      },
+      {
+        "name": "long-child",
+        "status": "passed",
+        "result": {
+          "RootProcessId": 67020,
+          "RootExitCode": 0,
+          "TimedOut": false,
+          "ResidualTreeTerminated": true,
+          "TreeEmpty": true,
+          "ObservedProcessIds": [
+            1920,
+            43880,
+            67020,
+            73380
+          ],
+          "RootExitObservedElapsedMilliseconds": 584,
+          "ActiveProcessesAtRootExit": 2,
+          "NaturalDrainAttempted": true,
+          "NaturalDrainBudgetMilliseconds": 1000,
+          "NaturalDrainElapsedMilliseconds": 1004,
+          "NaturalDrainCompleted": false,
+          "ActiveProcessesAfterDrain": 2,
+          "ResidualProcesses": [
+            {
+              "ProcessId": 1920,
+              "OwnJobConfirmed": true,
+              "ImagePath": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+              "CreationFileTime100ns": "134374379693344396",
+              "CreationTimeUtc": "2026-10-25T21:39:29.3344396Z",
+              "Error": null
+            },
+            {
+              "ProcessId": 73380,
+              "OwnJobConfirmed": true,
+              "ImagePath": "C:\\Windows\\System32\\conhost.exe",
+              "CreationFileTime100ns": "134374379693460448",
+              "CreationTimeUtc": "2026-10-25T21:39:29.3460448Z",
+              "Error": null
+            }
+          ],
+          "JobTerminationRequested": true,
+          "CleanupElapsedMilliseconds": 0,
+          "Error": null
+        },
+        "child": {
+          "processId": 1920,
+          "imagePath": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+          "creationFileTime100ns": "134374379693344396"
+        }
+      },
+      {
+        "name": "timeout",
+        "status": "passed",
+        "result": {
+          "RootProcessId": 43828,
+          "RootExitCode": 124,
+          "TimedOut": true,
+          "ResidualTreeTerminated": false,
+          "TreeEmpty": true,
+          "ObservedProcessIds": [
+            10176,
+            43828
+          ],
+          "RootExitObservedElapsedMilliseconds": 416,
+          "ActiveProcessesAtRootExit": 0,
+          "NaturalDrainAttempted": false,
+          "NaturalDrainBudgetMilliseconds": 0,
+          "NaturalDrainElapsedMilliseconds": 0,
+          "NaturalDrainCompleted": false,
+          "ActiveProcessesAfterDrain": 0,
+          "ResidualProcesses": [
+            {
+              "ProcessId": 43828,
+              "OwnJobConfirmed": true,
+              "ImagePath": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+              "CreationFileTime100ns": "134374379707239863",
+              "CreationTimeUtc": "2026-10-25T21:39:30.7239863Z",
+              "Error": null
+            },
+            {
+              "ProcessId": 10176,
+              "OwnJobConfirmed": true,
+              "ImagePath": "C:\\Windows\\System32\\conhost.exe",
+              "CreationFileTime100ns": "134374379707292246",
+              "CreationTimeUtc": "2026-10-25T21:39:30.7292246Z",
+              "Error": null
+            }
+          ],
+          "JobTerminationRequested": true,
+          "CleanupElapsedMilliseconds": 0,
+          "Error": null
+        },
+        "child": null
+      }
+    ],
+    "unrelated": {
+      "ready": {
+        "processId": 72028,
+        "imagePath": "D:\\ProgramFiles\\PowerShell\\7\\pwsh.exe",
+        "creationFileTime100ns": "134374379675056807"
+      },
+      "observations": [
+        {
+          "afterCase": "startup",
+          "processId": 72028,
+          "creationFileTime100ns": "134374379675056807",
+          "heartbeatUtcTicks": "639285611678365835",
+          "stillRunning": true
+        },
+        {
+          "afterCase": "finite-child",
+          "processId": 72028,
+          "creationFileTime100ns": "134374379675056807",
+          "heartbeatUtcTicks": "639285611690997178",
+          "stillRunning": true
+        },
+        {
+          "afterCase": "long-child",
+          "processId": 72028,
+          "creationFileTime100ns": "134374379675056807",
+          "heartbeatUtcTicks": "639285611707082076",
+          "stillRunning": true
+        },
+        {
+          "afterCase": "timeout",
+          "processId": 72028,
+          "creationFileTime100ns": "134374379675056807",
+          "heartbeatUtcTicks": "639285611711399263",
+          "stillRunning": true
+        }
+      ],
+      "result": {
+        "RootProcessId": 72028,
+        "RootExitCode": 0,
+        "TimedOut": false,
+        "ResidualTreeTerminated": false,
+        "TreeEmpty": true,
+        "ObservedProcessIds": [
+          70652,
+          72028
+        ],
+        "RootExitObservedElapsedMilliseconds": 3712,
+        "ActiveProcessesAtRootExit": 0,
+        "NaturalDrainAttempted": false,
+        "NaturalDrainBudgetMilliseconds": 0,
+        "NaturalDrainElapsedMilliseconds": 0,
+        "NaturalDrainCompleted": false,
+        "ActiveProcessesAfterDrain": 0,
+        "ResidualProcesses": [],
+        "JobTerminationRequested": false,
+        "CleanupElapsedMilliseconds": 0,
+        "Error": null
+      }
+    }
+  },
+  "checks": {
+    "format": "76 files,4 changed",
+    "analysis": "FAILED5 issues",
+    "suite": "UNRUN",
+    "full1282": "UNRUN",
+    "coreDrift": 0,
+    "newNativeBuild": "UNRUN",
+    "device": "UNRUN"
+  }
+}
