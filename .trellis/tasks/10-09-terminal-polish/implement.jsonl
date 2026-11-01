@@ -1,0 +1,6 @@
+{"type":"spec","path":".trellis/spec/backend/lua-toolchain.md","reason":"Runner title/exit-code semantics and cancellation contract for the Lua toolchain"}
+{"type":"spec","path":".trellis/spec/frontend/component-guidelines.md","reason":"Shared terminal renders ProgramRunResult.title as a shell-style command line"}
+{"type":"research","path":"lib/lua_runner.dart","reason":"File under change: all titles originate here"}
+{"type":"research","path":"test/lua_app_test.dart","reason":"Title assertions and stdout/exit/cancel coverage"}
+{"type":"research","path":"../qfli_studio_core/lib/editor/terminal_pane.dart","reason":"Read-only: how title is rendered (prompt + command)"}
+{"type":"research","path":"../qfli_studio_core/lib/services/studio_profile.dart","reason":"Read-only: ProgramRunner/ProgramRunResult contract"}

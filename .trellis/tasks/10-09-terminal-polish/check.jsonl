@@ -1,0 +1,3 @@
+{"type":"spec","path":".trellis/spec/backend/lua-toolchain.md","reason":"Verify no title, stdout/stderr, exit-code, or cancel semantics regressed"}
+{"type":"research","path":"lib/lua_runner.dart","reason":"Check all title literals; confirm output streams and codes untouched"}
+{"type":"research","path":"test/lua_app_test.dart","reason":"Confirm updated assertions pass and semantics tests still pass"}
