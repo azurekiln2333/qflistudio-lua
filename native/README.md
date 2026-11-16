@@ -49,6 +49,11 @@ scripts can catch that error and continue executing subsequent code.
 
 ## Builds
 
+GitHub Actions builds the standalone runtimes for desktop and mobile targets.
+See [cloud builds, artifacts and local storage](CI.zh-CN.md) for the matrix,
+download steps and verification boundaries. These artifacts contain native
+libraries, not complete Flutter applications.
+
 - Android Gradle builds `libqfli_lua.so` from `native/CMakeLists.txt` for its
   configured ABIs and includes the result in the APK. For a universal APK,
   native ABI filters follow Flutter's `--target-platform`; split APK builds

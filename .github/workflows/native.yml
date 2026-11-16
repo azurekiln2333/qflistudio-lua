@@ -1,0 +1,220 @@
+name: Native libraries
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, 'ci/native-*']
+    paths:
+      - '.github/workflows/native.yml'
+      - 'tools/ci_native_build.py'
+      - 'native/**'
+      - 'ios/Runner/QfliLuaIos.h'
+      - 'assets/runtime/**'
+  pull_request:
+    paths:
+      - '.github/workflows/native.yml'
+      - 'tools/ci_native_build.py'
+      - 'native/**'
+      - 'ios/Runner/QfliLuaIos.h'
+      - 'assets/runtime/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: native-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  desktop:
+    name: ${{ matrix.platform }} / ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {platform: linux, arch: x86_64, runner: ubuntu-24.04}
+          - {platform: windows, arch: x86_64, runner: windows-2025}
+          - {platform: macos, arch: arm64, runner: macos-15}
+          - {platform: macos, arch: x86_64, runner: macos-15-intel}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        if: runner.os != 'Windows'
+        with:
+          python-version: '3.13'
+      - uses: msys2/setup-msys2@ec48f7c5447b3140e2b088413ae3a55687bccb6e # v2.33.0
+        if: runner.os == 'Windows'
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-python
+      - name: Install Linux build tools
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y ninja-build
+      - name: Install macOS build tools
+        if: runner.os == 'macOS'
+        run: brew install ninja
+      - name: Build, inspect and test both runtimes
+        if: runner.os != 'Windows'
+        shell: bash
+        env:
+          TARGET_PLATFORM: ${{ matrix.platform }}
+          TARGET_ARCH: ${{ matrix.arch }}
+        run: |
+          python tools/ci_native_build.py build \
+            --platform "$TARGET_PLATFORM" --arch "$TARGET_ARCH" \
+            --build-dir build/native-ci/host \
+            --output-dir "build/native-artifacts/native-$TARGET_PLATFORM-$TARGET_ARCH"
+      - name: Build, inspect and test both Windows runtimes
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
+        run: |
+          python tools/ci_native_build.py build \
+            --platform windows --arch x86_64 \
+            --build-dir build/native-ci/host \
+            --output-dir build/native-artifacts/native-windows-x86_64 \
+            -- -DCMAKE_C_COMPILER=gcc '-DCMAKE_SHARED_LINKER_FLAGS=-static -static-libgcc'
+      - name: Upload libraries and test reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: native-${{ matrix.platform }}-${{ matrix.arch }}
+          path: build/native-artifacts/native-${{ matrix.platform }}-${{ matrix.arch }}/
+          if-no-files-found: warn
+          retention-days: 14
+
+  android:
+    name: Android / ${{ matrix.abi }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        abi: [arm64-v8a, armeabi-v7a, x86_64]
+    env:
+      NDK_VERSION: 27.0.12077973
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13'
+      - name: Install native toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build
+          sdkmanager "ndk;$NDK_VERSION"
+      - name: Cross-compile and inspect both runtimes
+        env:
+          TARGET_ABI: ${{ matrix.abi }}
+        run: |
+          ndk="$ANDROID_SDK_ROOT/ndk/$NDK_VERSION"
+          bin="$ndk/toolchains/llvm/prebuilt/linux-x86_64/bin"
+          python tools/ci_native_build.py build \
+            --platform android --arch "$TARGET_ABI" \
+            --build-dir "build/native-ci/android-$TARGET_ABI" \
+            --output-dir "build/native-artifacts/native-android-$TARGET_ABI" \
+            --readelf "$bin/llvm-readelf" --nm "$bin/llvm-nm" \
+            -- "-DCMAKE_TOOLCHAIN_FILE=$ndk/build/cmake/android.toolchain.cmake" \
+            "-DANDROID_ABI=$TARGET_ABI" -DANDROID_PLATFORM=android-21 \
+            -DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON
+      - name: Upload libraries and inspection reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: native-android-${{ matrix.abi }}
+          path: build/native-artifacts/native-android-${{ matrix.abi }}/
+          if-no-files-found: warn
+          retention-days: 14
+
+  ohos:
+    name: OHOS / arm64-v8a + x86_64
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13'
+      - name: Download and verify OpenHarmony API 18 native SDK
+        env:
+          SDK_URL: https://repo.huaweicloud.com/openharmony/os/5.1.0-Release/ohos-sdk-windows_linux-public.tar.gz
+          SDK_SHA256: 8c1f97df34812e45fa4f0e3275987b261e80622abb7c51392bb063f853451344
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build unzip
+          mkdir -p "$RUNNER_TEMP/ohos-sdk" build/native-artifacts/native-ohos/reports
+          curl --fail --location --retry 3 "$SDK_URL" -o "$RUNNER_TEMP/ohos-sdk.tar.gz"
+          echo "$SDK_SHA256  $RUNNER_TEMP/ohos-sdk.tar.gz" | sha256sum --check \
+            | tee build/native-artifacts/native-ohos/reports/sdk-checksum.txt
+          tar -xzf "$RUNNER_TEMP/ohos-sdk.tar.gz" -C "$RUNNER_TEMP/ohos-sdk" \
+            --wildcards 'ohos-sdk/linux/native-linux-x64-*.zip'
+          unzip -q "$RUNNER_TEMP"/ohos-sdk/ohos-sdk/linux/native-linux-x64-*.zip -d "$RUNNER_TEMP/ohos-native"
+          toolchain=$(find "$RUNNER_TEMP/ohos-native" -path '*/build/cmake/ohos.toolchain.cmake' -print -quit)
+          test -n "$toolchain"
+          echo "OHOS_NATIVE_ROOT=${toolchain%/build/cmake/ohos.toolchain.cmake}" >> "$GITHUB_ENV"
+      - name: Cross-compile and inspect both runtimes for both ABIs
+        run: |
+          result=0
+          for abi in arm64-v8a x86_64; do
+            python tools/ci_native_build.py build \
+              --platform ohos --arch "$abi" \
+              --build-dir "build/native-ci/ohos-$abi" \
+              --output-dir "build/native-artifacts/native-ohos/$abi" \
+              --readelf "$OHOS_NATIVE_ROOT/llvm/bin/llvm-readelf" \
+              --nm "$OHOS_NATIVE_ROOT/llvm/bin/llvm-nm" \
+              -- "-DCMAKE_TOOLCHAIN_FILE=$OHOS_NATIVE_ROOT/build/cmake/ohos.toolchain.cmake" \
+              "-DOHOS_ARCH=$abi" -DOHOS_PLATFORM=OHOS -DOHOS_STL=none || result=1
+          done
+          exit "$result"
+      - name: Upload libraries and inspection reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: native-ohos
+          path: build/native-artifacts/native-ohos/
+          if-no-files-found: warn
+          retention-days: 14
+
+  ios:
+    name: iOS / device + simulator
+    runs-on: macos-15
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13'
+      - name: Install build tools
+        run: brew install ninja
+      - name: Cross-compile device archives
+        run: |
+          python tools/ci_native_build.py build \
+            --platform ios --arch device-arm64 \
+            --build-dir build/native-ci/ios-device \
+            --output-dir build/native-artifacts/native-ios/device-arm64 \
+            -- -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos \
+            -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=13.0
+      - name: Cross-compile universal simulator archives
+        run: |
+          python tools/ci_native_build.py build \
+            --platform ios --arch simulator-universal \
+            --build-dir build/native-ci/ios-simulator \
+            --output-dir build/native-artifacts/native-ios/simulator-universal \
+            -- -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator \
+            '-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64' -DCMAKE_OSX_DEPLOYMENT_TARGET=13.0
+      - name: Package unsigned XCFrameworks
+        run: python tools/ci_native_build.py package-ios --output-dir build/native-artifacts/native-ios
+      - name: Upload archives, XCFrameworks and inspection reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: native-ios
+          path: build/native-artifacts/native-ios/
+          if-no-files-found: warn
+          retention-days: 14

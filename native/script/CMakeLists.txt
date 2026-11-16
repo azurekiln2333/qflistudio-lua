@@ -16,7 +16,7 @@ foreach(QFLI_SCRIPT_HASH_LINE IN LISTS QFLI_SCRIPT_HASHES)
     message(FATAL_ERROR "QuickJS source hash mismatch: ${QFLI_SCRIPT_HASH_PATH}")
   endif()
 endforeach()
-add_library(qfli_script_engine SHARED qfli_script.c
+add_library(qfli_script_engine ${QFLI_NATIVE_LIBRARY_TYPE} qfli_script.c
   "${QFLI_SCRIPT_QUICKJS}/quickjs.c" "${QFLI_SCRIPT_QUICKJS}/cutils.c"
   "${QFLI_SCRIPT_QUICKJS}/libregexp.c" "${QFLI_SCRIPT_QUICKJS}/libunicode.c" "${QFLI_SCRIPT_QUICKJS}/dtoa.c")
 set_target_properties(qfli_script_engine PROPERTIES OUTPUT_NAME qfli_script
@@ -24,6 +24,7 @@ set_target_properties(qfli_script_engine PROPERTIES OUTPUT_NAME qfli_script
 if(WIN32)
   set_target_properties(qfli_script_engine PROPERTIES PREFIX lib)
   target_link_options(qfli_script_engine PRIVATE -static -static-libgcc)
+  target_link_libraries(qfli_script_engine PRIVATE winpthread)
 endif()
 target_include_directories(qfli_script_engine PRIVATE "${QFLI_SCRIPT_QUICKJS}")
 target_compile_definitions(qfli_script_engine PRIVATE _GNU_SOURCE CONFIG_VERSION="2026-06-04")

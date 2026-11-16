@@ -1,0 +1,2 @@
+{"file":".trellis/spec/backend/lua-toolchain.md","reason":"Platform/runtime evidence and ABI checks"}
+{"file":".trellis/spec/backend/script-toolchain.md","reason":"Both runtime artifacts and regression probes are required"}
