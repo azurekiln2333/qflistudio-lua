@@ -152,3 +152,11 @@ posix canvaskit/chromium/canvaskit.js matches=true
 This explains how existing assets can receive 404 on Windows before the test starts. The same source and correctly extracted Web SDK on the Linux CI runner avoid that separator mismatch. No SDK patch or alternate CanvasKit download is required for the planned Linux Chrome tests based on this finding. Actual CI tests still provide the final evidence.
 
 If Windows-hosted Chrome tests must be supported later, the smallest upstream/toolchain fix is to use `request.url.path` for URL routing, then convert only the remaining file path when locating the local asset. Do not change the user's global SDK for this CI task.
+
+## Cloud follow-up: isolate non-OHOS platform setup
+
+Run `43947518174` at application commit `c81ef0fe85a6d3485f190e3d128a67d6db0dd599` passed Flutter bootstrap on Linux and Web, then failed at `flutter pub get` with `No Hmos SDK found. Try setting the HOS_SDK_HOME environment variable.` Dependency resolution had already completed.
+
+The fixed SDK defaults `enable-ohos` to true. After dependency resolution, `commands/packages.dart:395` calls `project.regeneratePlatformSpecificTooling`. `project.dart:396` requests OHOS setup when `featureFlags.isOhosEnabled && ohos.existsSync()`. OHOS setup then requires the Harmony SDK through `ohos/hvigor_utils.dart:37`.
+
+The concrete `FlutterFeatureFlagsIsEnabled.isOhosEnabled` implementation in `flutter_features.dart:18` reads `flutterOhosFeature`, whose `configSetting` is `enable-ohos`. Therefore the supported fix is to run `flutter config --no-enable-ohos` in every non-OHOS job before application `pub get`, and keep `flutter config --enable-ohos` in the OHOS job. This uses the fork's intended platform configuration and preserves all source directories. Record `flutter config --list` when diagnosing the resolved configuration.

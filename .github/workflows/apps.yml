@@ -110,7 +110,7 @@ jobs:
       - name: Install the OHOS profile parser
         if: matrix.platform == 'ohos'
         run: python -m pip install --disable-pip-version-check json5==0.12.1
-      - name: Download and verify the API24 OHOS command-line SDK
+      - name: Download and verify the API26 OHOS command-line SDK
         if: matrix.platform == 'ohos'
         run: python tools/ci_app_build.py setup-ohos
       - name: Bootstrap the pinned Flutter-OH SDK

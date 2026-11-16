@@ -4,6 +4,85 @@ Research date: 2026-11-17. This research did not install an SDK, modify product
 files, or run a full HAP build. HTTP metadata and selected archive members were
 read remotely. Cloud execution remains the acceptance test.
 
+## Cloud finding and revised toolchain choice
+
+The initial API24 toolchain choice below is superseded for the pinned Flutter-OH
+`62357a93d653bf844f730bb1f4b7cc9e2139d14e` release. Actual run `43947518174`,
+job `133581000456`, passed SDK download/hash checks, extraction, tool version
+checks, Flutter bootstrap and application dependency resolution. The HAP build
+then failed in the Flutter HAR's `OhosAutoFillHelper.ets`, with missing
+`autoFillManager.AutoFillType`, `ViewData`, `FillRequest`, `AutoFillCallback`,
+`requestAutoFill` and other API26 declarations. The job reported 15 ArkTS errors.
+
+Evidence files:
+
+- `build/app-ci/sdk-audit-jobs-43947518174.json`
+- `build/app-ci/sdk-audit-ohos-second.log` (first compiler error at line 895)
+
+The pinned engine source
+`engine/src/flutter/shell/platform/ohos/flutter_embedding/flutter/src/main/ets/plugin/editing/OhosAutoFillHelper.ets`
+sets `AUTOFILL_SUPPORT_API = 26`. Read-only inspection of the local official
+DevEco SDK found `sdk/default/sdk-pkg.json` identifying HarmonyOS26.0.0,
+API26 and SDK26.0.0.105. Its public
+`sdk/default/openharmony/ets/api/@ohos.app.ability.autoFillManager.d.ts` marks the
+missing members `@since 26.0.0`. They are public APIs, not hidden system APIs.
+Runtime version guards cannot make the missing types compile against API24.
+
+Use the same published Flutter pin with the fixed API26 command-line SDK
+release **26.0.0.821**. Keep application `targetSdkVersion: 6.1.1(24)` and
+`compatibleSdkVersion: 5.1.0(18)`. Set `compileSdkVersion: 26.0.0(26)` explicitly
+in the unsigned profile generated only inside the clean cloud checkout.
+
+The official SDK-bundled Hvigor schema supports independent versions:
+
+- Read-only source:
+  `D:/ProgramFiles/Huawei/DevEco Studio/tools/hvigor/hvigor-ohos-plugin/res/schemas/ohos-project-build-profile-schema.json:1193`.
+- `compileSdkVersion` controls APIs/toolchain and defaults to the SDK bundled
+  with DevEco for HarmonyOS.
+- `targetSdkVersion` controls runtime behavior and defaults to compileSdk only
+  when omitted.
+- `src/utils/one-sdk-validator.d.ts:43` states the constraint
+  `compileSdkVersion >= targetSdkVersion >= compatibleSdkVersion`.
+
+No local SDK files were changed or uploaded. The next cloud run must validate
+the exact generated profile and toolchain combination.
+
+### Fixed API26 download identity
+
+Release and primary publisher metadata:
+
+- `https://github.com/ErBWs/ohos-sdk/releases/tag/26.0.0.821`
+- `https://api.github.com/repos/ErBWs/ohos-sdk/releases/tags/26.0.0.821`
+- `https://raw.githubusercontent.com/ErBWs/ohos-sdk/26.0.0.821/README.md`
+- `https://raw.githubusercontent.com/ErBWs/ohos-sdk/26.0.0.821/.github/workflows/action.yml`
+
+The tagged README identifies command-line tools26.0.0.821 and API26. The release
+was published on 2026-09-02. Download prefix:
+`https://github.com/ErBWs/ohos-sdk/releases/download/26.0.0.821/`.
+
+| Part | Bytes | SHA256 from release asset metadata |
+| --- | ---: | --- |
+| `ohos-sdk-linux-amd64.tar.gz.aa` | 1572864000 | `4321eb328558169e9531594139910a42b1c88057fb09f852be85ff2487e6adbc` |
+| `ohos-sdk-linux-amd64.tar.gz.ab` | 700317187 | `26e9ae251e761fbc9ec4e7ad780b5b291130e7824af2324167530941e11ad592` |
+
+GET of the published `ohos-sdk-linux-amd64.tar.gz.sha256` returned combined hash
+`0cbdf7ac5c1be1e42694d448ffaee0c0be0ba9a948197e2bc5b61ca5bdc481f2`.
+Pin all three hashes. Preserve the `command-line-tools/` layout and environment
+setup documented below. Verify extracted SDK metadata identifies API26.
+
+Provenance remains a third-party repackaged mirror. The tagged publisher workflow
+verifies the input ZIP against a supplied checksum, then repacks/splits it. It
+does not expose the original official URL/checksum in the release body, so the
+fixed artifact hash is identity evidence rather than independent proof of the
+original Huawei source. No full API26 archive was downloaded during research.
+
+An alternative complete official Flutter release was inspected but is not the
+chosen fix: `3.41.10-ohos-1.0.0` at
+`244a0e8abb3085e8675589b13e219af8c41cb7aa` predates `OhosAutoFillHelper`; its
+upstream engine is 42d3d75a56, OHOS engine is ab1841593e and HAR is 97a3efd6c9.
+The next tag `3.41.10-ohos-1.0.1` already contains the API26 helper. Do not mix
+these engine/HAR revisions into the current framework piecemeal.
+
 ## Result
 
 A Linux GitHub runner can obtain a complete HarmonyOS command-line toolchain and

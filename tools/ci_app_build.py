@@ -28,12 +28,13 @@ FLUTTER_COMMIT = "62357a93d653bf844f730bb1f4b7cc9e2139d14e"
 TOOLING_COMMIT = "9d2eaf45940e5042637b3387b18292ed39223a4a"
 ENGINE_COMMIT = "42d3d75a56efe1a2e9902f52dc8006099c45d937"
 OHOS_ENGINE_COMMIT = "4cbeea6a36f7aea39a60f2c5d57b1ffd84bfd106"
-OHOS_SDK_RELEASE = "6.1.1.280"
-OHOS_SDK_SHA256 = "3d37eb5a3a81358a9731c35265f4f29d8ecf1028b0bbbb777f2928cd6990aa83"
+OHOS_SDK_RELEASE = "26.0.0.821"
+OHOS_SDK_SHA256 = "0cbdf7ac5c1be1e42694d448ffaee0c0be0ba9a948197e2bc5b61ca5bdc481f2"
 OHOS_PARTS = {
-    "aa": "c9bc62586835cb952094349dfd5857a7387d80b34e72562ab8e930aa9bdae02b",
-    "ab": "fb964dc01cd385abc9f4d19eb96fa69f841e3a64b87ac94508ae48a8268cee06",
+    "aa": "4321eb328558169e9531594139910a42b1c88057fb09f852be85ff2487e6adbc",
+    "ab": "26e9ae251e761fbc9ec4e7ad780b5b291130e7824af2324167530941e11ad592",
 }
+OHOS_COMPILE_SDK_VERSION = "26.0.0(26)"
 MACHINES = {"x86_64": 62, "arm64": 183, "arm64-v8a": 183, "armeabi-v7a": 40}
 SIGNING = {
     "android": "debug_key_for_testing_not_store_release",
@@ -128,6 +129,7 @@ def initialize(args):
         "status": "pending", "stage": "initialized", "application_package": False,
         "verification": "not_completed", "runtime_tests": "not_run",
         "device_tests": "not_run", "browser_tests": "not_run",
+        "release_bundle_browser_tests": "not_run",
         "signing": SIGNING[args.platform],
         "flutter": {"repository": FLUTTER_REPOSITORY, "tag": FLUTTER_TAG,
                     "commit": FLUTTER_COMMIT, "engine": ENGINE_COMMIT,
@@ -189,7 +191,10 @@ def setup_flutter(args, manifest):
     (reports / "flutter-tool-pubspec-overrides.yaml").write_text(overrides, encoding="utf-8")
     sdk_env = environment()
     publish_environment({"QFLI_FLUTTER_ROOT": sdk}, [sdk / "bin"])
-    run([flutter(args), "config", "--no-analytics"], reports / "flutter-config.log", env=sdk_env)
+    # Pub get regenerates every enabled platform. Do not require an OHOS SDK in
+    # a non-OHOS job merely because this application contains an ohos directory.
+    ohos_flag = "--enable-ohos" if args.platform == "ohos" else "--no-enable-ohos"
+    run([flutter(args), "config", "--no-analytics", ohos_flag], reports / "flutter-config.log", env=sdk_env)
     version = run([flutter(args), "--version", "--machine"], reports / "flutter-version.log", env=sdk_env)
     version_data = json.loads(version)
     validate_flutter_version(version_data)
@@ -198,6 +203,7 @@ def setup_flutter(args, manifest):
             "macos": "--enable-macos-desktop", "web": "--enable-web"}.get(args.platform)
     if flag:
         run([flutter(args), "config", flag], reports / "flutter-platform-config.log", env=sdk_env)
+    run([flutter(args), "config", "--list"], reports / "flutter-effective-config.log", env=sdk_env)
     run([flutter(args), "precache", "--" + args.platform], reports / "flutter-precache.log", env=sdk_env)
     resolved_locks = []
     for source in (sdk / "pubspec.lock", sdk / "packages/flutter_tools/pubspec.lock"):
@@ -211,6 +217,12 @@ def setup_flutter(args, manifest):
         if not any(re.search(r"resolved-ref:\s*[\"']?" + TOOLING_COMMIT, block) for block in blocks):
             raise RuntimeError(f"Flutter tooling lock did not resolve {package} to the pinned override")
     manifest["flutter"]["tooling_overrides_verified_in_lock"] = True
+
+
+def validate_ohos_sdk_metadata(metadata):
+    data = metadata.get("data", {}) if isinstance(metadata, dict) else {}
+    if not isinstance(data, dict) or str(data.get("apiVersion")) != "26":
+        raise RuntimeError("OHOS SDK does not contain the expected API26 release")
 
 
 def setup_ohos(args, manifest):
@@ -239,8 +251,7 @@ def setup_ohos(args, manifest):
     tools = sdk_dir / "command-line-tools"
     metadata_path = tools / "sdk/default/sdk-pkg.json"
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-    if "6.1.1" not in json.dumps(metadata):
-        raise RuntimeError("OHOS SDK does not contain the expected API24 release")
+    validate_ohos_sdk_metadata(metadata)
     write_json(reports / "ohos-sdk-pkg.json", metadata)
     publish_environment({"HOS_SDK_HOME": tools / "sdk", "DEVECO_SDK_HOME": tools / "sdk",
                          "DEVECO_NODE_HOME": tools / "tool/node"},
@@ -249,7 +260,10 @@ def setup_ohos(args, manifest):
     run([tools / "bin/hvigorw", "--version"], reports / "hvigor-version.log")
     manifest["ohos_sdk"] = {"release": OHOS_SDK_RELEASE, "source": base,
                             "provenance": "third_party_repackaged_mirror",
-                            "sha256": OHOS_SDK_SHA256, "metadata": metadata}
+                            "sha256": OHOS_SDK_SHA256, "metadata": metadata,
+                            "compile_sdk_version": OHOS_COMPILE_SDK_VERSION,
+                            "target_sdk_version": "6.1.1(24)",
+                            "compatible_sdk_version": "5.1.0(18)"}
 
 
 def unsigned_ohos_profile():
@@ -270,6 +284,9 @@ def unsigned_ohos_profile():
         if (product.get("targetSdkVersion") != "6.1.1(24)"
                 or product.get("compatibleSdkVersion") != "5.1.0(18)"):
             raise RuntimeError("Unexpected OHOS SDK targets; review instead of silently changing them")
+        # The pinned Flutter HAR references public API26 types. Compilation needs
+        # those declarations while target behavior and device compatibility stay fixed.
+        product["compileSdkVersion"] = OHOS_COMPILE_SDK_VERSION
     path.write_text(json.dumps(profile, indent=2) + "\n", encoding="utf-8")
 
 
@@ -492,7 +509,9 @@ def collect(args, manifest, core):
         for name in ("index.html", "main.dart.js", "flutter_bootstrap.js", "assets/AssetManifest.bin"):
             required_file(bundle / name)
         inventories.append({"bundle": "web", "native_execution": "disabled",
-                            "browser_tests": "not_run", "files": len(list(bundle.rglob("*")))})
+                            "browser_tests": manifest["browser_tests"],
+                            "release_bundle_browser_tests": "not_run",
+                            "files": len(list(bundle.rglob("*")))})
         pending.append(bundle)
         manifest["web_capabilities"] = {"editing_and_saving": "implemented_requires_browser_acceptance",
                                          "native_execution": "disabled"}
@@ -561,19 +580,25 @@ def build(args, manifest):
     manifest["status"] = "passed"
 
 
+def invalidate_packages(args, manifest):
+    """Revoke package success for every failure, including late evidence errors."""
+    manifest["status"] = "failed"
+    manifest["packages"] = []
+    manifest["application_package"] = False
+    manifest["verification"] = "failed_see_reports"
+    (args.output / "SHA256SUMS").unlink(missing_ok=True)
+    packages = args.output / "packages"
+    if packages.exists():
+        # This is the output directory created by this attempt. Refuse link traversal.
+        if packages.is_symlink() or packages.resolve().parent != args.output.resolve():
+            raise RuntimeError("Refusing to clean packages outside this attempt's output directory")
+        shutil.rmtree(packages)
+
+
 def finalize(args, manifest):
     if args.job_status != "success" or manifest.get("status") != "passed":
-        manifest["status"] = "failed"
         manifest.setdefault("error", "See the workflow step and retained reports for the failed prerequisite")
-        packages = args.output / "packages"
-        if packages.exists():
-            # This is the output directory created by this attempt. Refuse link traversal.
-            if packages.is_symlink() or packages.resolve().parent != args.output.resolve():
-                raise RuntimeError("Refusing to clean packages outside this attempt's output directory")
-            shutil.rmtree(packages)
-        manifest["packages"] = []
-        manifest["application_package"] = False
-        manifest["verification"] = "failed_see_reports"
+        invalidate_packages(args, manifest)
     licenses = args.output / "licenses"
     licenses.mkdir(exist_ok=True)
     for source, name in ((ROOT / "LICENSE", "GPL-3.0.txt"),
@@ -584,6 +609,12 @@ def finalize(args, manifest):
                          (ROOT.parent / "qfli_studio_core/LICENSE", "Core-LICENSE.txt")):
         if source.is_file():
             shutil.copy2(source, licenses / name)
+
+
+def write_checksums(output):
+    paths = sorted(p for p in output.rglob("*") if p.is_file() and p.name != "SHA256SUMS")
+    content = "".join(f"{digest(p)}  {p.relative_to(output).as_posix()}\n" for p in paths)
+    (output / "SHA256SUMS").write_text(content, encoding="utf-8")
 
 
 def main():
@@ -600,31 +631,38 @@ def main():
         parser.error("--platform and --arch (or QFLI_PLATFORM/QFLI_ARCH) are required")
     args.output = (args.output_dir or ROOT / f"build/app-artifacts/app-{args.platform}-{args.arch}").resolve()
     manifest_path = args.output / "manifest.json"
-    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else initialize(args)
+    # An init refusal has not acquired this output directory. Keep it outside the
+    # current-attempt failure handler so an earlier successful run stays intact.
+    if args.command == "init":
+        manifest = initialize(args)
+    else:
+        manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else initialize(args)
     try:
         manifest["stage"] = args.command
-        if args.command == "init":
-            manifest = initialize(args)
-        elif args.command == "setup-flutter":
+        if args.command == "setup-flutter":
             setup_flutter(args, manifest)
         elif args.command == "setup-ohos":
             setup_ohos(args, manifest)
         elif args.command == "build":
             build(args, manifest)
-        else:
+        elif args.command == "finalize":
             finalize(args, manifest)
-    except Exception as error:
-        manifest["status"] = "failed"
-        manifest["error"] = str(error)
-        report = args.output / "reports" / f"{args.command}-failure.txt"
-        report.parent.mkdir(parents=True, exist_ok=True)
-        report.write_text(traceback.format_exc(), encoding="utf-8")
-        raise
-    finally:
         write_json(manifest_path, manifest)
         if args.command == "finalize":
-            paths = sorted(p for p in args.output.rglob("*") if p.is_file() and p.name != "SHA256SUMS")
-            (args.output / "SHA256SUMS").write_text("".join(f"{digest(p)}  {p.relative_to(args.output).as_posix()}\n" for p in paths), encoding="utf-8")
+            write_checksums(args.output)
+    except Exception as error:
+        manifest["error"] = str(error)
+        failure = traceback.format_exc()
+        try:
+            invalidate_packages(args, manifest)
+        except Exception as cleanup_error:
+            manifest["package_cleanup_error"] = str(cleanup_error)
+            failure += "\nPackage invalidation error:\n" + traceback.format_exc()
+        report = args.output / "reports" / f"{args.command}-failure.txt"
+        report.parent.mkdir(parents=True, exist_ok=True)
+        report.write_text(failure, encoding="utf-8")
+        write_json(manifest_path, manifest)
+        raise
 
 
 if __name__ == "__main__":

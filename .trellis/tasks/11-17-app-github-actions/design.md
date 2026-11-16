@@ -20,8 +20,9 @@ files are outside this task. No local cache cleanup is included.
 - Flutter-OH: public 3.41.9+ohos-1.0.2 tag, expected commit
   62357a93d653bf844f730bb1f4b7cc9e2139d14e. Bootstrap must verify this identity
   and record Flutter/Dart versions. The local modified SDK is not an input.
-- HarmonyOS full SDK: mirrored 6.1.1.280 command-line tools, fixed SHA256 from
-  research/ohos-app.md. Preserve target API24 and compatible API18. Identify the
+- HarmonyOS full SDK: mirrored 26.0.0.821 command-line tools, fixed SHA256 from
+  research/ohos-app.md. Compile with API26 because the pinned HAR uses its public
+  autofill APIs. Preserve target API24 and compatible API18. Identify the
   third-party mirror explicitly in metadata and documentation.
 - Action references remain pinned to full SHAs. Workflow has contents:read.
 

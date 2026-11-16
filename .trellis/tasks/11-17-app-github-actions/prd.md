@@ -29,6 +29,8 @@ Build Flutter applications for OHOS macOS Linux Android iOS Web and Windows, pub
 - Apple currently embeds only Lua. Script integration is required for complete native runtime packaging.
 - The user selected browser editing and saving. Web must persist workspace files
   across reloads and explicitly disable native running, debugging and compilation.
-- API24 full OHOS toolchain is available through a fixed-hash third-party mirror.
+- API26 full OHOS toolchain is available through a fixed-hash third-party mirror.
+  Cloud compilation requires API26 for the pinned Flutter HAR. Application target
+  API24 and compatible API18 remain unchanged.
 - GPL v3 alignment was committed and pushed as a2ee30c before app implementation.
 - Web must build a usable browser editor, with real persistence and no FFI imports.
