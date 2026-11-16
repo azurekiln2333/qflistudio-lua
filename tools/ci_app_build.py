@@ -137,6 +137,35 @@ def initialize(args):
     }
 
 
+def checkout_flutter_release(sdk, reports):
+    tag_ref = "refs/tags/" + FLUTTER_TAG
+    for attempt in range(3):
+        try:
+            # Flutter derives its public SDK version from the retained release tag.
+            # Fetching only into FETCH_HEAD preserves the commit but loses that version.
+            run(["git", "fetch", "--depth", "1", "origin", f"{tag_ref}:{tag_ref}"],
+                reports / f"sdk-fetch-{attempt + 1}.log", cwd=sdk, timeout=900)
+            break
+        except (RuntimeError, subprocess.TimeoutExpired):
+            if attempt == 2:
+                raise
+            time.sleep(5)
+    tagged_commit = run(["git", "rev-parse", tag_ref + "^{commit}"],
+                        reports / "sdk-tag-commit.log", cwd=sdk).strip()
+    if tagged_commit != FLUTTER_COMMIT:
+        raise RuntimeError("Flutter tag no longer matches the pinned commit")
+    run(["git", "checkout", "--detach", tag_ref], reports / "sdk-checkout.log", cwd=sdk)
+    if git_head(sdk) != FLUTTER_COMMIT:
+        raise RuntimeError("Flutter checkout differs from the verified release tag")
+
+
+def validate_flutter_version(version):
+    if (version.get("frameworkRevision") != FLUTTER_COMMIT
+            or version.get("frameworkVersion") != FLUTTER_TAG
+            or not version.get("dartSdkVersion", "").startswith("3.11.5")):
+        raise RuntimeError("Bootstrapped Flutter/Dart version differs from the pinned release")
+
+
 def setup_flutter(args, manifest):
     sdk = args.flutter_root
     reports = args.output / "reports"
@@ -145,18 +174,7 @@ def setup_flutter(args, manifest):
         run(["git", "init", sdk], reports / "sdk-init.log")
         run(["git", "remote", "add", "origin", FLUTTER_REPOSITORY],
             reports / "sdk-remote.log", cwd=sdk)
-    for attempt in range(3):
-        try:
-            run(["git", "fetch", "--depth", "1", "origin", "refs/tags/" + FLUTTER_TAG],
-                reports / f"sdk-fetch-{attempt + 1}.log", cwd=sdk, timeout=900)
-            break
-        except (RuntimeError, subprocess.TimeoutExpired):
-            if attempt == 2:
-                raise
-            time.sleep(5)
-    run(["git", "checkout", "--detach", "FETCH_HEAD"], reports / "sdk-checkout.log", cwd=sdk)
-    if git_head(sdk) != FLUTTER_COMMIT:
-        raise RuntimeError("Flutter tag no longer matches the pinned commit")
+    checkout_flutter_release(sdk, reports)
     for name, expected in (("engine.version", ENGINE_COMMIT),
                            ("engine.ohos.version", OHOS_ENGINE_COMMIT),
                            ("engine.ohos.har.version", OHOS_ENGINE_COMMIT)):
@@ -174,9 +192,7 @@ def setup_flutter(args, manifest):
     run([flutter(args), "config", "--no-analytics"], reports / "flutter-config.log", env=sdk_env)
     version = run([flutter(args), "--version", "--machine"], reports / "flutter-version.log", env=sdk_env)
     version_data = json.loads(version)
-    if (version_data.get("frameworkRevision") != FLUTTER_COMMIT
-            or not version_data.get("dartSdkVersion", "").startswith("3.11.5")):
-        raise RuntimeError("Bootstrapped Flutter/Dart identity differs from the pinned inputs")
+    validate_flutter_version(version_data)
     manifest["flutter"]["version"] = version_data
     flag = {"windows": "--enable-windows-desktop", "linux": "--enable-linux-desktop",
             "macos": "--enable-macos-desktop", "web": "--enable-web"}.get(args.platform)

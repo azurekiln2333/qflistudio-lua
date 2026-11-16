@@ -4,6 +4,7 @@ import argparse
 import os
 from pathlib import Path
 import struct
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -13,6 +14,39 @@ import ci_app_build as ci
 
 
 class ApplicationPackageTests(unittest.TestCase):
+    def test_sdk_fetch_preserves_release_tag_for_git_version_discovery(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            upstream = root / "upstream"
+            sdk = root / "sdk"
+            upstream.mkdir()
+            sdk.mkdir()
+
+            def git(cwd, *args):
+                return subprocess.check_output(["git", *args], cwd=cwd, text=True,
+                                               stderr=subprocess.STDOUT).strip()
+
+            git(upstream, "init")
+            git(upstream, "-c", "user.name=CI Test", "-c", "user.email=ci@example.invalid",
+                "commit", "--allow-empty", "-m", "Create release fixture")
+            git(upstream, "tag", ci.FLUTTER_TAG)
+            expected = git(upstream, "rev-parse", "HEAD")
+            git(sdk, "init")
+            git(sdk, "remote", "add", "origin", str(upstream))
+            with patch.object(ci, "FLUTTER_COMMIT", expected):
+                ci.checkout_flutter_release(sdk, root / "reports")
+            self.assertEqual(git(sdk, "describe", "--tags", "--exact-match"), ci.FLUTTER_TAG)
+            self.assertEqual(git(sdk, "rev-parse", "refs/tags/" + ci.FLUTTER_TAG + "^{commit}"), expected)
+            self.assertEqual(ci.git_head(sdk), expected)
+
+    def test_sdk_version_rejects_unknown_despite_correct_revision(self):
+        version = {"frameworkRevision": ci.FLUTTER_COMMIT,
+                   "frameworkVersion": "0.0.0-unknown", "dartSdkVersion": "3.11.5"}
+        with self.assertRaisesRegex(RuntimeError, "differs from the pinned release"):
+            ci.validate_flutter_version(version)
+        version["frameworkVersion"] = ci.FLUTTER_TAG
+        ci.validate_flutter_version(version)
+
     def test_mobile_package_rejects_missing_script_before_staging(self):
         with tempfile.TemporaryDirectory() as directory:
             package = Path(directory) / "app-arm64-v8a-release.apk"
