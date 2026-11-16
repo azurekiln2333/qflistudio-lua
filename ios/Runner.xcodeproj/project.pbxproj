@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A4900010000000000000001 /* qfli_script.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A4900020000000000000001 /* qfli_script.c */; settings = {COMPILER_FLAGS = "-I\"$(SRCROOT)/../native/script/quickjs\" -D_GNU_SOURCE -DCONFIG_VERSION=\\\"2026-06-04\\\" -fno-strict-aliasing -fwrapv -fvisibility=hidden"; }; };
+		5A4900010000000000000002 /* quickjs.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A4900020000000000000002 /* quickjs.c */; settings = {COMPILER_FLAGS = "-I\"$(SRCROOT)/../native/script/quickjs\" -D_GNU_SOURCE -DCONFIG_VERSION=\\\"2026-06-04\\\" -fno-strict-aliasing -fwrapv -fvisibility=hidden"; }; };
+		5A4900010000000000000003 /* cutils.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A4900020000000000000003 /* cutils.c */; settings = {COMPILER_FLAGS = "-I\"$(SRCROOT)/../native/script/quickjs\" -D_GNU_SOURCE -DCONFIG_VERSION=\\\"2026-06-04\\\" -fno-strict-aliasing -fwrapv -fvisibility=hidden"; }; };
+		5A4900010000000000000004 /* libregexp.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A4900020000000000000004 /* libregexp.c */; settings = {COMPILER_FLAGS = "-I\"$(SRCROOT)/../native/script/quickjs\" -D_GNU_SOURCE -DCONFIG_VERSION=\\\"2026-06-04\\\" -fno-strict-aliasing -fwrapv -fvisibility=hidden"; }; };
+		5A4900010000000000000005 /* libunicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A4900020000000000000005 /* libunicode.c */; settings = {COMPILER_FLAGS = "-I\"$(SRCROOT)/../native/script/quickjs\" -D_GNU_SOURCE -DCONFIG_VERSION=\\\"2026-06-04\\\" -fno-strict-aliasing -fwrapv -fvisibility=hidden"; }; };
+		5A4900010000000000000006 /* dtoa.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A4900020000000000000006 /* dtoa.c */; settings = {COMPILER_FLAGS = "-I\"$(SRCROOT)/../native/script/quickjs\" -D_GNU_SOURCE -DCONFIG_VERSION=\\\"2026-06-04\\\" -fno-strict-aliasing -fwrapv -fvisibility=hidden"; }; };
 		5A4800010000000000000001 /* qfli_lua.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A4800020000000000000001 /* qfli_lua.c */; };
 		5A4800010000000000000002 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A4800020000000000000002 /* lapi.c */; };
 		5A4800010000000000000003 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A4800020000000000000003 /* lauxlib.c */; };
@@ -74,6 +80,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5A4900020000000000000001 /* qfli_script.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "qfli_script.c"; sourceTree = "<group>"; };
+		5A4900020000000000000002 /* quickjs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "quickjs/quickjs.c"; sourceTree = "<group>"; };
+		5A4900020000000000000003 /* cutils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "quickjs/cutils.c"; sourceTree = "<group>"; };
+		5A4900020000000000000004 /* libregexp.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "quickjs/libregexp.c"; sourceTree = "<group>"; };
+		5A4900020000000000000005 /* libunicode.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "quickjs/libunicode.c"; sourceTree = "<group>"; };
+		5A4900020000000000000006 /* dtoa.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "quickjs/dtoa.c"; sourceTree = "<group>"; };
+		5A4900020000000000000007 /* qfli_script.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "qfli_script.h"; sourceTree = "<group>"; };
 		5A4800020000000000000001 /* qfli_lua.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = qfli_lua.c; path = "src/qfli_lua.c"; sourceTree = "<group>"; };
 		5A4800020000000000000002 /* lapi.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = lapi.c; path = "third_party/lua-5.4.8/src/lapi.c"; sourceTree = "<group>"; };
 		5A4800020000000000000003 /* lauxlib.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = lauxlib.c; path = "third_party/lua-5.4.8/src/lauxlib.c"; sourceTree = "<group>"; };
@@ -139,6 +152,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A4900030000000000000001 /* Native Script */ = {
+			isa = PBXGroup;
+			children = (
+				5A4900020000000000000001 /* qfli_script.c */,
+				5A4900020000000000000002 /* quickjs.c */,
+				5A4900020000000000000003 /* cutils.c */,
+				5A4900020000000000000004 /* libregexp.c */,
+				5A4900020000000000000005 /* libunicode.c */,
+				5A4900020000000000000006 /* dtoa.c */,
+				5A4900020000000000000007 /* qfli_script.h */,
+			);
+			name = "Native Script";
+			path = "../native/script";
+			sourceTree = "<group>";
+		};
 		5A4800030000000000000001 /* Native Lua */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +234,7 @@
 			children = (
 				9740EEB11CF90186004384FC /* Flutter */,
 				5A4800030000000000000001 /* Native Lua */,
+				5A4900030000000000000001 /* Native Script */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
 				331C8082294A63A400263BE5 /* RunnerTests */,
@@ -421,6 +450,12 @@
 				5A480001000000000000001F /* lutf8lib.c in Sources */,
 				5A4800010000000000000020 /* lvm.c in Sources */,
 				5A4800010000000000000021 /* lzio.c in Sources */,
+				5A4900010000000000000001 /* qfli_script.c in Sources */,
+				5A4900010000000000000002 /* quickjs.c in Sources */,
+				5A4900010000000000000003 /* cutils.c in Sources */,
+				5A4900010000000000000004 /* libregexp.c in Sources */,
+				5A4900010000000000000005 /* libunicode.c in Sources */,
+				5A4900010000000000000006 /* dtoa.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

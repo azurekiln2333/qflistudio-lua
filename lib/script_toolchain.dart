@@ -388,6 +388,10 @@ class _Bindings {
 DynamicLibrary _open(String? explicitPath) {
   if (explicitPath != null) return DynamicLibrary.open(explicitPath);
   if (Platform.isIOS) return DynamicLibrary.process();
+  if (Platform.isMacOS) {
+    final linked = DynamicLibrary.process();
+    if (linked.providesSymbol('qfli_script_version')) return linked;
+  }
   final name = Platform.isWindows
       ? 'libqfli_script.dll'
       : Platform.isMacOS
