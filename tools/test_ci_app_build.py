@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+import plistlib
 import struct
 import subprocess
 import sys
@@ -16,6 +17,59 @@ import ci_app_build as ci
 
 
 class ApplicationPackageTests(unittest.TestCase):
+    def test_failed_command_annotation_escapes_workflow_data(self):
+        with tempfile.TemporaryDirectory() as directory:
+            log = Path(directory) / "build.log"
+
+            def failed(*args, **kwargs):
+                kwargs["stdout"].write("Compiler failed at 50%\n::warning::literal source\n")
+                return subprocess.CompletedProcess(args[0], 7)
+
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}):
+                with patch.object(ci.subprocess, "run", side_effect=failed), patch("builtins.print") as printed:
+                    with self.assertRaisesRegex(RuntimeError, "Command failed \\(7\\)"):
+                        ci.run(["fixture-compiler"], log)
+            annotations = [call.args[0] for call in printed.call_args_list
+                           if call.args[0].startswith("::error::")]
+            self.assertEqual(len(annotations), 1)
+            self.assertIn("Compiler failed at 50%25%0A::warning::literal source%0A", annotations[0])
+            self.assertNotIn("\n", annotations[0])
+            self.assertIn("Compiler failed", log.read_text(encoding="utf-8"))
+
+    def test_failure_annotation_redacts_before_truncation_and_stays_bounded(self):
+        output = ("Command: fixture\n\n" + "earlier diagnostics\n" * 500
+                  + "password=" + "PRIVATE_VALUE" * 500 + "\n"
+                  + "Authorization: Bearer private-bearer\n"
+                  + '"storePassword": "private-signing-password"\n'
+                  + "https://user:private-userinfo@example.invalid/path?sig=private-signature\n"
+                  + "-----BEGIN PRIVATE KEY-----\nprivate-key-body\n-----END PRIVATE KEY-----\n"
+                  + "final failure 100%\r\n")
+        with patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}), patch("builtins.print") as printed:
+            ci.annotate_command_failure(Path("compiler.log"), 1, output)
+        annotation = printed.call_args.args[0]
+        for secret in ("PRIVATE_VALUE", "private-bearer", "private-signing-password",
+                       "private-userinfo", "private-signature", "private-key-body"):
+            self.assertNotIn(secret, annotation)
+        decoded = annotation.removeprefix("::error::").replace("%0D", "\r").replace("%0A", "\n").replace("%25", "%")
+        self.assertLessEqual(len(decoded), 4100)
+        self.assertTrue(annotation.endswith("final failure 100%25%0D%0A"))
+
+    def test_successful_and_local_commands_do_not_emit_failure_annotations(self):
+        with tempfile.TemporaryDirectory() as directory:
+            log = Path(directory) / "build.log"
+
+            def succeeded(*args, **kwargs):
+                kwargs["stdout"].write("Build succeeded\n")
+                return subprocess.CompletedProcess(args[0], 0)
+
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}):
+                with patch.object(ci.subprocess, "run", side_effect=succeeded), patch("builtins.print") as printed:
+                    self.assertEqual(ci.run(["fixture-compiler"], log), "Build succeeded\n")
+            self.assertFalse(any(call.args[0].startswith("::error::") for call in printed.call_args_list))
+            with patch.dict(os.environ, {"GITHUB_ACTIONS": "false"}), patch("builtins.print") as printed:
+                ci.annotate_command_failure(log, 1, "Local failure")
+            printed.assert_not_called()
+
     def test_init_refusal_preserves_an_existing_successful_run(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "artifact"
@@ -26,11 +80,35 @@ class ApplicationPackageTests(unittest.TestCase):
             before = {p.relative_to(output): p.read_bytes() for p in output.rglob("*") if p.is_file()}
             argv = ["ci_app_build.py", "init", "--platform", "android", "--arch", "universal",
                     "--output-dir", str(output)]
-            with patch.object(sys, "argv", argv):
+            with patch.object(sys, "argv", argv), patch.object(ci, "annotate_command_failure") as annotate:
                 with self.assertRaisesRegex(RuntimeError, "Refusing to reuse existing application packages"):
                     ci.main()
+            annotate.assert_not_called()
             after = {p.relative_to(output): p.read_bytes() for p in output.rglob("*") if p.is_file()}
             self.assertEqual(after, before)
+
+    def test_main_validation_failure_emits_sanitized_annotation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "artifact"
+            (output / "reports").mkdir(parents=True)
+            manifest_path = output / "manifest.json"
+            ci.write_json(manifest_path, {"status": "pending", "packages": []})
+            argv = ["ci_app_build.py", "build", "--platform", "windows", "--arch", "x86_64",
+                    "--output-dir", str(output)]
+            error = ValueError("Missing native runtime 50%\npassword=private-fixture-value")
+            with patch.object(sys, "argv", argv), patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}):
+                with patch.object(ci, "build", side_effect=error), patch("builtins.print") as printed:
+                    with self.assertRaisesRegex(ValueError, "Missing native runtime"):
+                        ci.main()
+            annotations = [call.args[0] for call in printed.call_args_list
+                           if call.args[0].startswith("::error::")]
+            self.assertEqual(len(annotations), 1)
+            self.assertIn("build-failure.txt", annotations[0])
+            self.assertIn("Missing native runtime 50%25%0A", annotations[0])
+            self.assertNotIn("private-fixture-value", annotations[0])
+            self.assertNotIn("\n", annotations[0])
+            self.assertEqual(json.loads(manifest_path.read_text())["status"], "failed")
+            self.assertIn("Missing native runtime", (output / "reports/build-failure.txt").read_text())
 
     def test_sdk_fetch_preserves_release_tag_for_git_version_discovery(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -140,7 +218,7 @@ class ApplicationPackageTests(unittest.TestCase):
             expected["app"]["signingConfigs"] = []
             for product in expected["app"]["products"]:
                 product.pop("signingConfig", None)
-                product["compileSdkVersion"] = "26.0.0(26)"
+                product.pop("compileSdkVersion", None)
             # Fixtures use JSON, a JSON5 subset. Keep non-OHOS test runners free
             # of the parser installed only in the real OHOS build job.
             with patch.dict(sys.modules, {"json5": json}), patch.object(ci, "ROOT", root):
@@ -169,6 +247,69 @@ class ApplicationPackageTests(unittest.TestCase):
                             with self.assertRaisesRegex(RuntimeError, error):
                                 ci.unsigned_ohos_profile()
                 self.assertEqual(path.read_bytes(), before)
+
+    def test_macos_build_requires_ad_hoc_embedded_framework_signing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            args = argparse.Namespace(platform="macos", arch="x86_64", output=root / "artifact",
+                                      flutter_root=root / "sdk")
+            manifest = {}
+            with patch.object(ci, "ROOT", root), patch.object(ci, "collect"):
+                with patch.object(ci, "git_head", side_effect=[ci.CORE_COMMIT, ci.FLUTTER_COMMIT]):
+                    with patch.object(ci, "core_source_binding", return_value=(root, {})):
+                        with patch.object(ci, "run", return_value="") as run:
+                            ci.build(args, manifest)
+            build_call = next(call for call in run.call_args_list if "build" in call.args[0])
+            env = build_call.kwargs["env"]
+            self.assertEqual(env["FLUTTER_XCODE_CODE_SIGNING_REQUIRED"], "YES")
+            self.assertEqual(env["FLUTTER_XCODE_CODE_SIGN_IDENTITY"], "-")
+            self.assertEqual(env["FLUTTER_XCODE_CODE_SIGN_STYLE"], "Manual")
+
+    def test_macos_package_requires_deep_signature_verification(self):
+        for signed in (False, True):
+            with self.subTest(signed=signed), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                bundle = root / "build/macos/Build/Products/Release/QFLIScript.app"
+                for name in ("MacOS/QFLIScript", "Frameworks/FlutterMacOS.framework/FlutterMacOS",
+                             "Frameworks/App.framework/App"):
+                    path = bundle / "Contents" / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes(b"fixture Mach-O")
+                (bundle / "Contents/Info.plist").write_bytes(
+                    plistlib.dumps({"CFBundleExecutable": "QFLIScript"}))
+                output = root / "artifact"
+                (output / "reports").mkdir(parents=True)
+                args = argparse.Namespace(platform="macos", arch="x86_64", output=output)
+                manifest = {"packages": [], "application_package": False}
+
+                def inspect(command, log):
+                    if command[0] == "lipo":
+                        return "x86_64\n"
+                    if command[0] == "nm":
+                        return "\n".join("0000 T _" + symbol for symbols in ci.REQUIRED_EXPORTS.values()
+                                         for symbol in symbols)
+                    if command[:2] == ["codesign", "--verify"] and not signed:
+                        raise RuntimeError("App.framework is not signed at all")
+                    return "valid on disk\n"
+
+                with patch.object(ci, "ROOT", root), patch.object(ci, "inspect_assets", return_value=[]):
+                    with patch.object(ci, "run", side_effect=inspect) as run:
+                        if signed:
+                            ci.collect(args, manifest, root)
+                        else:
+                            with self.assertRaisesRegex(RuntimeError, "not signed at all"):
+                                ci.collect(args, manifest, root)
+                verify = next(call for call in run.call_args_list
+                              if call.args[0][:2] == ["codesign", "--verify"])
+                self.assertEqual(verify.args[0], ["codesign", "--verify", "--deep", "--strict",
+                                                "--verbose=2", bundle])
+                self.assertEqual(verify.args[1], output / "reports/codesign-verification.log")
+                self.assertEqual((output / "packages").exists(), signed)
+                self.assertEqual(manifest["application_package"], signed)
+                if signed:
+                    report = json.loads((output / "reports/package-inspection.json").read_text())[0]
+                    self.assertEqual(report["signing_verification"],
+                                     "deep_strict_verification_passed_not_notarized")
 
     def test_bridge_check_requires_debugger_and_cancellation_exports(self):
         with self.assertRaisesRegex(RuntimeError, "qfli_lua_debug_new"):

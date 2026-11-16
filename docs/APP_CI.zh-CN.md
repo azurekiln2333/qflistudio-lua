@@ -21,6 +21,7 @@ Android APK 覆盖 ARM64、ARMv7 和 x64。
 桌面压缩包包含运行库、Flutter 引擎和资源。
 请解压整个目录后启动应用。
 Apple 压缩包保留文件权限与符号链接。
+macOS 包通过深度签名检查后上传。
 Web 目录需要通过 HTTP 服务访问。
 
 每个 Artifact 包含以下内容：
@@ -69,7 +70,8 @@ CI 不使用本地修改过的 Flutter SDK。
 
 OHOS 使用 API26 完整命令行工具包。
 Flutter HAR 的自动填充接口要求 API26。
-编译 API 设为 26。
+云端配置使用工具包内置的编译 SDK。
+脚本删除云端配置中的 `compileSdkVersion`。
 目标 API 保持为 24。
 兼容 API 保持为 18。
 工具包来自 `ErBWs/ohos-sdk` 的第三方镜像。

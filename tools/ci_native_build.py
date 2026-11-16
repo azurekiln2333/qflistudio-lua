@@ -131,6 +131,7 @@ def build(args):
             shutil.copy2(library, output / "lib" / library.name)
         for header in (ROOT / "native/src/qfli_lua.h", ROOT / "native/script/qfli_script.h"):
             shutil.copy2(header, output / "include" / header.name)
+        shutil.copy2(ROOT / "LICENSE", output / "licenses/GPL-3.0.txt")
         shutil.copy2(ROOT / "native/script/quickjs/LICENSE", output / "licenses/QuickJS-LICENSE.txt")
         shutil.copy2(ROOT / "native/third_party/lua-5.4.8/doc/readme.html", output / "licenses/Lua-readme.html")
         manifest["status"] = "passed"

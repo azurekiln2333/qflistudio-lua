@@ -34,7 +34,6 @@ OHOS_PARTS = {
     "aa": "4321eb328558169e9531594139910a42b1c88057fb09f852be85ff2487e6adbc",
     "ab": "26e9ae251e761fbc9ec4e7ad780b5b291130e7824af2324167530941e11ad592",
 }
-OHOS_COMPILE_SDK_VERSION = "26.0.0(26)"
 MACHINES = {"x86_64": 62, "arm64": 183, "arm64-v8a": 183, "armeabi-v7a": 40}
 SIGNING = {
     "android": "debug_key_for_testing_not_store_release",
@@ -57,6 +56,33 @@ def write_json(path, value):
     path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def annotate_command_failure(log, returncode, output):
+    """Keep a bounded compiler diagnostic available through the checks API."""
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        return
+    # Exclude the command heading. Redact before truncation so a long credential
+    # cannot lose its identifying prefix and survive at the start of the tail.
+    tail = output.split("\n\n", 1)[-1] if output.startswith("Command: ") else output
+    tail = re.sub(r"(?s)-----BEGIN [^-]*PRIVATE KEY-----.*?-----END [^-]*PRIVATE KEY-----",
+                  "[private key redacted]", tail)
+    tail = re.sub(
+        r"(?im)^.*(?:authorization\s*:|\b(?:[a-z_]*password|[a-z_]*token|"
+        r"[a-z_]*secret|keypass|storepass|private[_-]?key)[\"']?\s*[:=]).*$",
+        "[sensitive diagnostic line redacted]", tail)
+
+    def redact_url(match):
+        value = match.group(0)
+        value = re.sub(r"(https?://)[^/@]+@", r"\1[redacted]@", value, flags=re.IGNORECASE)
+        return value.split("?", 1)[0] + ("?[redacted]" if "?" in value else "")
+
+    tail = re.sub(r"https?://[^\s<>\"']+", redact_url, tail, flags=re.IGNORECASE)
+    tail = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", "", tail)
+    message = f"Command failed ({returncode}); see {log.name}\n" + tail[-4000:]
+    # Escape data, in this order, to prevent output from becoming workflow commands.
+    message = message.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+    print("::error::" + message, flush=True)
+
+
 def run(command, log, *, cwd=ROOT, env=None, timeout=3600):
     """Keep the complete output and propagate a real command failure."""
     command = [str(part) for part in command]
@@ -73,6 +99,7 @@ def run(command, log, *, cwd=ROOT, env=None, timeout=3600):
             output = log.read_text(encoding="utf-8", errors="replace")
             print(output[-12000:], flush=True)
     if result.returncode:
+        annotate_command_failure(log, result.returncode, output)
         raise RuntimeError(f"Command failed ({result.returncode}); see {log.name}")
     # Exclude our command heading, for commands that print machine-readable JSON.
     return output.split("\n\n", 1)[1]
@@ -261,7 +288,8 @@ def setup_ohos(args, manifest):
     manifest["ohos_sdk"] = {"release": OHOS_SDK_RELEASE, "source": base,
                             "provenance": "third_party_repackaged_mirror",
                             "sha256": OHOS_SDK_SHA256, "metadata": metadata,
-                            "compile_sdk_version": OHOS_COMPILE_SDK_VERSION,
+                            "effective_compile_api": int(metadata["data"]["apiVersion"]),
+                            "compile_sdk_selection": "bundled_default",
                             "target_sdk_version": "6.1.1(24)",
                             "compatible_sdk_version": "5.1.0(18)"}
 
@@ -284,9 +312,9 @@ def unsigned_ohos_profile():
         if (product.get("targetSdkVersion") != "6.1.1(24)"
                 or product.get("compatibleSdkVersion") != "5.1.0(18)"):
             raise RuntimeError("Unexpected OHOS SDK targets; review instead of silently changing them")
-        # The pinned Flutter HAR references public API26 types. Compilation needs
-        # those declarations while target behavior and device compatibility stay fixed.
-        product["compileSdkVersion"] = OHOS_COMPILE_SDK_VERSION
+        # Hvigor selects the verified API26 SDK bundled with the command-line
+        # tools. An explicit numeric API conflicts with its DevEco version check.
+        product.pop("compileSdkVersion", None)
     path.write_text(json.dumps(profile, indent=2) + "\n", encoding="utf-8")
 
 
@@ -408,6 +436,7 @@ def inspect_desktop(bundle, args, core):
     names = ["bundle/" + p.relative_to(bundle).as_posix() for p in paths]
     assets = inspect_assets(names, lambda name: (bundle / name.removeprefix("bundle/")).read_bytes(), core)
     libraries = []
+    signing_verification = "not_applicable"
     if args.platform in ("windows", "linux"):
         windows = args.platform == "windows"
         required = (["qfli_lua.exe", "flutter_windows.dll", "data/app.so", "data/icudtl.dat"]
@@ -464,8 +493,16 @@ def inspect_desktop(bundle, args, core):
         libraries.append({"path": executable.relative_to(bundle).as_posix(),
                           "sha256": digest(executable), "architectures": architectures,
                           "verification": "both_linked_bridge_export_sets_checked"})
+        if args.platform == "macos":
+            run(["codesign", "--verify", "--deep", "--strict", "--verbose=2", bundle],
+                reports / "codesign-verification.log")
+            run(["codesign", "--display", "--verbose=4", bundle], reports / "codesign-identity.log")
+            signing_verification = "deep_strict_verification_passed_not_notarized"
+        else:
+            signing_verification = "unsigned_device_signing_required"
     return {"bundle": bundle.name, "libraries": libraries, "assets": assets,
-            "device_tests": "not_run", "runtime_tests": "not_run"}
+            "device_tests": "not_run", "runtime_tests": "not_run",
+            "signing_verification": signing_verification}
 
 
 def archive_directory(directory, destination):
@@ -554,7 +591,7 @@ def build(args, manifest):
     if args.platform == "macos":
         build_env.update({"FLUTTER_XCODE_ARCHS": args.arch, "FLUTTER_XCODE_ONLY_ACTIVE_ARCH": "YES",
                           "FLUTTER_XCODE_CODE_SIGN_IDENTITY": "-", "FLUTTER_XCODE_CODE_SIGN_STYLE": "Manual",
-                          "FLUTTER_XCODE_CODE_SIGNING_REQUIRED": "NO", "FLUTTER_XCODE_MACOSX_DEPLOYMENT_TARGET": "11.0"})
+                          "FLUTTER_XCODE_CODE_SIGNING_REQUIRED": "YES", "FLUTTER_XCODE_MACOSX_DEPLOYMENT_TARGET": "11.0"})
     run([flutter(args), "pub", "get"], reports / "pub-get.log", env=build_env)
     issues = []
     core, binding = core_source_binding(ROOT, issues)
@@ -659,6 +696,7 @@ def main():
             manifest["package_cleanup_error"] = str(cleanup_error)
             failure += "\nPackage invalidation error:\n" + traceback.format_exc()
         report = args.output / "reports" / f"{args.command}-failure.txt"
+        annotate_command_failure(report, 1, failure)
         report.parent.mkdir(parents=True, exist_ok=True)
         report.write_text(failure, encoding="utf-8")
         write_json(manifest_path, manifest)

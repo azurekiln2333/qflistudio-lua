@@ -30,8 +30,15 @@ Runtime version guards cannot make the missing types compile against API24.
 
 Use the same published Flutter pin with the fixed API26 command-line SDK
 release **26.0.0.821**. Keep application `targetSdkVersion: 6.1.1(24)` and
-`compatibleSdkVersion: 5.1.0(18)`. Set `compileSdkVersion: 26.0.0(26)` explicitly
-in the unsigned profile generated only inside the clean cloud checkout.
+`compatibleSdkVersion: 5.1.0(18)`. Omit `compileSdkVersion` from the unsigned
+profile generated only inside the clean cloud checkout. The fixed bundle and
+its checked API26 metadata establish the default compilation SDK.
+
+Actual run 43950009629 invalidated the earlier suggestion to explicitly set
+`26.0.0(26)`: Hvigor error 00303313 parsed it as configured version 26, incompatible
+with DevEco version 26.0.0. The tool's own diagnostic instructs HarmonyOS projects
+to omit that field and use the bundled SDK. Evidence: the complete run log ZIP,
+OHOS job 133589672672, build-hap log. Preserve explicit target24/compatible18.
 
 The official SDK-bundled Hvigor schema supports independent versions:
 

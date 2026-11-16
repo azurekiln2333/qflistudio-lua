@@ -58,3 +58,33 @@ Bundle directories must retain Flutter engine, data and plugin files. Uploading 
 ## Evidence limits
 
 This audit read sources and committed core files. It did not build full applications. Existing nine-platform native CI proves the libraries can compile, but does not establish application packaging, signing or startup. Mobile device execution remains distinct from packaging.
+
+## Apple cloud findings (2026-11-17)
+
+Application run `43950009629`, source `3348b1b`, established these results:
+
+- iOS ARM64 built the real `lib/main.dart` into unsigned `Runner.app` (45.3 MB).
+  Runner, App.framework and Flutter.framework were ARM64. All required Lua
+  debugger/cancellation symbols and six Script bridge exports survived Release
+  stripping. Artifact `14269320646` is 14,534,391 bytes, with uploaded ZIP SHA256
+  `81c04ede7c6dedf9b46e2669f32a2beeb45496e6586b46f2e2cb93dcf4bb902f`.
+- macOS ARM64 built `QFLIScript.app` (50.4 MB). Runner, App.framework and
+  FlutterMacOS.framework were ARM64; both runtime export checks passed. Artifact
+  `14267619207` is 16,401,842 bytes, with uploaded ZIP SHA256
+  `ea3fe1cb868713357903edaa833d9ccbbb0ae7f8c543e078491a0aa9da5d2d28`.
+- macOS x64 compiled the application C sources, then failed in Xcode CodeSign:
+  `Contents/Frameworks/App.framework` was not signed. No successful x64 package
+  was published. The ARM64 job did not yet run a deep signature verification.
+
+The x64 failure came from CI's `FLUTTER_XCODE_CODE_SIGNING_REQUIRED=NO` combined
+with outer-app ad-hoc signing. In the fixed Flutter SDK's
+`packages/flutter_tools/bin/xcode_backend.dart`, lines 293-297 require
+`CODE_SIGNING_REQUIRED != 'NO'` before signing embedded macOS frameworks. Lines
+311-316 sign App.framework and FlutterMacOS.framework only when that condition
+holds. The fix is to use `CODE_SIGNING_REQUIRED=YES`, keep identity `-` and
+Manual style, and verify the finished bundle with
+`codesign --verify --deep --strict --verbose=2` before staging. This needs a fresh
+cloud run for both macOS architectures. Ad-hoc signing is not notarization.
+
+These successful package checks do not establish application startup or physical
+device execution. Local downloaded logs are under `build/app-ci/apple-*-third.log`.

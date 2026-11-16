@@ -13,7 +13,9 @@ with SHA256 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986.
 - Six Script/QuickJS sources per Runner, source paths, object IDs, macro escaping,
   Apple API visibility and existing non-global stripping were checked.
 - Dart format and targeted analysis passed. Script toolchain tests passed 16/16.
-- No actual Xcode compile or application startup has been performed yet.
+- Actual Xcode compilation and package checks passed for iOS and macOS ARM64 in
+  run 43950009629. The Intel build compiled but failed embedded framework signing.
+  No application startup or device acceptance has been performed.
 
 ## CI and Web implementation
 
@@ -24,7 +26,8 @@ with SHA256 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986.
 - The local Windows Chrome test compiled but could not start: Flutter's CanvasKit
   route converts URL slashes to Windows backslashes before a slash-prefix check.
   The required JS/WASM files exist locally and in the fixed SDK archive. This is
-  an environment failure, not a passing browser test. Linux CI will run Chrome.
+  an environment failure, not a passing browser test. Linux CI subsequently passed
+  all twelve model/widget tests and the real Chrome persistence test.
 - Browser source import/download has not received end-to-end file-picker evidence.
 - A headless Chrome screenshot of the actual local release bundle showed the
   editor, source contents, file controls and disabled native actions. CanvasKit
@@ -34,9 +37,10 @@ with SHA256 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986.
 
 ## Remaining verification
 
-Cloud application jobs and Web storage/browser checks remain pending. Local SDK
-and shared-core worktrees have unrelated changes; local tests do not establish
-the reproducible pinned cloud build.
+Windows, OHOS and macOS Intel need another cloud run after the concrete third-run
+compiler/configuration/signing fixes. Android, Linux, Web, iOS and macOS ARM64
+have passed from pinned public inputs. See cloud-runs.md for per-artifact evidence.
+Local SDK and shared-core worktrees have unrelated changes and are not CI inputs.
 
 First cloud run: 43945934915, source c95351adda65b83eee650f39590418973478b945.
 All implementation commits were pushed to github/ci/native-all-platforms.
@@ -81,3 +85,10 @@ The earlier successful native Linux artifact was downloaded locally. Its manifes
 matches source 560eea3841dc78d89551c62f7a550f51565f2eb8 and run 43925767369. Both
 runtime libraries, headers and test reports are present; all 17 checksum entries
 match the ZIP contents. Other native artifacts were not downloaded in this check.
+
+Third-run fixes passed independent review and 22 helper tests. They load MSVC
+CRT declarations before UTF-8 macros, keep macOS ad-hoc signing required and verify
+the whole bundle, and let the verified HarmonyOS SDK choose its compilation API.
+Native packages now include the root GPL text. Bounded, escaped error summaries
+also appear in GitHub annotations to keep compiler evidence accessible when the
+separate storage endpoint is unavailable. Actual cloud validation remains required.

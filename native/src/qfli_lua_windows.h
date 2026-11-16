@@ -2,6 +2,9 @@
 #define QFLI_LUA_WINDOWS_H
 
 #include <stdio.h>
+/* MSVC also declares remove/rename in io.h. Load those declarations before
+ * redirecting calls so the macros cannot rewrite imported CRT declarations. */
+#include <io.h>
 
 FILE *qfli_utf8_fopen(const char *filename, const char *mode);
 FILE *qfli_utf8_freopen(const char *filename, const char *mode, FILE *stream);
