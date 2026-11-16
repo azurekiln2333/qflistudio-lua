@@ -197,7 +197,9 @@ android/ ios/ linux/ macos/ ohos/ web/ windows/   Platform projects
 
 ## License
 
-The repository root has no LICENSE file.
+The repository code is licensed under GNU GPL v3.0.
+Content with a separate license retains that license.
+See [LICENSE](LICENSE) for the full text.
 
 Lua 5.4.8 uses the MIT license.
 The original license stays in `native/third_party/lua-5.4.8/`.

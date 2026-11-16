@@ -182,7 +182,9 @@ android/ ios/ linux/ macos/ ohos/ web/ windows/   平台项目
 
 ## 许可证
 
-本仓库根目录没有 LICENSE 文件。
+本仓库代码采用 GNU GPL v3.0 许可证。
+单独声明许可证的内容沿用原许可证。
+许可证全文见 [LICENSE](LICENSE)。
 
 Lua 5.4.8 使用 MIT 许可。原始许可保留在 `native/third_party/lua-5.4.8/`。
 QuickJS 使用 MIT 许可。许可文件在 `native/script/quickjs/LICENSE`。

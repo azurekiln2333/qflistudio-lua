@@ -182,7 +182,9 @@ android/ ios/ linux/ macos/ ohos/ web/ windows/   平台專案
 
 ## 授權
 
-本倉庫根目錄沒有 LICENSE 檔。
+本倉庫程式碼採用 GNU GPL v3.0 授權。
+單獨聲明授權的內容沿用原授權。
+授權全文見 [LICENSE](LICENSE)。
 
 Lua 5.4.8 使用 MIT 授權。原始授權保留在 `native/third_party/lua-5.4.8/`。
 QuickJS 使用 MIT 授權。授權檔在 `native/script/quickjs/LICENSE`。
