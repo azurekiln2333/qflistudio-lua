@@ -1,0 +1,153 @@
+name: Full applications
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, 'ci/native-*', 'ci/apps-*']
+    paths:
+      - '.github/workflows/apps.yml'
+      - 'tools/ci_app_build.py'
+      - 'tools/test_ci_app_build.py'
+      - 'tools/inspect_lua_hap.py'
+      - 'lib/**'
+      - 'assets/**'
+      - 'native/**'
+      - 'android/**'
+      - 'ios/**'
+      - 'linux/**'
+      - 'macos/**'
+      - 'ohos/**'
+      - 'web/**'
+      - 'windows/**'
+      - 'pubspec.*'
+  pull_request:
+    paths:
+      - '.github/workflows/apps.yml'
+      - 'tools/ci_app_build.py'
+      - 'tools/test_ci_app_build.py'
+      - 'tools/inspect_lua_hap.py'
+      - 'lib/**'
+      - 'assets/**'
+      - 'native/**'
+      - 'android/**'
+      - 'ios/**'
+      - 'linux/**'
+      - 'macos/**'
+      - 'ohos/**'
+      - 'web/**'
+      - 'windows/**'
+      - 'pubspec.*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: apps-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: App / ${{ matrix.platform }} / ${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {platform: windows, arch: x86_64, runner: windows-2025}
+          - {platform: linux, arch: x86_64, runner: ubuntu-24.04}
+          - {platform: macos, arch: arm64, runner: macos-26}
+          - {platform: macos, arch: x86_64, runner: macos-15-intel}
+          - {platform: android, arch: universal, runner: ubuntu-24.04}
+          - {platform: ios, arch: arm64, runner: macos-15-intel}
+          - {platform: ohos, arch: arm64-v8a, runner: ubuntu-24.04}
+          - {platform: web, arch: browser, runner: ubuntu-24.04}
+    defaults:
+      run:
+        shell: bash
+        working-directory: qfli_lua
+    env:
+      QFLI_PLATFORM: ${{ matrix.platform }}
+      QFLI_ARCH: ${{ matrix.arch }}
+      FLUTTER_SUPPRESS_ANALYTICS: 'true'
+      FLUTTER_STORAGE_BASE_URL: https://storage.googleapis.com
+      FLUTTER_OHOS_STORAGE_BASE_URL: https://flutter-ohos.obs.cn-south-1.myhuaweicloud.com
+      PUB_HOSTED_URL: https://pub.dev
+      PYTHONUTF8: '1'
+    steps:
+      - name: Check out application source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: qfli_lua
+          persist-credentials: false
+      - name: Check out the pinned shared core
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: azurekiln2333/qflistudio-core
+          ref: 573d1b6eecf1c2b392ad753264a5a09f62f8335e
+          path: qfli_studio_core
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13'
+      - name: Initialize build evidence
+        run: python tools/ci_app_build.py init
+      - name: Verify package failure boundaries
+        run: |
+          python -m unittest discover -s tools -p test_ci_app_build.py -v 2>&1 \
+            | tee "build/app-artifacts/app-$QFLI_PLATFORM-$QFLI_ARCH/reports/ci-helper-tests.log"
+      - name: Install Linux application build tools
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev libstdc++-12-dev
+      - name: Provision Java for Android and OHOS
+        if: matrix.platform == 'android' || matrix.platform == 'ohos'
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install the OHOS profile parser
+        if: matrix.platform == 'ohos'
+        run: python -m pip install --disable-pip-version-check json5==0.12.1
+      - name: Download and verify the API24 OHOS command-line SDK
+        if: matrix.platform == 'ohos'
+        run: python tools/ci_app_build.py setup-ohos
+      - name: Bootstrap the pinned Flutter-OH SDK
+        run: python tools/ci_app_build.py setup-flutter
+      - name: Provision the modern Windows native compiler
+        if: matrix.platform == 'windows'
+        uses: msys2/setup-msys2@ec48f7c5447b3140e2b088413ae3a55687bccb6e # v2.33.0
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-python
+      - name: Build and test the Windows Script prerequisite
+        if: matrix.platform == 'windows'
+        shell: msys2 {0}
+        run: |
+          python tools/ci_native_build.py build \
+            --platform windows --arch x86_64 \
+            --build-dir native/build/script-windows \
+            --output-dir build/app-artifacts/app-windows-x86_64/reports/native-prerequisite \
+            -- -DCMAKE_C_COMPILER=gcc '-DCMAKE_SHARED_LINKER_FLAGS=-static -static-libgcc'
+      - name: Build the real application and inspect its complete package
+        run: python tools/ci_app_build.py build
+      - name: Finalize diagnostics and checksums
+        if: always()
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: python tools/ci_app_build.py finalize --job-status "$JOB_STATUS"
+      - name: Upload application packages and reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: app-${{ matrix.platform }}-${{ matrix.arch }}
+          path: qfli_lua/build/app-artifacts/app-${{ matrix.platform }}-${{ matrix.arch }}/
+          if-no-files-found: warn
+          retention-days: 14
+          compression-level: 0

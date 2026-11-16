@@ -103,6 +103,13 @@ captured output emitted before cancellation and the real status.
 All selected ABIs need `libqfli_script` alongside Lua and Flutter. Native-only
 legacy GCC/MSVC can build Lua alone; Windows app packaging must require an
 explicit modern-compiler Script DLL or fail with the build prerequisite.
+Apple application Runner targets compile the Script bridge and all five retained
+QuickJS implementation files directly, alongside Lua. Set QuickJS configuration
+and include paths per source, preserving C11 and non-global stripping. The public
+bridge declarations retain Apple used/default visibility despite hidden QuickJS
+symbols. iOS resolves process symbols; macOS checks process symbols before its
+existing dylib fallback. Native-only CMake libraries and application embedding
+are separate build paths and both require actual target verification.
 Retained hash-pinned runtime/compiler inputs must use nested Git attributes
 with `-text`, including QuickJS and `assets/runtime`. Preserve upstream bytes
 and license notices rather than trimming their whitespace. A worktree hash is

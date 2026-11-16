@@ -9,7 +9,8 @@ The product name is QFLIScript.
 The app runs Lua, JavaScript, TypeScript and Shell code.
 Lua ships with the app.
 JavaScript and TypeScript require the packaged Script bridge.
-The Apple projects and the default MSVC build do not include that bridge.
+The iOS and macOS projects include Lua and Script bridge sources.
+The default MSVC build does not compile the Script bridge.
 Shell requires an available system shell.
 
 This repository is a standalone Git repository.
@@ -179,6 +180,7 @@ See [`tools/build_ohos_audit.ps1`](tools/build_ohos_audit.ps1).
 Package inspection stays separate from device execution.
 
 Build details are in [`native/README.md`](native/README.md).
+Full application builds and downloads are described in [the GitHub build guide](docs/APP_CI.zh-CN.md).
 
 ## Layout
 
@@ -229,8 +231,9 @@ Target device acceptance remains open.
 A full target acceptance still needs a fresh run slot.
 Content verification runs on the host. That is host evidence, not device evidence.
 A full Windows app build requires Visual Studio.
-An Apple build requires Xcode. Apple targets compile the Lua bridge.
-Script engine packaging for Apple is not verified.
+An Apple build requires Xcode.
+Apple application compilation and runtime validation are recorded separately.
+Apple application packaging has not yet been verified.
 A Linux build requires a usable Linux environment.
 This Windows host did not run those platform builds.
 The Android packaging result is in the

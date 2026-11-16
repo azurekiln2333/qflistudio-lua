@@ -8,8 +8,8 @@
 App 執行 Lua、JavaScript、TypeScript 與 Shell 程式碼。
 Lua 引擎隨 App 打包。使用者不需要安裝系統 Lua。
 JavaScript 與 TypeScript 需要 Script 橋接庫。
-Apple 專案不含 Script 橋接庫。
-預設 MSVC 建置也不含此庫。
+iOS 和 macOS 專案已接入 Lua 與 Script 橋接原始碼。
+預設 MSVC 建置不編譯 Script 橋接庫。
 Shell 不是內建引擎。它使用系統 shell。
 
 本倉庫是獨立的 Git 倉庫。請把 `qfli_studio_core` 放在同一層目錄。
@@ -164,6 +164,7 @@ OHOS 建置指令稿是 `tools/build_ohos_audit.ps1`。
 該指令稿保留套件摘要與檢查報告。
 
 建置細節見 [`native/README.md`](native/README.md)。
+應用建置與下載見 [GitHub 建置指南](docs/APP_CI.zh-CN.md)。
 
 ## 目錄
 
@@ -216,9 +217,10 @@ OHOS 原生探針為 `not_evaluated`。
 一次完整的目標驗收仍待新的執行時段。
 內容驗證在主機執行。這是主機證據，不是裝置證據。
 Windows 完整 App 需要 Visual Studio。
-Apple 建置需要 Xcode。Apple 只編譯 Lua 橋接。
+Apple 建置需要 Xcode。
+Apple 應用編譯與執行驗證分開記錄。
 Linux 建置需要可用的 Linux 環境。
 這台 Windows 主機沒有執行上述平台建置。
-Script 引擎的 Apple 打包尚未驗證。
+Apple 應用打包尚未完成驗證。
 Android 封裝結果見
 [平台驗證紀錄](.trellis/tasks/10-01-native-platforms/verification.md)。
