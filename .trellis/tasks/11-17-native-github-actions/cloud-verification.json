@@ -1,0 +1,172 @@
+{
+  "run": {
+    "id": 43925767369,
+    "name": "Native libraries",
+    "status": "completed",
+    "conclusion": "success",
+    "head_branch": "ci/native-all-platforms",
+    "head_sha": "560eea3841dc78d89551c62f7a550f51565f2eb8",
+    "html_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43925767369",
+    "created_at": "2026-11-16T18:08:57Z",
+    "updated_at": "2026-11-16T18:19:56Z"
+  },
+  "jobs": [
+    {
+      "id": 133504671404,
+      "name": "OHOS / arm64-v8a + x86_64",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43925767369/job/133504671404",
+      "started_at": "2026-11-16T18:09:00Z",
+      "completed_at": "2026-11-16T18:10:57Z"
+    },
+    {
+      "id": 133504671564,
+      "name": "Android / armeabi-v7a",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43925767369/job/133504671564",
+      "started_at": "2026-11-16T18:09:01Z",
+      "completed_at": "2026-11-16T18:10:30Z"
+    },
+    {
+      "id": 133504671605,
+      "name": "macos / arm64",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43925767369/job/133504671605",
+      "started_at": "2026-11-16T18:19:02Z",
+      "completed_at": "2026-11-16T18:19:56Z"
+    },
+    {
+      "id": 133504671607,
+      "name": "windows / x86_64",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43925767369/job/133504671607",
+      "started_at": "2026-11-16T18:09:00Z",
+      "completed_at": "2026-11-16T18:11:03Z"
+    },
+    {
+      "id": 133504671646,
+      "name": "linux / x86_64",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43925767369/job/133504671646",
+      "started_at": "2026-11-16T18:09:00Z",
+      "completed_at": "2026-11-16T18:09:43Z"
+    },
+    {
+      "id": 133504671664,
+      "name": "Android / arm64-v8a",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43925767369/job/133504671664",
+      "started_at": "2026-11-16T18:09:00Z",
+      "completed_at": "2026-11-16T18:09:54Z"
+    },
+    {
+      "id": 133504671669,
+      "name": "Android / x86_64",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43925767369/job/133504671669",
+      "started_at": "2026-11-16T18:09:00Z",
+      "completed_at": "2026-11-16T18:10:02Z"
+    },
+    {
+      "id": 133504671796,
+      "name": "iOS / device + simulator",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43925767369/job/133504671796",
+      "started_at": "2026-11-16T18:09:01Z",
+      "completed_at": "2026-11-16T18:11:06Z"
+    },
+    {
+      "id": 133504672067,
+      "name": "macos / x86_64",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43925767369/job/133504672067",
+      "started_at": "2026-11-16T18:09:01Z",
+      "completed_at": "2026-11-16T18:10:11Z"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14257710865,
+      "name": "native-macos-arm64",
+      "size_in_bytes": 633856,
+      "digest": "sha256:fee638782855c67ef099d7ba40babe4e1bee315c1d003c429795cb4f758fbc82",
+      "expired": false,
+      "expires_at": "2026-11-30T18:19:51Z"
+    },
+    {
+      "id": 14256906089,
+      "name": "native-android-armeabi-v7a",
+      "size_in_bytes": 2244997,
+      "digest": "sha256:1480ca6b084ebc8846a44e45364681a568d1e3cb1033ed828bfc069cf3b65207",
+      "expired": false,
+      "expires_at": "2026-11-30T18:10:24Z"
+    },
+    {
+      "id": 14256486356,
+      "name": "native-android-arm64-v8a",
+      "size_in_bytes": 2360640,
+      "digest": "sha256:ed99654ecbd1f4c862efcf19d3651978ad5059268ae884e7dd0f6607bc632ce9",
+      "expired": false,
+      "expires_at": "2026-11-30T18:09:51Z"
+    },
+    {
+      "id": 14256201395,
+      "name": "native-android-x86_64",
+      "size_in_bytes": 2472893,
+      "digest": "sha256:0750048d5aede103197d55cfca5eb35eea270fd7e044d19dcf3e0a775a9b07c9",
+      "expired": false,
+      "expires_at": "2026-11-30T18:09:56Z"
+    },
+    {
+      "id": 14255846714,
+      "name": "native-ohos",
+      "size_in_bytes": 1364049,
+      "digest": "sha256:6b06e3eb5312c664405f5303f721acb0cb21892c8c04e5abd7db1b848d95c754",
+      "expired": false,
+      "expires_at": "2026-11-30T18:10:52Z"
+    },
+    {
+      "id": 14255827040,
+      "name": "native-macos-x86_64",
+      "size_in_bytes": 668756,
+      "digest": "sha256:f69529d1e4df9429349123a7e180d0d6794db893f6676a8d289c0ba802383303",
+      "expired": false,
+      "expires_at": "2026-11-30T18:10:02Z"
+    },
+    {
+      "id": 14255702367,
+      "name": "native-windows-x86_64",
+      "size_in_bytes": 939203,
+      "digest": "sha256:6cab421e86be23d916f635b3513d6b7302b129633c7a80e25c1b5116175a3f6b",
+      "expired": false,
+      "expires_at": "2026-11-30T18:10:54Z"
+    },
+    {
+      "id": 14255567387,
+      "name": "native-linux-x86_64",
+      "size_in_bytes": 767182,
+      "digest": "sha256:896d08e497c4bac05defd1a6f0ec9a63127a5930c10235d64d94baae792435fb",
+      "expired": false,
+      "expires_at": "2026-11-30T18:09:39Z"
+    },
+    {
+      "id": 14255124487,
+      "name": "native-ios",
+      "size_in_bytes": 4308065,
+      "digest": "sha256:1a047b6624b9108a08e9e5161eeb2776a3cd9137ef242c78bd3d8ecc4a0fa324",
+      "expired": false,
+      "expires_at": "2026-11-30T18:10:58Z"
+    }
+  ],
+  "evidence_scope": "Native build and inspection; desktop runtime tests. No full application packages or mobile device execution.",
+  "download_verification": "GitHub reports nine successful artifact uploads. Local artifact retrieval was blocked by TLS to Azure Blob storage; job logs were retrievable."
+}
