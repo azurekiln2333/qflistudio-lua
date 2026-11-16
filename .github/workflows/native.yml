@@ -34,7 +34,7 @@ jobs:
         include:
           - {platform: linux, arch: x86_64, runner: ubuntu-24.04}
           - {platform: windows, arch: x86_64, runner: windows-2025}
-          - {platform: macos, arch: arm64, runner: macos-15}
+          - {platform: macos, arch: arm64, runner: macos-26}
           - {platform: macos, arch: x86_64, runner: macos-15-intel}
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 25
@@ -67,10 +67,15 @@ jobs:
           TARGET_PLATFORM: ${{ matrix.platform }}
           TARGET_ARCH: ${{ matrix.arch }}
         run: |
+          args=()
+          if [[ "$TARGET_PLATFORM" == macos ]]; then
+            args+=('-DCMAKE_OSX_DEPLOYMENT_TARGET=11.0')
+          fi
           python tools/ci_native_build.py build \
             --platform "$TARGET_PLATFORM" --arch "$TARGET_ARCH" \
             --build-dir build/native-ci/host \
-            --output-dir "build/native-artifacts/native-$TARGET_PLATFORM-$TARGET_ARCH"
+            --output-dir "build/native-artifacts/native-$TARGET_PLATFORM-$TARGET_ARCH" \
+            -- "${args[@]}"
       - name: Build, inspect and test both Windows runtimes
         if: runner.os == 'Windows'
         shell: msys2 {0}
@@ -104,16 +109,32 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: '3.13'
-      - name: Install native toolchain
+      - name: Download and verify the pinned Android NDK
+        env:
+          TARGET_ABI: ${{ matrix.abi }}
+          NDK_URL: https://dl.google.com/android/repository/android-ndk-r27-linux.zip
+          # Google's r27 release and repository2-1.xml publish this SHA1.
+          NDK_SHA1: 5e5cd517bdb98d7e0faf2c494a3041291e71bdcc
         run: |
+          reports="build/native-artifacts/native-android-$TARGET_ABI/reports"
+          mkdir -p "$reports"
+          exec > >(tee "$reports/setup.log") 2>&1
           sudo apt-get update
-          sudo apt-get install -y ninja-build
-          sdkmanager "ndk;$NDK_VERSION"
+          sudo apt-get install -y ninja-build unzip
+          archive="$RUNNER_TEMP/android-ndk-r27-linux.zip"
+          curl --fail --silent --show-error --location --retry 3 --max-time 600 "$NDK_URL" -o "$archive"
+          echo "$NDK_SHA1  $archive" | sha1sum --check
+          sha256sum "$archive" > "$reports/ndk-download.sha256"
+          unzip -q "$archive" -d "$RUNNER_TEMP/qfli-android-ndk"
+          ndk="$RUNNER_TEMP/qfli-android-ndk/android-ndk-r27"
+          grep -F "Pkg.Revision = $NDK_VERSION" "$ndk/source.properties"
+          cp "$ndk/source.properties" "$reports/ndk-source.properties"
+          echo "QFLI_ANDROID_NDK=$ndk" >> "$GITHUB_ENV"
       - name: Cross-compile and inspect both runtimes
         env:
           TARGET_ABI: ${{ matrix.abi }}
         run: |
-          ndk="$ANDROID_SDK_ROOT/ndk/$NDK_VERSION"
+          ndk="$QFLI_ANDROID_NDK"
           bin="$ndk/toolchains/llvm/prebuilt/linux-x86_64/bin"
           python tools/ci_native_build.py build \
             --platform android --arch "$TARGET_ABI" \
@@ -146,9 +167,10 @@ jobs:
           SDK_URL: https://repo.huaweicloud.com/openharmony/os/5.1.0-Release/ohos-sdk-windows_linux-public.tar.gz
           SDK_SHA256: 8c1f97df34812e45fa4f0e3275987b261e80622abb7c51392bb063f853451344
         run: |
+          mkdir -p "$RUNNER_TEMP/ohos-sdk" build/native-artifacts/native-ohos/reports
+          exec > >(tee build/native-artifacts/native-ohos/reports/setup.log) 2>&1
           sudo apt-get update
           sudo apt-get install -y ninja-build unzip
-          mkdir -p "$RUNNER_TEMP/ohos-sdk" build/native-artifacts/native-ohos/reports
           curl --fail --location --retry 3 "$SDK_URL" -o "$RUNNER_TEMP/ohos-sdk.tar.gz"
           echo "$SDK_SHA256  $RUNNER_TEMP/ohos-sdk.tar.gz" | sha256sum --check \
             | tee build/native-artifacts/native-ohos/reports/sdk-checksum.txt
@@ -183,7 +205,7 @@ jobs:
 
   ios:
     name: iOS / device + simulator
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
