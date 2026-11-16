@@ -77,7 +77,11 @@ Repeat for Script. Static archives do not establish FFI symbol retention in the 
 
 ## Android
 
-Project pins NDK `27.0.12077973`. Native CMake can use its `build/cmake/android.toolchain.cmake` independently of Gradle. Use ABI matrix `armeabi-v7a`, `arm64-v8a`, `x86_64`, `ANDROID_PLATFORM=android-21`, and `ANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON`. Both runtime libraries are output for each ABI. Cross compilation and ELF export inspection do not establish device runtime tests.
+Project pins NDK `27.0.12077973`. Native CMake can use its `build/cmake/android.toolchain.cmake` independently of Gradle. Use ABI matrix `armeabi-v7a`, `arm64-v8a`, `x86_64`, `ANDROID_PLATFORM=android-24`, and `ANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON`. Both runtime libraries are output for each ABI. Cross compilation and ELF export inspection do not establish device runtime tests.
+
+The second Actions attempt exposed the incorrect initial API21 assumption on ARM32. Lua lprefix.h enables `_FILE_OFFSET_BITS=64`; NDK27 stdio.h only declares the corresponding fseeko/ftello functions from API24 on 32-bit targets. The actual Flutter SDK Kotlin FlutterExtension selects minSdk24, and existing merged/packaged app manifests confirm 24. Align CI with the application instead of changing Lua or disabling large-file support.
+
+The first Actions attempt showed `sdkmanager: command not found`. Download the pinned NDK directly from `https://dl.google.com/android/repository/android-ndk-r27-linux.zip`. Google's release and repository2-1.xml publish SHA1 `5e5cd517bdb98d7e0faf2c494a3041291e71bdcc` (663957918 bytes), not a SHA256. Verify that official digest, record the downloaded SHA256, and check source.properties for 27.0.12077973. Keep setup logs in artifacts even when provisioning fails.
 
 ## Suggested artifacts
 

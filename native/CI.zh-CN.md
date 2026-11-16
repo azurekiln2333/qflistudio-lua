@@ -17,6 +17,9 @@
 
 桌面测试会加载实际编译的库。
 移动平台的编译成功不代表设备测试通过。
+Android 库要求 API 24 或更高版本。
+macOS 库要求 macOS 11 或更高版本。
+iOS 静态库的部署目标为 iOS 13。
 OHOS 使用 OpenHarmony API 18 的公开 SDK。
 它不验证华为 HarmonyOS 的 HAP 打包。
 Web 不使用这些原生库。

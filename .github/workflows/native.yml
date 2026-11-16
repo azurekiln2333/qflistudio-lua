@@ -136,13 +136,14 @@ jobs:
         run: |
           ndk="$QFLI_ANDROID_NDK"
           bin="$ndk/toolchains/llvm/prebuilt/linux-x86_64/bin"
+          # Match the app minimum; 32-bit Lua large-file APIs require API 24.
           python tools/ci_native_build.py build \
             --platform android --arch "$TARGET_ABI" \
             --build-dir "build/native-ci/android-$TARGET_ABI" \
             --output-dir "build/native-artifacts/native-android-$TARGET_ABI" \
             --readelf "$bin/llvm-readelf" --nm "$bin/llvm-nm" \
             -- "-DCMAKE_TOOLCHAIN_FILE=$ndk/build/cmake/android.toolchain.cmake" \
-            "-DANDROID_ABI=$TARGET_ABI" -DANDROID_PLATFORM=android-21 \
+            "-DANDROID_ABI=$TARGET_ABI" -DANDROID_PLATFORM=android-24 \
             -DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON
       - name: Upload libraries and inspection reports
         if: always()
@@ -205,7 +206,7 @@ jobs:
 
   ios:
     name: iOS / device + simulator
-    runs-on: macos-26
+    runs-on: macos-15-intel
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
