@@ -233,7 +233,10 @@ Content verification runs on the host. That is host evidence, not device evidenc
 A full Windows app build requires Visual Studio.
 An Apple build requires Xcode.
 Apple application compilation and runtime validation are recorded separately.
-Apple application packaging has not yet been verified.
+GitHub run 43954515357 passed all eight application jobs across seven platforms.
+Both macOS bundles passed deep signature verification with ad-hoc signatures.
+iOS and OHOS packages are unsigned. Device startup remains unverified.
+Download packages and inspect the limits in [the GitHub build guide](docs/APP_CI.zh-CN.md).
 A Linux build requires a usable Linux environment.
 This Windows host did not run those platform builds.
 The Android packaging result is in the

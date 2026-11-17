@@ -88,3 +88,40 @@ cloud run for both macOS architectures. Ad-hoc signing is not notarization.
 
 These successful package checks do not establish application startup or physical
 device execution. Local downloaded logs are under `build/app-ci/apple-*-third.log`.
+
+## Final Apple cloud and downloaded-artifact verification
+
+Run `43954515357`, source `6cb5aa99ddef523678d7bd996a237347e40295ca`, completed
+all three Apple application jobs successfully. Both macOS architectures now pass
+`codesign --verify --deep --strict --verbose=2`, including the embedded App,
+FlutterMacOS and plugin frameworks. Identity reports show `Signature=adhoc` and
+`TeamIdentifier=not set`. No notarization or distribution identity is claimed.
+iOS remains an unsigned device application.
+
+| Artifact | ID | Downloaded ZIP bytes | SHA256 |
+| --- | --- | ---: | --- |
+| app-macos-x86_64 | 14271333403 | 17219312 | aba38fe007090ff7bd0a43a15a9f62aeda3a1da1f8a435894330f739b2749b57 |
+| app-macos-arm64 | 14274457499 | 16268558 | eb113c2abece04f363680e0c5803f6c34528d9ac82e51e95f29c41a591c8e9fa |
+| app-ios-arm64 | 14272474877 | 14537457 | b6b5042cf7dea56979384f4dee14510f7af153c0256c7ee217c543b9c75a1e91 |
+
+All three ZIPs were downloaded locally. Their digests and sizes match GitHub API
+metadata and upload logs. Every SHA256SUMS entry was recomputed (32 per macOS
+artifact, 29 for iOS), and the checksum manifest covers every ZIP file except
+itself. Source/core/run identities, passed status, real entrypoint and release
+mode match the expected build. Each artifact contains the exact 35,149-byte GPL
+text and retained third-party notices.
+
+The nested application tarballs match their manifest sizes and hashes. Each
+macOS tarball retains 12 framework symlinks; every target resolves inside its
+bundle. All three main binaries and six framework binaries retain executable
+modes. Direct Mach-O header inspection confirms the requested architecture for
+Runner, App and Flutter in each package, including single-slice fat headers.
+Packaged binary hashes match the cloud inspection reports. Each package's nine
+asset receipts match the tar payload, and all 27 required Lua/Script bridge
+symbols are present in the hash-bound export report.
+
+Local evidence: `build/app-ci/apple-fourth-artifact-verification.json`.
+Cloud logs: `build/app-ci/apple-*-fourth.log`.
+Signature commands were executed on the cloud Macs; local Windows verification
+checked those reports and their package binding. Application startup and device
+execution remain untested, as declared in every manifest.

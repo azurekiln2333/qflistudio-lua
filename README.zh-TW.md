@@ -221,6 +221,11 @@ Apple 建置需要 Xcode。
 Apple 應用編譯與執行驗證分開記錄。
 Linux 建置需要可用的 Linux 環境。
 這台 Windows 主機沒有執行上述平台建置。
-Apple 應用打包尚未完成驗證。
+GitHub 建置 43954515357 的八個應用任務均通過。
+建置涵蓋七個平台。
+兩種 macOS 套件通過臨時簽章檢查。
+iOS 與 OHOS 套件未簽章。
+裝置啟動尚未驗證。
+下載入口見 [GitHub 建置指南](docs/APP_CI.zh-CN.md)。
 Android 封裝結果見
 [平台驗證紀錄](.trellis/tasks/10-01-native-platforms/verification.md)。

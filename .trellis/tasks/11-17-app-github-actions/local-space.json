@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-17",
+  "note": "Nested directories are included in parent totals. Existing build caches were preserved.",
+  "removed_own_verification_download_bytes": 355828855,
+  "paths": {
+    "build": {
+      "bytes": 2683228330,
+      "MiB": 2558.93,
+      "files": 6722
+    },
+    ".dart_tool": {
+      "bytes": 1100688550,
+      "MiB": 1049.7,
+      "files": 401
+    },
+    "ohos": {
+      "bytes": 987301769,
+      "MiB": 941.56,
+      "files": 1790
+    },
+    "ohos/entry/build": {
+      "bytes": 594318201,
+      "MiB": 566.79,
+      "files": 693
+    },
+    "ohos/oh_modules": {
+      "bytes": 80694582,
+      "MiB": 76.96,
+      "files": 306
+    },
+    "native": {
+      "bytes": 23208825,
+      "MiB": 22.13,
+      "files": 606
+    },
+    "native/build": {
+      "bytes": 18520834,
+      "MiB": 17.66,
+      "files": 495
+    },
+    "build/app-ci": {
+      "bytes": 27420908,
+      "MiB": 26.15,
+      "files": 1775
+    }
+  }
+}

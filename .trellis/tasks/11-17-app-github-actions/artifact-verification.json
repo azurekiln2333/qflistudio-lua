@@ -1,0 +1,348 @@
+{
+  "evidence_date": "2026-11-17",
+  "source_commit": "6cb5aa99ddef523678d7bd996a237347e40295ca",
+  "core_commit": "573d1b6eecf1c2b392ad753264a5a09f62f8335e",
+  "application_run_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357",
+  "application_jobs": {
+    "passed": 8,
+    "total": 8
+  },
+  "native_run_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515341",
+  "native_jobs": {
+    "passed": 9,
+    "total": 9
+  },
+  "artifacts": [
+    {
+      "name": "app-windows-x86_64",
+      "id": 14269159182,
+      "bytes": 27066304,
+      "sha256": "83534ed1be491e34f1677e764c9cfe0315a9c274a53553fd7b8072423d8d9214",
+      "download_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14269159182",
+      "expires_at": "2026-11-30T21:00:49Z",
+      "source_commit": "6cb5aa99ddef523678d7bd996a237347e40295ca",
+      "status": "passed",
+      "all_sha256sum_entries_verified": 42,
+      "gpl_sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
+      "gpl_normalized_text_matches_git_blob": true,
+      "packages": [
+        {
+          "path": "packages/qfliscript-windows-x86_64.tar.gz",
+          "bytes": 24049670,
+          "sha256": "f7a7597ab0dfc5bcff35363f7aabc9e5461573b1f34fca8ea31b2c34b849a41e"
+        }
+      ],
+      "signing": "unsigned_executable",
+      "runtime_tests": "not_run",
+      "device_tests": "not_run",
+      "browser_tests": "not_run",
+      "release_bundle_browser_tests": "not_run",
+      "nested_prerequisite_checksum_entries_verified": 16
+    },
+    {
+      "name": "app-linux-x86_64",
+      "id": 14271051428,
+      "bytes": 30601463,
+      "sha256": "49281e8c77868720d9c2afabc2a47fb6e33c8af1b3e4a7a66991165f549bfbe8",
+      "download_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14271051428",
+      "expires_at": "2026-11-30T20:57:37Z",
+      "source_commit": "6cb5aa99ddef523678d7bd996a237347e40295ca",
+      "status": "passed",
+      "all_sha256sum_entries_verified": 26,
+      "gpl_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "gpl_normalized_text_matches_git_blob": true,
+      "packages": [
+        {
+          "path": "packages/qfliscript-linux-x86_64.tar.gz",
+          "bytes": 30404612,
+          "sha256": "88858a4d88cfd8fe41b334b546ef35b8e7caa85046039c3cb4e949bce1fdde97"
+        }
+      ],
+      "signing": "not_applicable",
+      "runtime_tests": "not_run",
+      "device_tests": "not_run",
+      "browser_tests": "not_run",
+      "release_bundle_browser_tests": "not_run"
+    },
+    {
+      "name": "app-macos-arm64",
+      "id": 14274457499,
+      "bytes": 16268558,
+      "sha256": "eb113c2abece04f363680e0c5803f6c34528d9ac82e51e95f29c41a591c8e9fa",
+      "download_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14274457499",
+      "expires_at": "2026-11-30T21:40:46Z",
+      "source_commit": "6cb5aa99ddef523678d7bd996a237347e40295ca",
+      "status": "passed",
+      "all_sha256sum_entries_verified": 32,
+      "gpl_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "gpl_normalized_text_matches_git_blob": true,
+      "packages": [
+        {
+          "path": "packages/qfliscript-macos-arm64.tar.gz",
+          "bytes": 15940172,
+          "sha256": "7589835acbf1e9aa952fafb2142b05068fc616d7722b0b9838a1a309b4b026da"
+        }
+      ],
+      "signing": "ad_hoc_not_notarized",
+      "runtime_tests": "not_run",
+      "device_tests": "not_run",
+      "browser_tests": "not_run",
+      "release_bundle_browser_tests": "not_run",
+      "cloud_signature_verification": "codesign_deep_strict_passed_ad_hoc_not_notarized",
+      "symlinks_resolved_inside_bundle": 12
+    },
+    {
+      "name": "app-macos-x86_64",
+      "id": 14271333403,
+      "bytes": 17219312,
+      "sha256": "aba38fe007090ff7bd0a43a15a9f62aeda3a1da1f8a435894330f739b2749b57",
+      "download_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14271333403",
+      "expires_at": "2026-11-30T21:11:36Z",
+      "source_commit": "6cb5aa99ddef523678d7bd996a237347e40295ca",
+      "status": "passed",
+      "all_sha256sum_entries_verified": 32,
+      "gpl_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "gpl_normalized_text_matches_git_blob": true,
+      "packages": [
+        {
+          "path": "packages/qfliscript-macos-x86_64.tar.gz",
+          "bytes": 16938965,
+          "sha256": "2e89ad7629e33a150aad214dc0b8414770aa6b5b1bef368b76065c6de7bac20d"
+        }
+      ],
+      "signing": "ad_hoc_not_notarized",
+      "runtime_tests": "not_run",
+      "device_tests": "not_run",
+      "browser_tests": "not_run",
+      "release_bundle_browser_tests": "not_run",
+      "cloud_signature_verification": "codesign_deep_strict_passed_ad_hoc_not_notarized",
+      "symlinks_resolved_inside_bundle": 12
+    },
+    {
+      "name": "app-android-universal",
+      "id": 14271492382,
+      "bytes": 147396821,
+      "sha256": "50371437421e8fac0faf0e4e53d94a29d8bcb3a6aa58f9630bc56014e89e2490",
+      "download_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14271492382",
+      "expires_at": "2026-11-30T21:01:49Z",
+      "source_commit": "6cb5aa99ddef523678d7bd996a237347e40295ca",
+      "status": "passed",
+      "all_sha256sum_entries_verified": 32,
+      "gpl_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "gpl_normalized_text_matches_git_blob": true,
+      "packages": [
+        {
+          "path": "packages/app-arm64-v8a-release.apk",
+          "bytes": 30111766,
+          "sha256": "51396b3ca7b713e5479f1736671d76661492efa60d0c0f094a1f757f551903ca"
+        },
+        {
+          "path": "packages/app-armeabi-v7a-release.apk",
+          "bytes": 28242382,
+          "sha256": "923fabc2d920ea712788003e23a0cc1542bfed0dd8cefd9bbb2ecfb94cdf9f7c"
+        },
+        {
+          "path": "packages/app-x86_64-release.apk",
+          "bytes": 31129134,
+          "sha256": "65f4c683537040d5673eadf3c55cfa81c3d2bc4dddda564114f328c9390615d6"
+        },
+        {
+          "path": "packages/app-release.aab",
+          "bytes": 57677260,
+          "sha256": "e4785fdb3dc36cc1b616727a5880a85da695fc077671805bd31a1976078e64d4"
+        }
+      ],
+      "signing": "debug_key_for_testing_not_store_release",
+      "runtime_tests": "not_run",
+      "device_tests": "not_run",
+      "browser_tests": "not_run",
+      "release_bundle_browser_tests": "not_run"
+    },
+    {
+      "name": "app-ios-arm64",
+      "id": 14272474877,
+      "bytes": 14537457,
+      "sha256": "b6b5042cf7dea56979384f4dee14510f7af153c0256c7ee217c543b9c75a1e91",
+      "download_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14272474877",
+      "expires_at": "2026-11-30T21:22:18Z",
+      "source_commit": "6cb5aa99ddef523678d7bd996a237347e40295ca",
+      "status": "passed",
+      "all_sha256sum_entries_verified": 29,
+      "gpl_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "gpl_normalized_text_matches_git_blob": true,
+      "packages": [
+        {
+          "path": "packages/qfliscript-ios-arm64.tar.gz",
+          "bytes": 14337330,
+          "sha256": "5254d0cce1b8f336d2d55df5561ea0fd59fa314321dc63df444fe04512402223"
+        }
+      ],
+      "signing": "unsigned_requires_signing_before_device_installation",
+      "runtime_tests": "not_run",
+      "device_tests": "not_run",
+      "browser_tests": "not_run",
+      "release_bundle_browser_tests": "not_run"
+    },
+    {
+      "name": "app-ohos-arm64-v8a",
+      "id": 14272011720,
+      "bytes": 52901095,
+      "sha256": "14da90a27214df187cd11ce8d3a271a27851c24f4d6d9b96250b57f861ab2bfa",
+      "download_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14272011720",
+      "expires_at": "2026-11-30T20:58:42Z",
+      "source_commit": "6cb5aa99ddef523678d7bd996a237347e40295ca",
+      "status": "passed",
+      "all_sha256sum_entries_verified": 30,
+      "gpl_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "gpl_normalized_text_matches_git_blob": true,
+      "packages": [
+        {
+          "path": "packages/entry-default-unsigned.hap",
+          "bytes": 52698046,
+          "sha256": "40b4660a7d7cbdfb0046e881bf7f4f43dbe30a55c4994a7ab15d4474003080fc"
+        }
+      ],
+      "signing": "unsigned_requires_signing_before_device_installation",
+      "runtime_tests": "not_run",
+      "device_tests": "not_run",
+      "browser_tests": "not_run",
+      "release_bundle_browser_tests": "not_run",
+      "ohos_sdk": {
+        "release": "26.0.0.821",
+        "source": "https://github.com/ErBWs/ohos-sdk/releases/download/26.0.0.821",
+        "provenance": "third_party_repackaged_mirror",
+        "sha256": "0cbdf7ac5c1be1e42694d448ffaee0c0be0ba9a948197e2bc5b61ca5bdc481f2",
+        "metadata": {
+          "meta": {
+            "version": "1.0.0"
+          },
+          "data": {
+            "apiVersion": "26",
+            "displayName": "HarmonyOS 26.0.0",
+            "path": "HarmonyOS-26.0.0",
+            "platformVersion": "26.0.0",
+            "releaseType": "Release",
+            "version": "26.0.0.105",
+            "stage": "Release"
+          }
+        },
+        "effective_compile_api": 26,
+        "compile_sdk_selection": "bundled_default",
+        "target_sdk_version": "6.1.1(24)",
+        "compatible_sdk_version": "5.1.0(18)"
+      }
+    },
+    {
+      "name": "app-web-browser",
+      "id": 14272541093,
+      "bytes": 16403350,
+      "sha256": "56fc4449505bd1be9f0266f34bceb98eb336075d4189832bf37f80804e27d301",
+      "download_url": "https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14272541093",
+      "expires_at": "2026-11-30T20:56:57Z",
+      "source_commit": "6cb5aa99ddef523678d7bd996a237347e40295ca",
+      "status": "passed",
+      "all_sha256sum_entries_verified": 28,
+      "gpl_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "gpl_normalized_text_matches_git_blob": true,
+      "packages": [
+        {
+          "path": "packages/qfliscript-web-browser.tar.gz",
+          "bytes": 16205477,
+          "sha256": "eac9beae22349cb57e5650d426c860cc7e8bc689b6c66a91edb8059499e45f7a"
+        }
+      ],
+      "signing": "not_applicable",
+      "runtime_tests": "web_model_and_widget_tests_passed",
+      "device_tests": "not_run",
+      "browser_tests": "flutter_chrome_tests_passed",
+      "release_bundle_browser_tests": "not_run"
+    }
+  ],
+  "limits": [
+    "Native application startup and device execution were not tested.",
+    "Web source Chrome tests passed; release-bundle and OS file-picker/download acceptance remain unrun.",
+    "Android uses testing signatures; Windows is unsigned; iOS/OHOS are unsigned; macOS is ad-hoc signed and not notarized."
+  ],
+  "native_download_verification": [
+    {
+      "platform": "linux",
+      "artifact_id": 14271846164,
+      "artifact_name": "native-linux-x86_64",
+      "artifact_bytes": 779439,
+      "artifact_sha256": "195073406ae5c4351e20e9fbf1229afd147476d752340e79cc2241c5e4ee4b2f",
+      "source_commit": "6cb5aa99ddef523678d7bd996a237347e40295ca",
+      "run_id": "43954515341",
+      "status": "passed",
+      "verification": "compiled_inspected_and_host_tested",
+      "checksum_inventories_verified": {
+        "SHA256SUMS": 18
+      },
+      "gpl_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "gpl_git_blob_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "gpl_exact_blob_match": true,
+      "gpl_normalized_text_match": true,
+      "lua_ctest": {
+        "tests": 1,
+        "failures": 0,
+        "skipped": 0
+      },
+      "script_probes": {
+        "count": 22,
+        "result": "all_passed"
+      },
+      "libraries": [
+        {
+          "path": "lib/libqfli_lua.so",
+          "bytes": 401968,
+          "sha256": "66953d39f3ffd64f8731aedc73e1833dfe52de3283eb821f0cf5eeeeccbbde7c"
+        },
+        {
+          "path": "lib/libqfli_script.so",
+          "bytes": 1196200,
+          "sha256": "21fb7f845f7f9db7833ef68b405d150a02f179154c2c9801508598ff15d42bf3"
+        }
+      ],
+      "limits": "Native host tests are cloud evidence; downloaded libraries were not executed locally."
+    },
+    {
+      "platform": "windows",
+      "artifact_id": 14271621510,
+      "artifact_name": "native-windows-x86_64",
+      "artifact_bytes": 951641,
+      "artifact_sha256": "1b376778b76fc0c8f184186b0c990236424137af3ffefcc4f3973912808c2270",
+      "source_commit": "6cb5aa99ddef523678d7bd996a237347e40295ca",
+      "run_id": "43954515341",
+      "status": "passed",
+      "verification": "compiled_inspected_and_host_tested",
+      "checksum_inventories_verified": {
+        "SHA256SUMS": 16
+      },
+      "gpl_sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
+      "gpl_git_blob_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "gpl_exact_blob_match": false,
+      "gpl_normalized_text_match": true,
+      "lua_ctest": {
+        "tests": 1,
+        "failures": 0,
+        "skipped": 0
+      },
+      "script_probes": {
+        "count": 22,
+        "result": "all_passed"
+      },
+      "libraries": [
+        {
+          "path": "lib/libqfli_lua.dll",
+          "bytes": 408773,
+          "sha256": "ac94593b07a34621b9695c77f44df320a9e5294afe9b4d61c88a080af76aae21"
+        },
+        {
+          "path": "lib/libqfli_script.dll",
+          "bytes": 1439495,
+          "sha256": "332e36a85354f689abb7ff2b86af2458b8b1d39635c7c2506fe8aa5ee02f6411"
+        }
+      ],
+      "limits": "Native host tests are cloud evidence; downloaded libraries were not executed locally."
+    }
+  ]
+}

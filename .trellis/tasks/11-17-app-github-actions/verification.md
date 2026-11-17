@@ -35,12 +35,30 @@ with SHA256 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986.
 - Independent Web review found no source-level blockers. Sequential other-tab
   saves are detected; this does not establish simultaneous-write isolation.
 
-## Remaining verification
+## Final cloud verification
 
-Windows, OHOS and macOS Intel need another cloud run after the concrete third-run
-compiler/configuration/signing fixes. Android, Linux, Web, iOS and macOS ARM64
-have passed from pinned public inputs. See cloud-runs.md for per-artifact evidence.
+Run 43954515357 at source 6cb5aa99ddef523678d7bd996a237347e40295ca passed all
+eight full-application jobs. This verifies Windows, Linux, Android, Web, OHOS,
+iOS and both macOS architectures from pinned public inputs. Both macOS bundles
+passed deep/strict ad-hoc signature verification. Native regression run
+43954515341 passed all nine jobs from the same source, including project GPL
+packaging. See cloud-runs.md for artifact IDs, download locations and checksums.
+
+The final helper suite has 22 passing tests, including the isolated `python -S`
+run. Targeted Dart analysis/tests, Python syntax, actionlint, Chinese prose checks
+and independent review passed. No local SDK or signing material was uploaded.
+
+Native GUI/device startup, distribution signing/notarization, release-bundle
+browser acceptance and OS file-picker/download end-to-end checks remain unrun.
+Web editing/storage scope is established by model/widget and actual Chrome tests.
 Local SDK and shared-core worktrees have unrelated changes and are not CI inputs.
+
+All eight final application artifacts were downloaded and verified, including
+complete checksum lists, source manifests, GPL text and package contents. See
+artifact-verification.json for durable hashes and limits. Only the session's 13
+verification-download ZIPs were then removed (355,828,855 bytes). Existing caches,
+SDKs and local application outputs were preserved. local-space.json records the
+resulting directory measurements; nested paths must not be double-counted.
 
 First cloud run: 43945934915, source c95351adda65b83eee650f39590418973478b945.
 All implementation commits were pushed to github/ci/native-all-platforms.
@@ -91,4 +109,4 @@ CRT declarations before UTF-8 macros, keep macOS ad-hoc signing required and ver
 the whole bundle, and let the verified HarmonyOS SDK choose its compilation API.
 Native packages now include the root GPL text. Bounded, escaped error summaries
 also appear in GitHub annotations to keep compiler evidence accessible when the
-separate storage endpoint is unavailable. Actual cloud validation remains required.
+separate storage endpoint is unavailable. The fourth cloud run validated these fixes.

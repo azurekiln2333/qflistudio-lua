@@ -51,8 +51,15 @@ The official SDK-bundled Hvigor schema supports independent versions:
 - `src/utils/one-sdk-validator.d.ts:43` states the constraint
   `compileSdkVersion >= targetSdkVersion >= compatibleSdkVersion`.
 
-No local SDK files were changed or uploaded. The next cloud run must validate
+No local SDK files were changed or uploaded. The fourth cloud run validated
 the exact generated profile and toolchain combination.
+
+Run `43954515357`, source `6cb5aa99ddef523678d7bd996a237347e40295ca`, produced
+`entry-default-unsigned.hap` (52,698,046 bytes). Job `133605403645` passed build,
+package inspection and finalization. Artifact `14272011720` downloaded locally;
+all 30 checksum entries passed. Its manifest confirms bundled compile API26,
+target `6.1.1(24)` and compatible `5.1.0(18)`. The HAP contains Lua, Script,
+libc++, Flutter and Dart AOT libraries. Device startup remains unverified.
 
 ### Fixed API26 download identity
 

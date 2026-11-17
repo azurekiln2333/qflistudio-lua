@@ -26,7 +26,7 @@ Build Flutter applications for OHOS macOS Linux Android iOS Web and Windows, pub
 
 - Core public commit: 573d1b6eecf1c2b392ad753264a5a09f62f8335e. Local uncommitted core changes are excluded.
 - Source uses TargetPlatform.ohos, which requires the OHOS Flutter fork or a deliberate compatibility change.
-- Apple currently embeds only Lua. Script integration is required for complete native runtime packaging.
+- At planning, Apple embedded only Lua. This task also integrates Script for complete native runtime packaging.
 - The user selected browser editing and saving. Web must persist workspace files
   across reloads and explicitly disable native running, debugging and compilation.
 - API26 full OHOS toolchain is available through a fixed-hash third-party mirror.

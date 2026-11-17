@@ -4,6 +4,35 @@
 所有平台使用 `lib/main.dart`。
 `Native libraries` 工作流单独构建运行库。
 
+## 已验证的云构建
+
+验证日期：2026 年 11 月 17 日。
+源码提交：`6cb5aa99ddef523678d7bd996a237347e40295ca`。
+[应用构建 43954515357](https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357) 的八个任务均通过。
+构建覆盖七个平台和两种 macOS 架构。
+[运行库构建 43954515341](https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515341) 的九个任务均通过。
+Web 的 Chrome 保存恢复测试已通过。
+两种 macOS 包均通过深度签名检查。
+应用启动与设备运行尚未验证。
+
+下表链接直接打开本轮 Artifact。
+大小为 GitHub 下载包大小，单位为 MB。
+
+| 平台 | 下载 | 大小 |
+| --- | --- | ---: |
+| Windows x64 | [app-windows-x86_64](https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14269159182) | 27.1 |
+| Linux x64 | [app-linux-x86_64](https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14271051428) | 30.6 |
+| macOS ARM64 | [app-macos-arm64](https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14274457499) | 16.3 |
+| macOS x64 | [app-macos-x86_64](https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14271333403) | 17.2 |
+| Android | [app-android-universal](https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14271492382) | 147.4 |
+| iOS ARM64 | [app-ios-arm64](https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14272474877) | 14.5 |
+| OHOS ARM64 | [app-ohos-arm64-v8a](https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14272011720) | 52.9 |
+| Web | [app-web-browser](https://github.com/azurekiln2333/qflistudio-lua/actions/runs/43954515357/artifacts/14272541093) | 16.4 |
+
+本轮 Artifact 于北京时间 2026 年 12 月 1 日过期。
+过期时间约为当天 04:56 至 05:41。
+下载后请保留 `SHA256SUMS` 与 `manifest.json`。
+
 ## 构建产物
 
 | Artifact | 内容 | 使用限制 |
@@ -89,3 +118,19 @@ CI 只在干净的云端检出中删除签名配置。
 已有本地缓存不会自动删除。
 本地 `build/` 可能还包含可用安装包和报告。
 删除前应确认其中内容。
+
+2026 年 11 月 17 日的本地统计：
+
+| 目录 | 大小 | 内容 |
+| --- | ---: | --- |
+| `build/` | 2558.93 MiB | 应用产物、中间文件和报告 |
+| `.dart_tool/` | 1049.70 MiB | Dart 与 Flutter 工具缓存 |
+| `ohos/entry/build/` | 566.79 MiB | OHOS 构建产物与中间文件 |
+| `native/build/` | 17.66 MiB | 原生库构建文件 |
+
+仅迁移 native 构建，节省的空间有限。
+完整云构建可减少后续本地构建需求。
+上述目录不全是无用临时文件。
+本次仅删除核验下载的 13 个副本。
+这些副本共约 339 MiB。
+已有本地构建缓存保持原样。

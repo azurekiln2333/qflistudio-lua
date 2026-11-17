@@ -221,6 +221,11 @@ Apple 构建需要 Xcode。
 Apple 应用编译与运行验证分开记录。
 Linux 构建需要可用的 Linux 环境。
 这台 Windows 主机没有运行上述平台构建。
-Apple 应用打包尚未完成验证。
+GitHub 构建 43954515357 的八个应用任务均通过。
+构建覆盖七个平台。
+两种 macOS 包通过临时签名检查。
+iOS 与 OHOS 包未签名。
+设备启动尚未验证。
+下载入口见 [GitHub 构建指南](docs/APP_CI.zh-CN.md)。
 Android 打包结果见
 [平台验证记录](.trellis/tasks/10-01-native-platforms/verification.md)。
